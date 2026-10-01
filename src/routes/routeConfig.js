@@ -48,12 +48,20 @@ export const ROUTES = [
         title : "Contact Us"
     },
     {
-        path: "/product-details",
+        path: "/product-details/:id/variants/:variantId",
         element: "ProductDetails",
         area: ROUTE_AREA.WEBSITE,
         guest: true,
         is_show: "product-details",
         title : "Product Details"
+    },
+    {
+        path: "/cart",
+        element: "Cart",
+        area: ROUTE_AREA.WEBSITE,
+        guest: true,
+        is_show: "cart",
+        title : "Cart"
     }
     
 ];

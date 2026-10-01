@@ -6,6 +6,7 @@ export const PAGES = {
        About : lazy(()=>import('../pages/about/About')),
        Shop: lazy(()=>import('../pages/shop/Shop')),
        ContactUs : lazy(()=>import('../pages/contact/ContactUs')),
-       ProductDetails : lazy( ()=>import('../pages/product-details/ProductDetails'))
+       ProductDetails : lazy( ()=>import('../pages/product-details/ProductDetails')),
+       Cart : lazy(()=>import('../pages/cart/Cart'))
     } 
 };

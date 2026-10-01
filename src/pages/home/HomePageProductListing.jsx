@@ -127,7 +127,7 @@ export default function HomePageProductListing() {
                             {products.length > 0 &&
                                 products.map((item, index) => (
                                     <Link
-                                        to="/product-details"
+                                        to={`/product-details/${item.id}/variants/${item.variant_id}`}
                                         className="rs-card"
                                         key={item.id ?? index}
                                     >
