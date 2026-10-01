@@ -1,0 +1,40 @@
+
+import axiosInstance from './axiosInterceptor';
+import { API_MODULE, API_PREFIX } from './constants';
+
+export const service = {
+
+    /**
+     * Gte site infrmatiom 
+    */
+
+    site: {
+        getInfo: ()=> axiosInstance.get(`${API_PREFIX}info`)
+    },
+
+    /**
+     * PRODUCTS 
+    */
+   product: {
+    getAll: (params = {})=> 
+        axiosInstance.get(`${API_PREFIX}${API_MODULE.PRODUCTS}`, {params}
+
+    ),
+    getById: (id, variantId) => 
+        axiosInstance.get(`${API_PREFIX}${API_MODULE.PRODUCTS}/${id}/?variant_id=${variantId}`
+            
+        ),
+    getRelated: (id, count)=> 
+        axiosInstance.get(`${API_PREFIX}${API_MODULE.PRODUCTS}/${id}/related?count=${count}`
+
+    ),
+    getBestSelling: (count)=> 
+        axiosInstance.get(`${API_PREFIX}${API_MODULE.PRODUCTS}/best-selling?count=${count}`
+
+    ),
+    getVariation: (id, attributes)=> 
+        axiosInstance.get(`${API_PREFIX}${API_MODULE.PRODUCTS}/${id}/variation?${attributes}`
+        
+    )
+   }
+};
