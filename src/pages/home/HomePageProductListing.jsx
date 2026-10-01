@@ -1,11 +1,8 @@
-import React, { lazy, useEffect, useState } from 'react'
-import {STATIC_IMAGE} from '../../utils/staticImage'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { pagination } from '../../api/pagination';
 import { service } from '../../api/service';
 import Spinner from '../../components/Spinner';
-
-
 
 export default function HomePageProductListing() {
 
@@ -13,111 +10,182 @@ export default function HomePageProductListing() {
     const [products, setProducts] = useState([]);
     const [total, setTotal] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
-    const [currentPage, setCurrentPage] = useState(pagination.HOME_PAGE.page);
+    const [currentPage, setCurrentPage] = useState(
+        pagination.HOME_PAGE.page
+    );
     const [loading, setLoading] = useState(false);
     const [loadMoreLoading, setLoadMoreLoading] = useState(false);
 
-    const getShopProduct = async(page = 1, loadMore = false)=>{
+    const getShopProduct = async (page = 1, loadMore = false) => {
         try {
-            if(loadMore) {
+            if (loadMore) {
                 setLoadMoreLoading(true);
             } else {
                 setLoading(true);
             }
-            const requestParams  = {
+
+            const requestParams = {
                 ...params,
-                page : page
-            }
-           const response = await service.product.getAll(requestParams);
-           const productData = response.data;
-           const newProducts = productData?.data ?? [];
-           // Set pagination information
-           setTotal(productData.meta.total_records ? productData.meta.total_records : 0);
-           setTotalPages(productData.meta.total_pages ? productData.meta.total_pages : 0);
-           if(loadMore) {
-                // Append new products
-                setProducts(previousProduct=>[
-                    ...previousProduct,
+                page
+            };
+
+            const response = await service.product.getAll(requestParams);
+
+            const productData = response?.data;
+
+            const newProducts = Array.isArray(productData?.data)
+                ? productData.data
+                : [];
+
+            const totalRecords = Number(
+                productData?.meta?.total_records ?? 0
+            );
+
+            const pages = Number(
+                productData?.meta?.total_pages ?? 0
+            );
+
+            setTotal(totalRecords);
+            setTotalPages(pages);
+
+            if (loadMore) {
+                setProducts(previousProducts => [
+                    ...previousProducts,
                     ...newProducts
                 ]);
             } else {
-                // First load / filter change
                 setProducts(newProducts);
             }
-            
-        } catch (error) {
-            if(error) {
-                console.log(error);
-            }
-        } finally {
-            setLoading(false);
-            setLoadMoreLoading(false);
-        }
-       
-    }
 
-    useEffect(()=>{
-        getShopProduct(pagination.HOME_PAGE.page, false);
-        setCurrentPage(pagination.HOME_PAGE.page);
+            // Update current page only after successful API response
+            setCurrentPage(page);
+
+        } catch (error) {
+            console.error('Failed to load products:', error);
+        } finally {
+            if (loadMore) {
+                setLoadMoreLoading(false);
+            } else {
+                setLoading(false);
+            }
+        }
+    };
+
+    useEffect(() => {
+        const firstPage = pagination.HOME_PAGE.page;
+
+        setCurrentPage(firstPage);
+        setProducts([]);
+
+        getShopProduct(firstPage, false);
+
     }, [params]);
 
-    const handleLoadMore = ()=>{
-        if(loadMoreLoading) return;
-        if(currentPage >= totalPages) return;
-        const nextPage = currentPage+1;
-        setCurrentPage(nextPage);
+    const handleLoadMore = () => {
+
+        if (loading || loadMoreLoading) {
+            return;
+        }
+
+        if (currentPage >= totalPages) {
+            return;
+        }
+
+        const nextPage = currentPage + 1;
+
         getShopProduct(nextPage, true);
-    }
+    };
+
+    const hasMoreProducts =
+        currentPage < totalPages;
 
     return (
-        <>
-            <section className="rs-listing-area">
-                <div className="container">
-                    <div className="row">
-                        <div 
-                            className="col-12"
-                            style={{minHeight: "300px"}}
-                            >
-                            {
-                                loading && <Spinner
-                                    centered= {true}
-                                    label="Loading products..." 
-                                    color= "success"
-                                />
-                            }
-                            <div 
-                                className="rs-grid">
-                                    {
-                                        (Array.isArray(products) && products.length > 0) &&
-                                        products.map((item, index)=>{
-                                            return(
-                                                <>
-                                                
-                                                <Link 
-                                                    to="/product-details" 
-                                                    className="rs-card"
-                                                    style={{
-                                                        opacity : loading ? "0.2": ""
-                                                    }}
-                                                    key={index}
-                                                >
-                                                <img src={item.image.src}
-                                                        alt="Tribal Life" loading="lazy"/>
-                                                    <figcaption>{item.name}</figcaption>
-                                                </Link>
-                                                
-                                                </>
-                                            )
-                                        })
-                                    }
-                                    
-                               </div>
-                          
-                        </div>
-                    </div>
+        <section className="rs-listing-area">
+            <div className="container">
+                <div className="row">
+                    <div
+                        className="col-12"
+                        style={{ minHeight: '300px' }}
+                    >
 
+                        {/* Initial Loading */}
+                        {loading && (
+                            <Spinner
+                                centered={true}
+                                label="Loading products..."
+                                color="success"
+                            />
+                        )}
+
+                        {/* Product Grid */}
+                        <div
+                            className="rs-grid"
+                            style={{
+                                opacity: loading ? 0.2 : 1
+                            }}
+                        >
+                            {products.length > 0 &&
+                                products.map((item, index) => (
+                                    <Link
+                                        to="/product-details"
+                                        className="rs-card"
+                                        key={item.id ?? index}
+                                    >
+                                        <img
+                                            src={item?.image?.src}
+                                            alt={item?.name || 'Product'}
+                                            loading="lazy"
+                                        />
+
+                                        <figcaption>
+                                            {item?.name}
+                                        </figcaption>
+                                    </Link>
+                                ))
+                            }
+                        </div>
+
+                        {/* Load More Loading */}
+                        {loadMoreLoading && (
+                            <div className="mt-4">
+                                <Spinner
+                                    centered={true}
+                                    color="primary"
+                                    label="Loading more products..."
+                                />
+                            </div>
+                        )}
+
+                        {/* Load More Button */}
+                        {!loading &&
+                            !loadMoreLoading &&
+                            products.length > 0 &&
+                            hasMoreProducts && (
+                                <div className="text-center mt-4">
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary text-white"
+                                        onClick={handleLoadMore}
+                                    >
+                                        Load more
+                                    </button>
+                                </div>
+                            )}
+
+                        {/* No Products */}
+                        {!loading &&
+                            !loadMoreLoading &&
+                            products.length === 0 && (
+                                <div className="text-center py-5">
+                                    <p className="mb-0">
+                                        No products found.
+                                    </p>
+                                </div>
+                            )}
+
+                    </div>
                 </div>
-            </section>
-        </>
-    )
+            </div>
+        </section>
+    );
 }
