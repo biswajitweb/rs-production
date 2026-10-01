@@ -75,6 +75,7 @@ export default function ProductDetails() {
             productId: id,
             variantId : variantId,
             quantity : 1,
+            name : productDetails?.name,
             price : Number(totalPrice).toFixed(2),
             full_image : productDetails?.image?.src,
             thumbnail : productDetails?.image?.thumbnail,
