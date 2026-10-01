@@ -16,8 +16,19 @@ body {
 .container {
   max-width: 1600px;
 }
+.btn-primary{
+  background-color: var(--themePrimaryColor);
+  border-color: var(--themePrimaryColor);
+  &:hover{
+    background-color:var(--themeSecondaryColor);
+    border-color: var(--themeSecondaryColor);
+  }
+}
 
 /* HEADER START ------------------------------------------------ */
+.rs-header-area{
+  border-bottom: 1px solid #eee;
+}
 .rs-header-area .header-wrap {
   display: flex;
   align-items: center;
@@ -551,3 +562,55 @@ display: grid;
   color: #05b101;
 }
 /* LISTING DETAILS END ------------------------------------------------ */
+
+/* SHOPPING CART PAGE ------------------------------------------------ */
+.shopping-cart-page{
+  .page-heading{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin: 50px 0;
+  }
+table{
+  tr{
+    td{
+      vertical-align: middle;
+      .remove{
+        font-size: 24px;
+      }
+      a{
+        color: var(--themeBodyColor);
+        text-decoration: none;
+      }
+    }
+  }
+}
+.btn-group-cart{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  .btn{
+    margin-left: 10px;
+    border-radius: 30px;
+  }
+}
+.checkout-card{
+  max-width: 500px;
+    margin-left: auto;
+    margin-top: 50px;
+    padding: 50px;
+    border-radius: 12px;
+}
+}
+/* SHOPPING CART END ------------------------------------------------ */
+
+/* CHECKOUT START ------------------------------------------------ */
+.checkout-page{
+  .page-heading{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin: 50px 0;
+  }
+}
+/* CHECKOUT END ------------------------------------------------ */
