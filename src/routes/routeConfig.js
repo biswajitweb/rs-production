@@ -47,5 +47,13 @@ export const ROUTES = [
         is_show: "top-menu",
         title : "Contact Us"
     },
+    {
+        path: "/product-details",
+        element: "ProductDetails",
+        area: ROUTE_AREA.WEBSITE,
+        guest: true,
+        is_show: "product-details",
+        title : "Product Details"
+    }
     
 ];

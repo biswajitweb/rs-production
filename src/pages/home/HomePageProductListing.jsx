@@ -1,5 +1,6 @@
 import React from 'react'
 import {STATIC_IMAGE} from '../../utils/staticImage'
+import { Link } from 'react-router-dom'
 
 export default function HomePageProductListing() {
     return (
@@ -9,12 +10,12 @@ export default function HomePageProductListing() {
                     <div class="row">
                         <div class="col-12">
                             <div class="rs-grid">
-                                <a href="details.html" class="rs-card">
+                                <Link to="/product-details" class="rs-card">
                                     <img src={STATIC_IMAGE.HOME}
                                         alt="Tribal Life" loading="lazy"/>
                                     <figcaption>Authentic Tribal Life and Traditional Culture of Odisha, India – People,
                                         Heritage and Community</figcaption>
-                                </a>
+                                </Link>
 
                                 <a href="details.html" class="rs-card">
                                     <img src="https://images.pexels.com/photos/39068198/pexels-photo-39068198/free-photo-of-vibrant-traditional-cultural-dance-celebration.jpeg"
