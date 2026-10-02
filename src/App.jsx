@@ -4,6 +4,7 @@ import AppRoutes from './routes/AppRoutes'
 import { useDispatch } from 'react-redux'
 import { getSiteInfo } from './features/site/siteSlice'
 import { useEffect } from 'react'
+import ScrollToTop from './components/ScrollToTop'
 
 function App() {
 
@@ -19,7 +20,9 @@ function App() {
   return (
     <>
       <BrowserRouter>
+        <ScrollToTop/>
         <AppRoutes/>
+        
       </BrowserRouter>
     </>
   )

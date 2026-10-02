@@ -59,7 +59,7 @@ export default function Header() {
                                                 </Link>
                                             </li>
                                             <li>
-                                                <a className="btn-signin" href="">Sign in</a>
+                                                <Link className="btn-signin" to="/sign-in">Sign in</Link>
                                             </li>
                                         </ul>
                                     </div>

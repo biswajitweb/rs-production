@@ -62,6 +62,38 @@ export const ROUTES = [
         guest: true,
         is_show: "cart",
         title : "Cart"
+    },
+    {
+        path: "/sign-in",
+        element: "Login",
+        area: ROUTE_AREA.WEBSITE,
+        guest: true,
+        is_show: "login",
+        title : "Login"
+    },
+    {
+        path: "/sign-up",
+        element: "SignUp",
+        area: ROUTE_AREA.WEBSITE,
+        guest: true,
+        is_show: "sign-up",
+        title : "SignUp"
+    },
+    {
+        path: "/terms-conditions",
+        element: "TermsConditions",
+        area: ROUTE_AREA.WEBSITE,
+        guest: true,
+        is_show: "terms-conditions",
+        title : "TermsConditions"
+    },
+    {
+        path: "/checkout",
+        element: "Checkout",
+        area: ROUTE_AREA.WEBSITE,
+        guest: true,
+        is_show: "checkout",
+        title : "Checkout"
     }
     
 ];
