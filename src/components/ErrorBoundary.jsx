@@ -31,45 +31,31 @@ class ErrorBoundary extends React.Component {
     if (this.state.hasError) {
       return (
        <>
-       <section className="error-section section-b-space">
-            <div className="container">
-                <div className="row align-items-center justify-content-center">
-                    <div className="col-lg-10">
-                        <div className="error-content">
-                            <div className="error-img">
-                                <img
-                                    src=''
-                                    className="img-fluid"
-                                    alt="400 Bad Request"
-                                />
+          <main class="error-page">
+                <div class="error-content">
+                    <div class="error-number">404</div>
+                    <h1>This Moment Couldn't Be Found</h1>
+                    <p>
+                        The page you're looking for may have been moved, removed,
+                        or is no longer available. Explore our collection of
+                        original photographs from Odisha and India.
+                    </p>
+                    <div class="error-buttons">
+                        <Link to="/" class="btn-primary">
+                            Go to Homepage
+                        </Link>
+                        <Link to="/contact-us" class="btn-secondary">
+                            Go to Contact
+                        </Link>
+                    </div>
 
-                                <h2 className="error-bg-text">404</h2>
-                            </div>
-
-                            <div className="error-text">
-                                <h3>Oops! Not Found</h3>
-
-                                <p>
-                                    The page you are looking for might have been removed, had its name changed, or is temporarily unavailable. Please double-check your URL or try going back to our homepage.
-                                </p>
-
-                                <div className="error-buttons">
-                                    <Link to="/" className="btn theme-btn">
-                                        <i className="ri-home-4-line"></i>
-                                        {" "}Back to Home
-                                    </Link>
-
-                                    <Link to={`/contact-us`} className="btn btn-outline">
-                                        <i className="ri-customer-service-2-line"></i>
-                                        {" "}Contact Support
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="error-note">
+                        Discover tribal culture, temples, festivals, people and
+                        everyday life through original photography.
                     </div>
                 </div>
-            </div>
-        </section>
+
+            </main>
        </> 
       )
     }

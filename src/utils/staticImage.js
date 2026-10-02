@@ -6,4 +6,6 @@ export const STATIC_IMAGE  = {
     LOGO : logoImage,
     HOME: homeBackground,
     FOOTER : footerBackground
-}
+};
+
+export const TAX = 18.00;

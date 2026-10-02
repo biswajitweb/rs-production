@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function CartItems({
-    item
+    item, deleteCartItem,handleDecrement, handleIncrement
 }) {
     return (
        <>
@@ -10,8 +10,15 @@ export default function CartItems({
             key={item.productId}
             >
                                        
-            <td class="product-remove">
-                <a href="#" class="remove" aria-label="" data-product_id="" data-product_sku="">&times;</a>
+            <td className="product-remove">
+                <button
+                    type="button"
+                    className="remove-btn"
+                    aria-label={`Remove ${item.productName || "product"} from cart`}
+                    onClick={() => deleteCartItem(item.productId)}
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </td>
             <td class="product-thumbnail">
                 <a href="#">
@@ -30,27 +37,42 @@ export default function CartItems({
                 <span 
                     class="woocommerce-Price-amount">
                     <bdi>
-                        <span class="woocommerce-Price-currencySymbol">&#8377;</span>{Number(item?.price).toFixed(2)}</bdi></span>
+                        <span class="woocommerce-Price-currencySymbol">&#8377;</span>{Number(item?.price).toFixed(2)}
+                    </bdi>
+                </span>
             </td>
-            <td class="product-quantity" data-title="Quantity">
-                <div class="quantity">
-                    <span class="input-button minus"></span>
-                    <input 
-                        type="number" 
-                        id="quantity_6abe3a9bb90ea" 
-                        class="input-text qty text form-control" 
-                        name="" 
-                        value={item.quantity} 
-                        aria-label="Product quantity" 
-                        size="4" 
-                        min="0" 
-                        max="10000" 
-                        step="1" 
-                        placeholder="" 
-                        inputmode="numeric" 
-                        autocomplete="off" 
+            <td className="product-quantity" data-title="Quantity">
+                <div className="quantity d-inline-flex align-items-center quantity-control">
+                    <button
+                        type="button"
+                        className="quantity-btn quantity-minus"
+                        onClick={()=>handleDecrement(item.productId)}
+                        disabled={item.quantity <= 1}
+                        aria-label="Decrease quantity"
+                    >
+                        −
+                    </button>
+
+                    <input
+                        type="number"
+                        className="quantity-input"
+                        value={item.quantity}
+                        min="1"
+                        max="10000"
+                        step="1"
+                        readOnly
+                        aria-label="Product quantity"
                     />
-                    <span class="input-button plus"></span>
+
+                    <button
+                        type="button"
+                        className="quantity-btn quantity-plus"
+                        onClick={()=>handleIncrement(item.productId)}
+                        disabled={item.quantity >= 10000}
+                        aria-label="Increase quantity"
+                    >
+                        +
+                    </button>
                 </div>
             </td>
             <td class="product-subtotal" data-title="Total">
