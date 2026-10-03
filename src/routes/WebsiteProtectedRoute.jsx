@@ -6,8 +6,8 @@ const WebsiteProtectedRoute = ({
         children,
         allowedRoles = [] 
     }) => {
-    const userToken = '';
-    const userRole = '';
+    const userToken = sessionStorage.getItem('auth');
+    const userRole = sessionStorage.getItem('role'); 
     if (!userToken) {
         return (
             <Navigate

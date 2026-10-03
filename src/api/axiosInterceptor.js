@@ -37,12 +37,8 @@ axiosInstance.interceptors.response.use(
 
         // Unauthorized
         if (status === 401) {
-            localStorage.removeItem("token");
-
-            // Avoid redirect during login request
-            if (!window.location.pathname.includes("/login")) {
-                window.location.href = "/login";
-            }
+            error.message =
+                data?.message || "You do not have permission to perform this action.";
         }
 
         // Forbidden

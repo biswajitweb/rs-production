@@ -7,6 +7,7 @@ import { ROUTE_AREA } from '../api/constants/common';
 import { PAGES } from './pages';
 import WebsiteProtectedRoute from './WebsiteProtectedRoute'; 
 import WebsiteGuestRoute from './WebsiteGuestRoute';
+import MyAccountLayout from '../pages/layout/MyAccountLayout';
 
 
 export default function AppRoutes() {
@@ -54,6 +55,53 @@ export default function AppRoutes() {
 
                             })
                         }
+
+                        {/* ==================== MY ACCOUNT ==================== */}
+                       
+
+                        <Route
+                            path="/my-account"
+                            element={
+                                <WebsiteProtectedRoute>
+                                    <MyAccountLayout />
+                                </WebsiteProtectedRoute>
+                            }
+                        >
+                            {
+                                ROUTES
+                                    .filter(
+                                        (route) =>
+                                            route.area === ROUTE_AREA.WEBSITE &&
+                                            route.is_show === "my-account"
+                                    )
+                                    .map((route) => {
+
+                                        const AccountComponent =
+                                            PAGES.website[route.element];
+
+                                        if (!AccountComponent) {
+                                            return null;
+                                        }
+
+                                        // /my-account/profile -> profile
+                                        // /my-account/orders  -> orders
+                                        const childPath = route.path
+                                            .replace("/my-account/", "")
+                                            .replace("/my-account", "");
+
+                                        return (
+                                            <Route
+                                                key={route.path}
+                                                index={childPath === ""}
+                                                path={childPath || undefined}
+                                                element={
+                                                    <AccountComponent />
+                                                }
+                                            />
+                                        );
+                                    })
+                            }
+                        </Route>
 
                     </Route>
                 </Routes>

@@ -1,7 +1,99 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { lazy, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { validateField } from "../../utils/validateField";
+import { service } from '../../api/service';
+import { FORM_ERROR_STYLE } from '../../utils/formStyles';
+import { encryptData } from '../../utils/encryption';
+
+
+const Spinner = lazy(()=>import('../../components/Spinner'));
 
 export default function Login() {
+
+    const initialFormData  = {
+        email : "",
+        password : ""
+    }; 
+
+    const initialTouched  = {
+        email : false,
+        password: false
+    };
+
+    const [fromData, setFromData] = useState(initialFormData );
+    const [touched, setTouched] = useState(initialTouched);
+    const REQURIED_FIELD = Object.keys(initialFormData);
+    const [errors, setErrors] = useState({});
+    const [loader, setLoader] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [loginErrorMessage, setLoginErrorMessage] = useState('');
+    const navigate = useNavigate();
+
+    const handleFromData = (e)=>{
+        const {name, value} = e.target;
+        setFromData((prev)=>({
+            ...prev,
+            [name] : value
+        }));
+    }
+
+    const handleBlur = (e) => {
+        const { name, value } = e.target;
+        setTouched((prev) => ({
+        ...prev,
+        [name]: true,
+        }));
+        setErrors((prev) => ({
+        ...prev,
+        [name]: validateField(name, value),
+        }));
+    };
+
+    const onHandleLogin = async()=>{
+        setLoader(true);
+        setLoginErrorMessage('');
+        // Mark all fields as touched
+        const touchedFields  = REQURIED_FIELD.reduce((acc, field )=>{
+            acc[field] = true;
+            return acc;
+        }, {});
+        setTouched(touchedFields)
+        const isValid = REQURIED_FIELD.reduce((isValid, field)=>{
+            return isValid && fromData[field] !== '' 
+        }, true);
+
+        const newErrors = {
+            email: validateField("email", fromData.email),
+            password: validateField("password", fromData.password),
+        };
+
+        setErrors(newErrors);
+        const hasError = Object.values(newErrors).some((error) => error);
+        if (hasError) return;
+        try {
+            if(isValid)  {
+                const playload = {... fromData};
+                const response = await service.customer.login(playload);
+                const loginResponse = response.data;
+                const userData =  await encryptData(loginResponse);
+                if(userData) {
+                    sessionStorage.setItem('auth' , userData);
+                    sessionStorage.setItem('role', "CUSTOMER")
+                    navigate(`/my-account`, {
+                        replace : true
+                    });
+                }
+            }
+        } catch (error) {
+            if(error) {
+                setLoginErrorMessage(error.message);
+            }
+        } finally {
+            setLoader(false);
+        }
+        
+    }
+    
     return (
        <>
         <main className="login-page">
@@ -20,75 +112,106 @@ export default function Login() {
                 </div>
 
                 {/* Login Form */}
-                <form>
-                    {/* Email */}
-                    <div className="mb-3">
-                        <label htmlFor="email" className="form-label">
-                            Email Address
+                {
+                    loginErrorMessage && <span className='text-danger'>{loginErrorMessage}</span>
+                }
+               
+                {/* Email */}
+                <div className="mb-3">
+                    <label htmlFor="email" className="form-label">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="login"
+                        name="email"
+                        className="form-control"
+                        placeholder="Enter your email"
+                        autoComplete="off"
+                        value={fromData.login}
+                        onChange={handleFromData}
+                        onBlur={handleBlur}
+                        style={
+                            fromData.login === "" && touched.login
+                            ? FORM_ERROR_STYLE
+                            : {}
+                        }
+                    />
+                   {errors.email && (
+                        <small className="text-danger">{errors.email}</small>
+                    )}
+                    
+                </div>
+
+                {/* Password */}
+                <div className="mb-3">
+                    <div className="d-flex justify-content-between align-items-center">
+                        <label htmlFor="password" className="form-label">
+                            Password
                         </label>
 
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            className="form-control"
-                            placeholder="Enter your email"
-                            autoComplete="email"
-                            required
-                        />
-                    </div>
-
-                    {/* Password */}
-                    <div className="mb-3">
-                        <div className="d-flex justify-content-between align-items-center">
-                            <label htmlFor="password" className="form-label">
-                                Password
-                            </label>
-
-                            <a
-                                href="/forgot-password"
-                                className="forgot-password"
-                            >
-                                Forgot Password?
-                            </a>
-                        </div>
-
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            className="form-control"
-                            placeholder="Enter your password"
-                            autoComplete="current-password"
-                            required
-                        />
-                    </div>
-
-                    {/* Remember Me */}
-                    <div className="form-check mb-4">
-                        <input
-                            type="checkbox"
-                            id="remember"
-                            name="remember"
-                            className="form-check-input"
-                        />
-
-                        <label
-                            htmlFor="remember"
-                            className="form-check-label"
+                        <a
+                            href="/forgot-password"
+                            className="forgot-password"
                         >
-                            Remember me
-                        </label>
+                            Forgot Password?
+                        </a>
                     </div>
 
-                    {/* Login Button */}
-                    <button
-                        type="submit"
-                        className="login-btn"
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        className="form-control"
+                        placeholder="Enter your password"
+                        autoComplete="off"
+                        value={fromData.password}
+                        onChange={handleFromData}
+                        onBlur={handleBlur}
+                        style={
+                            fromData.password === "" && touched.password
+                            ? FORM_ERROR_STYLE
+                            : {}
+                        }
+                    />
+                    {errors.password && (
+                        <small className="text-danger">{errors.password}</small>
+                    )}
+                    
+                </div>
+
+                {/* Remember Me */}
+                <div className="form-check mb-4">
+                    <input
+                        type="checkbox"
+                        id="remember"
+                        name="remember"
+                        className="form-check-input"
+                    />
+
+                    <label
+                        htmlFor="remember"
+                        className="form-check-label"
                     >
-                        Login
-                    </button>
-                </form>
+                        Remember me
+                    </label>
+                </div>
+
+                {/* Login Button */}
+                <button
+                    type="button"
+                    className="login-btn"
+                    onClick={onHandleLogin}
+                    disabled={loader}
+                    style={{
+                        cursor: loader ? "none" : "pointer"
+                    }}
+                >
+                    {loader  && <Spinner color= "white" size='sm' />}
+                    Login
+                </button>
+                
 
                 {/* Divider */}
                 <div className="divider">

@@ -6,7 +6,7 @@ export default function Spinner({
   color = "primary",
   opacity = 1,
   className = "",
-  label = "Loading...",
+  label = "",
   centered = false,
 }) {
   const sizeClass = size === "sm" ? `spinner-${variant}-sm` : "";

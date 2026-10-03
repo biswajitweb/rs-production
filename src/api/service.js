@@ -36,5 +36,17 @@ export const service = {
         axiosInstance.get(`${API_PREFIX}${API_MODULE.PRODUCTS}/${id}/variation?${attributes}`
         
     )
-   }
+   },
+
+   /**
+    * Customer info 
+    */
+    customer: {
+        login: (params = {}) => {
+            return axiosInstance.post(
+                `${API_PREFIX}customer/login`,
+                params
+            );
+        }
+    } 
 };
