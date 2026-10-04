@@ -71,7 +71,7 @@
     gap: 4px;
 }
 
-.account-menu button {
+.account-menu .button {
     width: 100%;
     display: flex;
     align-items: center;
@@ -90,14 +90,16 @@
 
     cursor: pointer;
     transition: all .25s ease;
+
+    text-decoration:  none;
 }
 
-.account-menu button:hover {
+.account-menu .button:hover {
     background: #fff4ed;
     color: #f16f21;
 }
 
-.account-menu button.active {
+.account-menu .button.active {
     background: #f16f21;
     color: #fff;
 }

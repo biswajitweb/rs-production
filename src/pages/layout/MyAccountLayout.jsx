@@ -1,6 +1,6 @@
 import React from "react";
 import { ROUTES } from "../../routes/routeConfig";
-import { Link, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 
 export default function MyAccountLayout() {
 
@@ -34,28 +34,31 @@ export default function MyAccountLayout() {
                         {Array.isArray(myAccountMenu) &&
                             myAccountMenu.length > 0 &&
                             myAccountMenu.map((item) => {
-
-                                // Convert:
-                                // /my-account/profile
-                                // into:
-                                // profile
                                 const relativePath = item.path
                                     .replace("/my-account/", "")
                                     .replace("/my-account", "");
+                                
+                                const isDashboard = item.path === "/my-account";
 
+                            
                                 return (
-                                    <Link
+                                    <NavLink
                                         key={item.path}
-                                        className="button"
                                         data-page={item.element}
                                         to={relativePath || "."}
+                                        end={isDashboard}
+                                        className={({ isActive }) =>
+                                            `button ${
+                                                isActive ? "active" : ""
+                                            }`
+                                        }
                                     >
                                         <span className="menu-icon">
                                             {item.icon}
                                         </span>
 
                                         {item.title}
-                                    </Link>
+                                    </NavLink>
                                 );
                             })
                         }
@@ -64,7 +67,7 @@ export default function MyAccountLayout() {
 
                         <Link
                             to="/"
-                            className="logout"
+                            className="logout button"
                         >
                             <span className="menu-icon">
                                 ↪
