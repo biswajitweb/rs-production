@@ -96,65 +96,66 @@ export const ROUTES = [
         title : "Checkout"
     },
     // My account
+    
     {
         path: "/my-account",
         element: "Dashboard",
         area: ROUTE_AREA.WEBSITE,
         is_show: "my-account",
-        title : "Dashboard",
-        protected: true, 
-        roles: [ROLES.CUSTOMER] ,
-        icon : "⌂"
+        title: "Dashboard",
+        protected: true,
+        roles: [ROLES.CUSTOMER],
+        icon: "bi bi-grid-1x2"
     },
     {
         path: "/my-account/profile",
         element: "Profile",
         area: ROUTE_AREA.WEBSITE,
         is_show: "my-account",
-        title : "My Profile",
-        protected: true, 
-        roles: [ROLES.CUSTOMER] ,
-        icon : "♙"
+        title: "My Profile",
+        protected: true,
+        roles: [ROLES.CUSTOMER],
+        icon: "bi bi-person"
     },
     {
         path: "/my-account/orders",
         element: "Orders",
         area: ROUTE_AREA.WEBSITE,
         is_show: "my-account",
-        title : " My Orders / Purchases",
-        protected: true, 
-        roles: [ROLES.CUSTOMER] ,
-        icon : "▤"
+        title: "My Orders / Purchases",
+        protected: true,
+        roles: [ROLES.CUSTOMER],
+        icon: "bi bi-bag-check"
     },
     {
         path: "/my-account/addresses",
         element: "Addresses",
         area: ROUTE_AREA.WEBSITE,
         is_show: "my-account",
-        title : " Saved Addresses",
-        protected: true, 
-        roles: [ROLES.CUSTOMER] ,
-        icon : "⌖"
+        title: "Saved Addresses",
+        protected: true,
+        roles: [ROLES.CUSTOMER],
+        icon: "bi bi-geo-alt"
     },
     {
         path: "/my-account/account-details",
         element: "AccountDetails",
         area: ROUTE_AREA.WEBSITE,
         is_show: "my-account",
-        title : "Account Details",
-        protected: true, 
-        roles: [ROLES.CUSTOMER] ,
-        icon : "⚙"
+        title: "Account Details",
+        protected: true,
+        roles: [ROLES.CUSTOMER],
+        icon: "bi bi-person-gear"
     },
     {
         path: "/my-account/change-password",
         element: "ChangePassword",
         area: ROUTE_AREA.WEBSITE,
         is_show: "my-account",
-        title : "Change Password",
-        protected: true, 
-        roles: [ROLES.CUSTOMER] ,
-        icon : "🔒"
+        title: "Change Password",
+        protected: true,
+        roles: [ROLES.CUSTOMER],
+        icon: "bi bi-shield-lock"
     }
     
 ];

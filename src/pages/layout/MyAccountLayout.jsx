@@ -17,7 +17,7 @@ export default function MyAccountLayout() {
 
                     <div className="account-user">
                         <img
-                            src="https://via.placeholder.com/100"
+                            src=""
                             alt="Profile"
                         />
 
@@ -54,7 +54,7 @@ export default function MyAccountLayout() {
                                         }
                                     >
                                         <span className="menu-icon">
-                                            {item.icon}
+                                           <i className={item.icon}></i>
                                         </span>
 
                                         {item.title}
@@ -70,7 +70,7 @@ export default function MyAccountLayout() {
                             className="logout button"
                         >
                             <span className="menu-icon">
-                                ↪
+                                <i className="bi bi-box-arrow-right"></i> 
                             </span>
                             Logout
                         </Link>

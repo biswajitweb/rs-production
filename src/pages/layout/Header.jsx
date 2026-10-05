@@ -1,12 +1,39 @@
-import React from 'react'
+import React, { lazy, useEffect, useState } from 'react'
 import {STATIC_IMAGE} from '../../utils/staticImage'
 import {ROUTES} from '../../routes/routeConfig'
 import { Link, NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { decryptData } from '../../utils/encryption';
+
+
+const MyAccountDropDown = lazy(()=>import('../../components/MyAccountDropDown'));
 
 export default function Header() {
     const primaryMenu  = ROUTES.filter((item)=> item.is_show === "top-menu" );
     const {totalQuantity} =  useSelector((state)=> state.cart);
+
+    const {authToken} =  useSelector((state)=>state.user);
+    const [userInfo, setUserInfo] = useState({});
+
+    useEffect(() => {
+        decryptAuth();
+    }, [authToken]);
+
+    const decryptAuth = async () => {
+        if (!authToken) {
+            return;
+        }
+        try {
+            const userDecrypt = await decryptData(authToken);
+            setUserInfo(userDecrypt?.data);
+            
+        } catch (error) {
+            console.error("Decrypt error:", error);
+        }
+    };
+
+    
+    
     return (
         <>
             <header className="rs-header-area">
@@ -59,7 +86,20 @@ export default function Header() {
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link className="btn-signin" to="/sign-in">Sign in</Link>
+                                                {
+                                                    authToken === null ? (
+                                                        <>
+                                                            <Link className="btn-signin" to="/sign-in">Sign in</Link>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <MyAccountDropDown
+                                                                user={userInfo}
+                                                            />
+                                                        </>
+                                                    )
+                                                }
+                                                
                                             </li>
                                         </ul>
                                     </div>

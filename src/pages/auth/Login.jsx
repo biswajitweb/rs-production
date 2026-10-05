@@ -4,6 +4,8 @@ import { validateField } from "../../utils/validateField";
 import { service } from '../../api/service';
 import { FORM_ERROR_STYLE } from '../../utils/formStyles';
 import { encryptData } from '../../utils/encryption';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../../features/auth/authSlice';
 
 
 const Spinner = lazy(()=>import('../../components/Spinner'));
@@ -28,6 +30,7 @@ export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
     const [loginErrorMessage, setLoginErrorMessage] = useState('');
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleFromData = (e)=>{
         const {name, value} = e.target;
@@ -78,7 +81,13 @@ export default function Login() {
                 const userData =  await encryptData(loginResponse);
                 if(userData) {
                     sessionStorage.setItem('auth' , userData);
-                    sessionStorage.setItem('role', "CUSTOMER")
+                    sessionStorage.setItem('role', "CUSTOMER");
+                    dispatch(
+                        loginSuccess({
+                            auth : userData,
+                            role : "CUSTOMER"
+                        })
+                    );
                     navigate(`/my-account`, {
                         replace : true
                     });
