@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ROUTES } from "../../routes/routeConfig";
 import { Link, NavLink, Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { decryptData } from "../../utils/encryption";
 
 export default function MyAccountLayout() {
 
@@ -8,23 +10,44 @@ export default function MyAccountLayout() {
         (item) => item.is_show === "my-account"
     );
 
+    const {authToken} =  useSelector((state)=>state.user);
+    const [userInfo, setUserInfo] = useState({});
+
+    useEffect(() => {
+        decryptAuth();
+    }, [authToken]);
+    
+    const decryptAuth = async () => {
+        if (!authToken) {
+            return;
+        }
+        try {
+            const userDecrypt = await decryptData(authToken);
+            setUserInfo(userDecrypt?.data);
+        } catch (error) {
+            console.error("Decrypt error:", error);
+        }
+    };
+
+
     return (
         <div className="my-account">
             <div className="account-layout">
-
+                
                 {/* ================= SIDEBAR ================= */}
                 <aside className="account-sidebar">
 
                     <div className="account-user">
-                        <img
+                        <img 
                             src=""
                             alt="Profile"
                         />
+                       
 
                         <div className="account-user-info">
-                            <h4>Biswajit Sahu</h4>
+                            <h4>{userInfo?.first_name} {userInfo?.last_name}</h4>
                             <span>
-                                biswajit@example.com
+                                {userInfo?.email}
                             </span>
                         </div>
                     </div>

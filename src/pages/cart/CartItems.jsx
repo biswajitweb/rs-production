@@ -45,7 +45,7 @@ export default function CartItems({
                 <div className="quantity d-inline-flex align-items-center quantity-control">
                     <button
                         type="button"
-                        className="quantity-btn quantity-minus"
+                        className="quantity-btn quantity-minus d-none"
                         onClick={()=>handleDecrement(item.productId)}
                         disabled={item.quantity <= 1}
                         aria-label="Decrease quantity"
@@ -66,7 +66,7 @@ export default function CartItems({
 
                     <button
                         type="button"
-                        className="quantity-btn quantity-plus"
+                        className="quantity-btn quantity-plus d-none"
                         onClick={()=>handleIncrement(item.productId)}
                         disabled={item.quantity >= 10000}
                         aria-label="Increase quantity"

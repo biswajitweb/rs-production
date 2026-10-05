@@ -1,5 +1,5 @@
 import React, { lazy, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { service } from '../../api/service';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../features/cart/cartSlice';
@@ -20,6 +20,7 @@ export default function ProductDetails() {
     const [totalPrice, setTotalPrice] = useState(0);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
 
     const getProductDetailsById = async()=>{
@@ -81,6 +82,7 @@ export default function ProductDetails() {
             thumbnail : productDetails?.image?.thumbnail,
         };
         dispatch(addToCart(preparingCart));
+        navigate(`/cart`);
     }
 
     if (loading) {

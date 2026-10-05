@@ -1,16 +1,26 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
+import { calculateTax } from '../../utils/calculateTax';
 
 export default function Checkout() {
     const {authToken} =  useSelector((state)=>state.user);
+    const {totalQuantity, totalAmount, itmes} =  useSelector((state)=> state.cart);
+    const taxWithAmount = calculateTax(totalAmount);
+
     const navigate = useNavigate();
     
     useEffect(()=>{
-        if(authToken === null) {
+        if (!authToken || !itmes || itmes.length === 0) {
             navigate(`/`);
         }
-    }, [authToken]);
+    }, [authToken, itmes, navigate]);
+
+    const onPlaceOrder = ()=>{
+
+    }
+
+
     return (
         <>
             <section className='checkout-page'>
@@ -26,14 +36,22 @@ export default function Checkout() {
                                             <div class="mb-3">
                                             <label for="fname" class="form-label">First Name <span class="text-danger" aria-hidden="true">*</span></label>
                                             <div></div>
-                                            <input type="text" class="form-control" id="fname" />
+                                                <input 
+                                                    type="text" 
+                                                    class="form-control" 
+                                                    id="fname" 
+                                                />
                                             </div>
                                         </div>
                                          <div className='col-md-6'>
                                             <div class="mb-3">
                                             <label for="lname" class="form-label">Last Name <span class="text-danger" aria-hidden="true">*</span></label>
                                             <div></div>
-                                            <input type="text" class="form-control" id="lname" />
+                                                <input 
+                                                    type="text" 
+                                                    class="form-control" 
+                                                    id="lname" 
+                                                />
                                             </div>
                                         </div>
                                         <div className='col-md-12'>
@@ -92,49 +110,58 @@ export default function Checkout() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className='col-md-6'>
-                                    <h3 className='mb-4'>Your order</h3>
-                                    <div className='card'>
-                                        <div className='card-body'>
-                                            <table className='table'>
-                                        <thead>
-                                            <tr>
-                                                <th class="product-name">Product</th>
-                                                <th class="product-total">Subtotal</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Birhor Tribal Performers Celebrating Culture</td>
-                                                <td>&#8377; 999.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Traditional Birhor Dance and Tribal Culture</td>
-                                                <td>&#8377; 999.00</td>
-                                            </tr>
-                                             <tr>
-                                                <td>Subtotal</td>
-                                                <td>&#8377; 1998.00</td>
-                                            </tr>
-                                             <tr>
-                                                <td>Shipping</td>
-                                                <td>Free Shipping</td>
-                                            </tr>
-                                              <tr>
-                                                <td>Tax</td>
-                                                <td>&#8377; 0</td>
-                                            </tr>
-                                             <tr>
-                                                <td><b>Total</b></td>
-                                                <td><b>&#8377; 1998.00</b></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <a className='btn btn-primary'>Place Order</a>
+                                {
+                                    (Array.isArray(itmes) && itmes.length > 0) &&  
+                                    <div className='col-md-6'>
+                                        <h3 className='mb-4'>Your order</h3>
+                                        <div className='card'>
+                                            <div className='card-body'>
+                                                <table className='table'>
+                                            <thead>
+                                                <tr>
+                                                    <th class="product-name">Product</th>
+                                                    <th class="product-total">Subtotal</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {
+                                                    itmes.map((item, index)=>{
+                                                        return(
+                                                            <>
+                                                             <tr key={index}>
+                                                                <td>{item.name}</td>
+                                                                <td>&#8377; {item.price}</td>
+                                                            </tr>
+                                                            </>
+                                                        )
+                                                    })
+                                                }
+                                               <tr>
+                                                    <td>Subtotal</td>
+                                                    <td>&#8377; {totalAmount}</td>
+                                                </tr>
+                                               <tr>
+                                                    <td>Tax</td>
+                                                    <td>18%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>Total</b></td>
+                                                    <td><b>&#8377; {taxWithAmount.total}</b>  </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                            <button 
+                                                className='btn btn-primary'
+                                                onClick={onPlaceOrder}
+                                                >
+                                                Place Order
+                                            </button>
+                                            </div>
                                         </div>
-                                    </div>
                                     
-                                </div>
+                                    </div>
+                                }
+                                
                             </div>
                         </div>
                     </div>
