@@ -1,11 +1,14 @@
 import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import {logout} from '../features/auth/authSlice'
 
 const MyAccountDropDown = ({ user }) => {
     const [showDropdown, setShowDropdown] = useState(false);
 
     const dropdownRef = useRef(null);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const displayName =
         user?.first_name ||
@@ -17,6 +20,7 @@ const MyAccountDropDown = ({ user }) => {
 
     const handleLogout = () => {
         localStorage.removeItem("auth");
+        dispatch(logout());
         setShowDropdown(false);
         navigate("/");
     };

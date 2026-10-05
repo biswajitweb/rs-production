@@ -1,7 +1,18 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function SignUp() {
+
+    const {authToken} =  useSelector((state)=>state.user);
+    const navigate = useNavigate();
+    useEffect(()=>{
+        if(authToken !== null) {
+            navigate(`/my-account`);
+        }
+    }, [authToken]);
+    
+
     return (
         <>
         <main className="signup-page">

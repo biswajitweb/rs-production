@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, replace, useNavigate } from 'react-router-dom';
+import { Link, replace, useLocation, useNavigate } from 'react-router-dom';
 import { clearCart, decreaseQuantity, increaseQuantity, removeFromCart } from '../../features/cart/cartSlice';
 import CartItems from './CartItems';
 import { calculateTax } from '../../utils/calculateTax';
@@ -11,8 +11,11 @@ export default function Cart() {
     
     const navigate = useNavigate();
     const dispatch =  useDispatch();
-
-
+    const location = useLocation();
+    const {authToken} =  useSelector((state)=>state.user);
+    
+    
+    
     const taxWithAmount = calculateTax(totalAmount);
     
 
@@ -45,6 +48,16 @@ export default function Cart() {
         if(productId) {
             dispatch(decreaseQuantity(productId));
         }
+    }
+
+    const onHandlePageRequest = ()=>{
+        const pageRequest = (authToken === null) ? "/sign-in" : "/checkout";
+        navigate(pageRequest, {
+            state: {
+                from: location.pathname
+            }
+        });
+
     }
 
     return (
@@ -139,7 +152,11 @@ export default function Cart() {
                                         </tbody>
                                             
                                         </table>
-                                        <a href='#' className='btn btn-primary w-100'>Proceed to checkout</a>
+                                        <button 
+                                            onClick={onHandlePageRequest}
+                                            className='btn btn-primary w-100'>
+                                                Proceed to checkout
+                                        </button>
                                     </div>
                                 </div>
                             </div>

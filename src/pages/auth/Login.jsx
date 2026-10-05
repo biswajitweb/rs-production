@@ -1,16 +1,26 @@
-import React, { lazy, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { lazy, useEffect, useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { validateField } from "../../utils/validateField";
 import { service } from '../../api/service';
 import { FORM_ERROR_STYLE } from '../../utils/formStyles';
 import { encryptData } from '../../utils/encryption';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginSuccess } from '../../features/auth/authSlice';
 
 
 const Spinner = lazy(()=>import('../../components/Spinner'));
 
 export default function Login() {
+
+    const {authToken} =  useSelector((state)=>state.user);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const location = useLocation();
+    useEffect(()=>{
+        if(authToken !== null) {
+            navigate(`/my-account`);
+        }
+    }, [authToken])
 
     const initialFormData  = {
         email : "",
@@ -29,8 +39,8 @@ export default function Login() {
     const [loader, setLoader] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [loginErrorMessage, setLoginErrorMessage] = useState('');
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
+    
+    
 
     const handleFromData = (e)=>{
         const {name, value} = e.target;
@@ -53,7 +63,6 @@ export default function Login() {
     };
 
     const onHandleLogin = async()=>{
-        setLoader(true);
         setLoginErrorMessage('');
         // Mark all fields as touched
         const touchedFields  = REQURIED_FIELD.reduce((acc, field )=>{
@@ -75,6 +84,7 @@ export default function Login() {
         if (hasError) return;
         try {
             if(isValid)  {
+                setLoader(true);
                 const playload = {... fromData};
                 const response = await service.customer.login(playload);
                 const loginResponse = response.data;
@@ -88,7 +98,8 @@ export default function Login() {
                             role : "CUSTOMER"
                         })
                     );
-                    navigate(`/my-account`, {
+                    const redirectPath = location.state?.from || "/my-account";
+                    navigate(redirectPath, {
                         replace : true
                     });
                 }
