@@ -17,6 +17,7 @@ export const PAGES = {
        Orders : lazy(()=>import('../pages/my-account/Orders')),
        Addresses : lazy(()=>import('../pages/my-account/Addresses')),
        AccountDetails : lazy(()=>import('../pages/my-account/AccountDetails')),
-       ChangePassword : lazy(()=>import('../pages/my-account/ChangePassword'))
+       ChangePassword : lazy(()=>import('../pages/my-account/ChangePassword')),
+       OrderSuccess : lazy(()=>import('../pages/order/OrderSuccess'))
     } 
 };

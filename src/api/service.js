@@ -48,5 +48,14 @@ export const service = {
                 params
             );
         }
-    } 
+    },
+    
+    /**
+     * Order info
+    */
+    order : {
+        create : (params = {})=>{
+            return axiosInstance.post(`${API_PREFIX}orders`, params);
+        }
+    }
 };

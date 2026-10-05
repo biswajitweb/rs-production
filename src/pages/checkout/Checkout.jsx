@@ -1,14 +1,23 @@
-import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import React, { lazy, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { calculateTax } from '../../utils/calculateTax';
+import { decryptData } from '../../utils/encryption';
+import { service } from '../../api/service';
+import { clearCart } from '../../features/cart/cartSlice';
+
+
+const Spinner = lazy(()=>import('../../components/Spinner'));
 
 export default function Checkout() {
+
     const {authToken} =  useSelector((state)=>state.user);
     const {totalQuantity, totalAmount, itmes} =  useSelector((state)=> state.cart);
     const taxWithAmount = calculateTax(totalAmount);
-
     const navigate = useNavigate();
+    const  dispatch = useDispatch();
+    const [userInfo, setUserInfo] = useState({});
+    const [orderLoader, setOrderLoader] = useState(false);
     
     useEffect(()=>{
         if (!authToken || !itmes || itmes.length === 0) {
@@ -16,8 +25,60 @@ export default function Checkout() {
         }
     }, [authToken, itmes, navigate]);
 
-    const onPlaceOrder = ()=>{
+    const decryptAuth = async () => {
+        if (!authToken) {
+            return;
+        }
+        try {
+            const userDecrypt = await decryptData(authToken);
+            setUserInfo(userDecrypt?.data);
+            
+        } catch (error) {
+            console.error("Decrypt error:", error);
+        }
+    };
 
+     useEffect(() => {
+        decryptAuth();
+    }, [authToken]);
+
+    const onPlaceOrder = async()=>{
+        if(userInfo) {
+            const result = itmes.map(({ productId, quantity }) => ({
+                product_id : productId,
+                quantity
+            }));
+            let orderData = {
+                customer_id : userInfo.id,
+                payment_method : "cod",
+                payment_method_title : "Cash on Delivery",
+                tax_rate : 18,
+                billing : userInfo?.billing,
+                shipping : userInfo?.shipping,
+                line_items : result
+            };
+            try {
+                setOrderLoader(true);
+                const response = await service.order.create(orderData);
+                const orderResponse = response.data;
+                const orderId = orderResponse?.data?.id;
+                if(orderId > 0 ) {
+                    
+                    navigate(`/order-success`, {
+                        replace : true
+                    });
+                    //dispatch(clearCart());
+
+                }
+            } catch (error) {
+                if(error) {
+
+                }
+            } finally {
+                setOrderLoader(false);
+            }
+            
+        }
     }
 
 
@@ -153,7 +214,14 @@ export default function Checkout() {
                                             <button 
                                                 className='btn btn-primary'
                                                 onClick={onPlaceOrder}
+                                                disabled ={orderLoader}
                                                 >
+                                                {
+                                                    orderLoader  && <Spinner
+                                                        size='sm'
+                                                        color='white'
+                                                    />
+                                                }
                                                 Place Order
                                             </button>
                                             </div>

@@ -95,6 +95,14 @@ export const ROUTES = [
         is_show: "checkout",
         title : "Checkout"
     },
+    {
+        path: "/order-success",
+        element: "OrderSuccess",
+        area: ROUTE_AREA.WEBSITE,
+        guest: true,
+        is_show: "order-success",
+        title : "OrderSuccess"
+    },
     // My account
     
     {
