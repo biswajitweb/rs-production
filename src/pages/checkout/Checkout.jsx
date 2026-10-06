@@ -73,11 +73,7 @@ export default function Checkout() {
         try {
             const userDecrypt = await decryptData(authToken);
             const userData = userDecrypt?.data;
-
-            console.log("User Data:", userData);
-
             setUserInfo(userData);
-
             setFilterUserData({
                 first_name: userData?.first_name || "",
                 last_name: userData?.last_name || "",
@@ -405,21 +401,22 @@ export default function Checkout() {
             const response = await service.order.create(orderData);
             const orderResponse = response?.data;
             const orderId = orderResponse?.data?.id;
+            const createdAt = orderResponse?.data?.created_at;
+            const total = orderResponse?.data?.total;
             if (orderId > 0) {
-                /*
-                 * Clear cart after successful order
-                 */
-                //dispatch(clearCart());
-
                 /*
                  * Redirect to success page
                  */
-                navigate("/order-success", {
+                navigate(`/order-success`, {
                     replace: true,
                     state: {
                         orderId,
+                        createdAt,
+                        total
                     },
                 });
+
+                
             }
         } catch (error) {
             console.error("Place order error:", error);
