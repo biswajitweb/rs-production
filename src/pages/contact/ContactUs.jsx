@@ -3,7 +3,7 @@ import React from 'react'
 export default function ContactUs() {
     return (
         <>
-            <section className='checkout-page'>
+            {/* <section className='checkout-page'>
                 <div className='container'>
                     <div className='row'>
                         <div className='col-12'>
@@ -129,7 +129,7 @@ export default function ContactUs() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> */}
         </>
     )
 }

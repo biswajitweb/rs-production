@@ -3,7 +3,7 @@ import React from 'react'
 export default function About() {
     return (
         <>
-            <section className='shopping-cart-page'>
+            {/* <section className='shopping-cart-page'>
                 <div className='container'>
                     <div className='row'>
                         <div className='col-12'>
@@ -102,7 +102,7 @@ export default function About() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> */}
         </>
     )
 }
