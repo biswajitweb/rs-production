@@ -63,12 +63,9 @@ export default function Checkout() {
                 const orderResponse = response.data;
                 const orderId = orderResponse?.data?.id;
                 if(orderId > 0 ) {
-                    
                     navigate(`/order-success`, {
                         replace : true
                     });
-                    //dispatch(clearCart());
-
                 }
             } catch (error) {
                 if(error) {
@@ -101,6 +98,7 @@ export default function Checkout() {
                                                     type="text" 
                                                     class="form-control" 
                                                     id="fname" 
+                                                    name="first_name"
                                                 />
                                             </div>
                                         </div>
@@ -112,6 +110,7 @@ export default function Checkout() {
                                                     type="text" 
                                                     class="form-control" 
                                                     id="lname" 
+                                                    name='last_name'
                                                 />
                                             </div>
                                         </div>
@@ -119,11 +118,13 @@ export default function Checkout() {
                                             <div class="mb-3">
                                             <label for="lname" class="form-label">Country <span class="text-danger" aria-hidden="true">*</span></label>
                                             <div></div>
-                                            <select class="form-select" aria-label="Default select example">
-                                                <option selected>Select</option>
-                                                <option value="1">India</option>
-                                                <option value="2">USA</option>
-                                                <option value="3">UK</option>
+                                            <select 
+                                                class="form-select" 
+                                                aria-label="Default select example"
+                                                name='country'
+                                                >
+                                                <option value="IN">India</option>
+                                                
                                                 </select>
                                             </div>
                                         </div>

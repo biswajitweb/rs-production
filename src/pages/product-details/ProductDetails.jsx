@@ -123,6 +123,7 @@ export default function ProductDetails() {
                                         <h1 className="p-heading">{productDetails?.name}</h1>
                                         <p className="p-description">
                                             { productDetails?.description }
+                                            
                                         </p>
                                         <h3 className="p-price">₹{Number(totalPrice).toFixed(2)}</h3>
                                         <div className="table-responsive">
