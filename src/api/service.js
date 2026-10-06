@@ -62,6 +62,11 @@ export const service = {
     order : {
         create : (params = {})=>{
             return axiosInstance.post(`${API_PREFIX}orders`, params);
+        },
+        byCustomer : (params = {})=>{
+            return axiosInstance.get(`${API_PREFIX}orders`, {
+                params : params
+            });
         }
     }
 };

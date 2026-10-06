@@ -164,6 +164,16 @@ export const ROUTES = [
         protected: true,
         roles: [ROLES.CUSTOMER],
         icon: "bi bi-shield-lock"
+    },
+    {
+        path: "/my-account/orders/:id",
+        element: "OrdersDetails",
+        area: ROUTE_AREA.WEBSITE,
+        is_show: "orders-details",
+        title: "Orders Details",
+        protected: true,
+        roles: [ROLES.CUSTOMER],
+        icon: "bi bi-shield-lock"
     }
     
 ];
