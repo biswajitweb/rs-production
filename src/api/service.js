@@ -47,6 +47,12 @@ export const service = {
                 `${API_PREFIX}customer/login`,
                 params
             );
+        },
+        create : (params = {})=>{
+            return axiosInstance.post(
+                `${API_PREFIX}customers`, 
+                params
+            );
         }
     },
     

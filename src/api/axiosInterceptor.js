@@ -59,6 +59,11 @@ axiosInstance.interceptors.response.use(
                 data?.message || "The requested resource was not found.";
         }
 
+        if (status === 409) {
+            error.message =
+                data?.message || "The requested resource was not found.";
+        }
+
         // Server error
         if (status >= 500) {
             error.message =
