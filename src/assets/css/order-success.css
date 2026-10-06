@@ -1,0 +1,266 @@
+/* =========================================
+   ORDER SUCCESS PAGE
+========================================= */
+
+.order-success-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 70px 20px;
+
+  .success-container {
+    width: 100%;
+    max-width: 680px;
+    background: #ffffff;
+    padding: 50px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.07);
+  }
+
+  .success-icon {
+    width: 82px;
+    height: 82px;
+    margin: 0 auto 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eaf8ef;
+    border-radius: 50%;
+
+    color: #20a354;
+    font-size: 36px;
+
+    svg {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  .success-icon::after {
+    content: "";
+  }
+
+  .success-container h1 {
+    margin: 0 0 12px;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+
+  .success-message {
+    max-width: 540px;
+    margin: 0 auto 35px;
+    color: #666666;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+
+  .order-info {
+    border: 1px solid var(--themeBorder);
+    border-radius: 14px;
+    overflow: hidden;
+    text-align: left;
+    margin-bottom: 25px;
+
+    span {
+      font-size: 18px !important;
+    }
+  }
+
+  .info-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--themeBorder);
+
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    span {
+      color: #777777;
+      font-size: 18px;
+    }
+
+    strong {
+      font-size: 18px;
+      font-weight: 600;
+    }
+  }
+
+  .paid {
+    color: #20a354;
+  }
+
+  .download-box {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    margin-bottom: 30px;
+    background: #fff7f1;
+    border: 1px solid #f8dfcf;
+    border-radius: 14px;
+    text-align: left;
+
+    h3 {
+      margin: 0 0 5px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 0;
+      color: #777777;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+  }
+
+  .download-icon {
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--themePrimaryColor);
+    color: #ffffff;
+
+    border-radius: 10px;
+    font-size: 19px;
+  }
+
+  .success-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary-custom,
+  .btn-outline-custom {
+    min-height: 50px;
+
+    padding: 0 25px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    border-radius: 8px;
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary-custom {
+    background: var(--themePrimaryColor);
+    color: #ffffff;
+    border: 1px solid var(--themePrimaryColor);
+
+    &:hover {
+      background: var(--themeSecondaryColor);
+      border-color: var(--themeSecondaryColor);
+      color: #ffffff;
+    }
+  }
+
+  .btn-outline-custom {
+    background: #ffffff;
+    color: var(--themeBodyColor);
+    border: 1px solid #dddddd;
+
+    &:hover {
+      background: #111111;
+      border-color: #111111;
+      color: #ffffff;
+    }
+  }
+
+  .support-text {
+    margin: 25px 0 0;
+    color: #888888;
+    font-size: 13px;
+
+    a {
+      color: var(--themePrimaryColor);
+      font-weight: 600;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+
+  /* =========================================
+   RESPONSIVE
+========================================= */
+
+  @media (max-width: 767px) {
+
+    .order-success-section {
+      padding: 30px 15px;
+    }
+
+    .success-container {
+      padding: 35px 20px;
+      border-radius: 16px;
+
+      h1 {
+        font-size: 28px;
+      }
+    }
+
+    .success-icon {
+      width: 70px;
+      height: 70px;
+      font-size: 30px;
+    }
+
+    .success-message {
+      font-size: 14px;
+    }
+
+    .info-item {
+      padding: 14px 15px;
+
+      span {
+        font-size: 13px;
+      }
+
+      strong {
+        font-size: 13px;
+        text-align: right;
+      }
+    }
+
+    .download-box {
+      align-items: flex-start;
+    }
+
+    .success-buttons {
+      flex-direction: column;
+    }
+
+    .btn-primary-custom,
+    .btn-outline-custom {
+      width: 100%;
+    }
+  }
+}
