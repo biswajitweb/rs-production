@@ -48,10 +48,12 @@ export default function MyAccountLayout() {
                 <aside className="account-sidebar">
 
                     <div className="account-user">
-                        <img 
-                            src=""
-                            alt="Profile"
-                        />
+                        <div
+                            className="rounded-circle bg-light d-flex align-items-center justify-content-center"
+                            style={{ width: "50px", height: "50px" }}
+                        >
+                            <i className="bi bi-person-fill fs-4 text-secondary"></i>
+                        </div>
                        
 
                         <div className="account-user-info">
