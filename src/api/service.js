@@ -67,6 +67,9 @@ export const service = {
             return axiosInstance.get(`${API_PREFIX}orders`, {
                 params : params
             });
+        },
+        single : (orderId)=>{
+            return axiosInstance.get(`${API_PREFIX}orders/${orderId}`);
         }
     }
 };

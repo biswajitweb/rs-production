@@ -166,10 +166,10 @@ export const ROUTES = [
         icon: "bi bi-shield-lock"
     },
     {
-        path: "/my-account/orders/:id",
+        path: "/my-account/orders/:orderId",
         element: "OrdersDetails",
         area: ROUTE_AREA.WEBSITE,
-        is_show: "orders-details",
+        is_show: "false",
         title: "Orders Details",
         protected: true,
         roles: [ROLES.CUSTOMER],
