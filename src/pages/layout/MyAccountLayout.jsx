@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { ROUTES } from "../../routes/routeConfig";
-import { Link, NavLink, Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { decryptData } from "../../utils/encryption";
+import {logout} from '../../features/auth/authSlice'
 
 export default function MyAccountLayout() {
 
@@ -12,6 +13,8 @@ export default function MyAccountLayout() {
 
     const {authToken} =  useSelector((state)=>state.user);
     const [userInfo, setUserInfo] = useState({});
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         decryptAuth();
@@ -28,6 +31,13 @@ export default function MyAccountLayout() {
             console.error("Decrypt error:", error);
         }
     };
+
+    const handleLogout = ()=>{
+        dispatch(logout());
+        navigate(`/`, {
+            replace : true
+        });
+    }
 
 
     return (
@@ -88,15 +98,15 @@ export default function MyAccountLayout() {
 
                         <div className="menu-divider"></div>
 
-                        <Link
-                            to="/"
-                            className="logout button"
+                        <button
+                           className="logout button"
+                           onClick={handleLogout}
                         >
                             <span className="menu-icon">
                                 <i className="bi bi-box-arrow-right"></i> 
                             </span>
                             Logout
-                        </Link>
+                        </button>
 
                     </nav>
                 </aside>

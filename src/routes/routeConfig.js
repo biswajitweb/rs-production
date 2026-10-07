@@ -119,7 +119,7 @@ export const ROUTES = [
         path: "/my-account/profile",
         element: "Profile",
         area: ROUTE_AREA.WEBSITE,
-        is_show: "my-account",
+        is_show: "false",
         title: "My Profile",
         protected: true,
         roles: [ROLES.CUSTOMER],
