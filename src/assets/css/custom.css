@@ -1,7 +1,15 @@
 @import '../css/style.css';
 @import '../css/loading-overlay.css';
 @import '../css//my-account.css';
-@import '../css/contact.css';
+
 @import '../css/order-success.css';
+
+@import '../css/contact.css';
+
 @import '../css/signin.css';
 @import '../css/signup.css';
+
+@import '../css/header.css';
+@import '../css/footer.css';
+@import '../css/search.css';
+@import '../css/listing.css';

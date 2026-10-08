@@ -1,0 +1,141 @@
+.rs-header-area {
+    border-bottom: 1px solid #eee;
+}
+
+.rs-header-area .header-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+
+.rs-header-area .logo-wrap {
+    display: flex;
+    margin-right: 70px;
+    text-decoration: none;
+    color: var(--themeBodyColor);
+}
+
+@media (max-width: 1024px) {
+    .rs-header-area .logo-wrap {
+        margin-right: 0px;
+    }
+}
+
+.rs-header-area .logo-wrap img {
+    height: 40px;
+}
+
+.rs-header-area .logo-wrap .logo-text {
+    font-size: 28px;
+    font-weight: 700;
+    padding-left: 10px;
+}
+
+@media (max-width: 1024px) {
+    .rs-header-area .logo-wrap .logo-text {
+        display: none;
+    }
+}
+
+.rs-header-area .nav-wrap {
+    display: flex;
+}
+
+@media (max-width: 1024px) {
+    .rs-header-area .nav-wrap {
+        display: none;
+    }
+}
+
+.rs-header-area .nav-wrap ul {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.rs-header-area .nav-wrap ul li a {
+    font-size: 20px;
+    text-decoration: none;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: var(--themeBodyColor);
+}
+
+.rs-header-area .nav-wrap ul li a:hover {
+    color: var(--themePrimaryColor);
+}
+
+.rs-header-area .header-col-left {
+    display: flex;
+}
+
+.rs-header-area .header-col-right {
+    display: flex;
+}
+
+.rs-header-area .acount-wrap {
+    display: flex;
+    align-items: center;
+}
+
+.rs-header-area .acount-wrap ul {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.rs-header-area .acount-wrap ul li {
+    margin-left: 10px;
+}
+
+.rs-header-area .btn-cart {
+    color: var(--themeBodyColor);
+    background-color: var(--themeGrayLight);
+    border-radius: 30px;
+    text-decoration: none;
+    min-width: 47px;
+    max-width: 47px;
+    min-height: 47px;
+    max-height: 47px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.rs-header-area .btn-cart .number {
+    position: absolute;
+    z-index: 3;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 8px;
+    background-color: var(--themeSecondaryColor);
+    color: #fff;
+    font-size: 13px;
+    border-radius: 50%;
+    right: 2px;
+}
+
+.rs-header-area .btn-cart svg {
+    width: 20px;
+    height: 20px;
+}
+
+.rs-header-area .btn-signin {
+    color: #fff;
+    font-size: 18px;
+    line-height: 18px;
+    padding: 10px 30px;
+    background-color: var(--themeSecondaryColor);
+    border-radius: 30px;
+    text-decoration: none;
+}

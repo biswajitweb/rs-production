@@ -164,7 +164,7 @@ export default function HomePageProductListing() {
                                 <div className="text-center mt-4">
                                     <button
                                         type="button"
-                                        className="btn btn-primary text-white"
+                                        className="btn rs-grid-loader"
                                         onClick={handleLoadMore}
                                     >
                                         Load more
