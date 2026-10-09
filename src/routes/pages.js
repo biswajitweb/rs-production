@@ -4,7 +4,8 @@ export const PAGES = {
     website: {
        Home : lazy(()=>import('../pages/home/Home')),
        About : lazy(()=>import('../pages/about/About')),
-       Shop: lazy(()=>import('../pages/shop/Shop')),
+       Tribal : lazy(()=>import('../pages/tribal/Tribal')),
+       Temple : lazy(()=>import('../pages/temple/Temple')),
        ContactUs : lazy(()=>import('../pages/contact/ContactUs')),
        ProductDetails : lazy( ()=>import('../pages/product-details/ProductDetails')),
        Cart : lazy(()=>import('../pages/cart/Cart')),

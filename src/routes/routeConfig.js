@@ -24,12 +24,20 @@ export const ROUTES = [
         title : "Home"
     },
     {
-        path: "/shop",
-        element: "Shop",
+        path: "/tribal",
+        element: "Tribal",
         area: ROUTE_AREA.WEBSITE,
         guest: true,
         is_show: "top-menu",
-        title : "My Products"
+        title : "Tribal"
+    },
+    {
+        path: "/temple",
+        element: "Temple",
+        area: ROUTE_AREA.WEBSITE,
+        guest: true,
+        is_show: "top-menu",
+        title : "Temple"
     },
     {
         path: "/about-us",
