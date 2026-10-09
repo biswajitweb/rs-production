@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function CartItems({
     item, deleteCartItem,handleDecrement, handleIncrement
@@ -21,12 +22,13 @@ export default function CartItems({
                 </button>
             </td>
             <td class="product-thumbnail">
-                <a href="#">
+                <Link 
+                    to={`/product-details/${item.productId}/variants/${item.variantId}`}>
                     <img 
                         decoding="async" 
                         width="200" 
                         src={item?.thumbnail} />
-                </a>
+                </Link>
             </td>
             <td class="product-name" data-title="Product">
                 <a href="#">{item?.name}</a>

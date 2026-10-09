@@ -1,6 +1,6 @@
 import React, { lazy, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { calculateTax } from "../../utils/calculateTax";
 import { decryptData } from "../../utils/encryption";
@@ -73,6 +73,8 @@ export default function Checkout() {
         try {
             const userDecrypt = await decryptData(authToken);
             const userData = userDecrypt?.data;
+            console.log(userData);
+            
             setUserInfo(userData);
             setFilterUserData({
                 first_name: userData?.first_name || "",
@@ -1011,14 +1013,20 @@ export default function Checkout() {
                                                                         key={`${item.productId}-${index}`}
                                                                     >
                                                                         <td>
-                                                                            {
-                                                                                item.name
-                                                                            }
-                                                                            {" "}
-                                                                            ×{" "}
-                                                                            {
-                                                                                item.quantity
-                                                                            }
+                                                                            <Link
+                                                                                className="text-decoration-none text-primary"
+                                                                                to={`/product-details/${item.productId}/variants/${item.variantId}`}
+                                                                            >
+                                                                                {
+                                                                                    item.name
+                                                                                }
+                                                                                {" "}
+                                                                                ×{" "}
+                                                                                {
+                                                                                    item.quantity
+                                                                                }
+                                                                            </Link>
+                                                                            
                                                                         </td>
 
                                                                         <td>
