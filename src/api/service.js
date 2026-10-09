@@ -53,6 +53,16 @@ export const service = {
                 `${API_PREFIX}customers`, 
                 params
             );
+        },
+        refreshToken : (params = {})=>{
+            return axiosInstance.post(`${API_PREFIX}refresh-token`, {
+                params: params
+            });
+        },
+        password : (params = {})=>{
+            return axiosInstance.post(`${API_PREFIX}update-password`, 
+                params
+            );
         }
     },
     

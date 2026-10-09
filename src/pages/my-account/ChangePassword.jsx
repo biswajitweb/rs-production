@@ -1,5 +1,9 @@
 import React, { lazy, useState } from 'react';
 import { FORM_ERROR_STYLE } from '../../utils/formStyles';
+import { service } from '../../api/service';
+import { useDispatch } from 'react-redux';
+import {logout} from '../../features/auth/authSlice'
+import { useNavigate } from 'react-router-dom';
 
 const InputField = lazy(() =>
     import('../../components/form/InputField')
@@ -40,10 +44,17 @@ export default function ChangePassword() {
         confirm_password: "Confirm password is required."
     };
 
+    const dispatch =  useDispatch();
+
     const [formData, setFormData] = useState(defaultPasswordData);
     const [touched, setTouched] = useState(initialTouched);
     const [errors, setErrors] = useState({});
     const [loader, setLoader] = useState(false);
+    const navigate = useNavigate();
+    const [showErrorMessage, setShowErrorMessage] = useState({
+        message : '',
+        type: 'danger'
+    });
 
     // --------------------------------
     // Strong Password Validation
@@ -254,6 +265,12 @@ export default function ChangePassword() {
     // --------------------------------
     const onPasswordUpdate = async () => {
 
+        setShowErrorMessage({
+            message : "",
+            type : 'danger'
+        });
+        setFormData(defaultPasswordData);
+        
         // --------------------------------
         // Mark All Fields as Touched
         // --------------------------------
@@ -347,29 +364,33 @@ export default function ChangePassword() {
         try {
 
             setLoader(true);
-
             const {
                 confirm_password,
                 ...payload
             } = formData;
 
-            console.log("Password Payload:", payload);
+           const response = await service.customer.password(payload);
+           if(response.status === 200) {
+                const responseData = response.data;
+                setShowErrorMessage({
+                    message : responseData?.message,
+                    type : 'success'
+                });
+                setTimeout(()=>{
+                    dispatch(logout());
+                    navigate(`/` , {
+                        replace : true
+                    });
 
-            /*
-            Example:
-
-            await changePassword(payload);
-            */
+                }, 1500 );
+           }
 
         } catch (error) {
-
-            console.error(
-                "Change password error:",
-                error?.message
-            );
-
+            setShowErrorMessage({
+                message : error?.message,
+                type : 'danger'
+            });
         } finally {
-
             setLoader(false);
         }
     };
@@ -409,7 +430,13 @@ export default function ChangePassword() {
                         another website.
                     </p>
 
-
+                    {
+                        showErrorMessage.message && (
+                            <p className={`text-${showErrorMessage.type}`}>
+                                {showErrorMessage.message}
+                            </p>
+                        )
+                    }
                     {/* --------------------------------
                         Current Password
                     -------------------------------- */}
