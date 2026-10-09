@@ -4,12 +4,30 @@
     min-width: 42px;
     font-size: 18px;
 }
-
-.account-avatar-lg {
+.account-avatar-head{
+      display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
     width: 48px;
     height: 48px;
     min-width: 48px;
     font-size: 20px;
+    background-color: var(--themePrimaryColor);
+    border-radius: 50%;
+}
+
+.account-avatar-lg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    font-size: 20px;
+    background-color: var(--themePrimaryColor);
+    border-radius: 50%;
 }
 
 .account-welcome {
@@ -56,8 +74,8 @@
     align-items: center;
     justify-content: center;
     border-radius: 8px;
-    background-color: #f1f5f9;
-    color: #0d6efd;
+    background-color: var(--themePrimaryLightColor);
+    color: var(--themePrimaryColor);
     font-size: 16px;
 }
 

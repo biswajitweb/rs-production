@@ -76,7 +76,7 @@ const MyAccountDropDown = ({ user }) => {
             >
                 {/* User Icon */}
                 <span
-                    className="account-avatar d-flex align-items-center justify-content-center rounded-circle bg-primary text-white"
+                    className="account-avatar account-avatar-head"
                 >
                     <i className="bi bi-person"></i>
                 </span>
@@ -114,7 +114,7 @@ const MyAccountDropDown = ({ user }) => {
                     {/* User Information */}
                     <div className="p-3 bg-light border-bottom">
                         <div className="d-flex align-items-center gap-3">
-                            <span className="account-avatar account-avatar-lg d-flex align-items-center justify-content-center rounded-circle bg-primary text-white">
+                            <span className="account-avatar account-avatar-lg">
                                 <i className="bi bi-person"></i>
                             </span>
 
