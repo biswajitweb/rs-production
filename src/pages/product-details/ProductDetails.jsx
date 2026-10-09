@@ -11,7 +11,6 @@ const Spinner = lazy(()=>import('../../components/Spinner'));
 
 export default function ProductDetails() {
     const {id, variantId} =  useParams();
-
     const [productDetails, setProductDetails] = useState({});
     const [loading, setLoading] = useState(true);
     const [imageLoading, setImageLoading] = useState(true);
@@ -23,17 +22,17 @@ export default function ProductDetails() {
     const navigate = useNavigate();
 
 
-    const getProductDetailsById = async()=>{
+    const getProductDetailsById = async(productId, variantId )=>{
         try {
             setLoading(true);
             setImageLoading(true);
             setThumbnailLoading(true);
 
-            if (!id || !variantId) {
+            if (!productId || !variantId) {
                 return;
             }
             const response = await service.product.getById(
-                Number(id), Number(variantId)
+                Number(productId), Number(variantId)
             );
             setProductDetails(response.data?.data ?? {});
             const price = Number(response.data?.data?.price) || 0;
@@ -50,10 +49,21 @@ export default function ProductDetails() {
 
     useState(()=>{
         if(id && variantId) {
-            getProductDetailsById();
+            getProductDetailsById(id, variantId);
         }
        
     }, [id, variantId]);
+
+    const updateProduct = (productId, variantId)=>{
+       if(productId && variantId) {
+            getProductDetailsById(productId, variantId);
+            navigate(`/product-details/${productId}/variants/${variantId}`, {
+                replace : true
+            })
+            
+       }
+        
+    }
 
     const handleQuantityIncrement = ()=>{
         const updateQty = quantity+1;
@@ -199,7 +209,12 @@ export default function ProductDetails() {
             }
             
             {
-                !loading && <SimilarProducts/>
+                !loading && <SimilarProducts
+                    productId = {id}
+                    onClick={(productId, variantId) =>
+                        updateProduct(productId, variantId)
+                    }
+                />
             }
             
         </>
