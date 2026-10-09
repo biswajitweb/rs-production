@@ -29,7 +29,9 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: var(--themePrimaryColor);
+        background:
+        linear-gradient(135deg, var(--themePrimaryColor), var(--themeSecondaryColor)) padding-box,
+        linear-gradient(135deg, var(--themeSecondaryColor), var(--themePrimaryColor)) border-box;
     color: #ffffff;
     font-size: 24px;
     font-weight: 700;
@@ -78,20 +80,6 @@
 
 .signup-btn {
     width: 100%;
-    min-height: 50px;
-    border: 0;
-    border-radius: 8px;
-    background: var(--themePrimaryColor);
-    color: #ffffff;
-    font-size: 15px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-
-    &:hover {
-        background: var(--themeSecondaryColor);
-        color: #ffffff;
-        transform: translateY(-1px);
-    }
 }
 
 .login-text {

@@ -450,7 +450,7 @@ export default function SignUp() {
                     {/* Signup Button */}
                     <button
                         type="button"
-                        className="signup-btn"
+                        className="btn btn-primary signup-btn"
                         onClick={onHandleRegister}
                         disabled={isLoader}
                     >

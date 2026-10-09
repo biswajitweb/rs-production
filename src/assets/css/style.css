@@ -17,18 +17,51 @@
 body {
   font-size: 18px;
   color: var(--themeBodyColor);
+  overflow-x: hidden;
 }
 
 .container {
   max-width: 1600px;
 }
-.btn-primary{
-  background-color: var(--themePrimaryColor);
-  border-color: var(--themePrimaryColor);
-  &:hover{
-    background-color:var(--themeSecondaryColor);
-    border-color: var(--themeSecondaryColor);
-  }
+
+/* Gradient Button */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 40px;
+    border: 1px solid var(--themeSecondaryColor) !important;
+    border-radius: 30px;
+    background:
+        linear-gradient(135deg, var(--themePrimaryColor), var(--themeSecondaryColor)) padding-box,
+        linear-gradient(135deg, var(--themeSecondaryColor), var(--themePrimaryColor)) border-box;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.35s ease;
+}
+
+/* Hover Effect */
+.btn-primary:hover {
+    background:
+        linear-gradient(135deg, var(--themeSecondaryColor), var(--themePrimaryColor)) padding-box,
+        linear-gradient(135deg, var(--themePrimaryColor), var(--themeSecondaryColor)) border-box;
+    box-shadow: 0 8px 22px rgba(157, 11, 14, 0.3);
+    transform: translateY(-3px);
+}
+
+/* Click Effect */
+.btn-primary:active {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(157, 11, 14, 0.2);
+}
+
+/* Keyboard Focus */
+.btn-primary:focus-visible {
+    outline: 3px solid rgba(241, 111, 33, 0.35);
+    outline-offset: 4px;
 }
 
 

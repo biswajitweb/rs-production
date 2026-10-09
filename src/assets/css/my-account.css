@@ -13,7 +13,9 @@
     height: 48px;
     min-width: 48px;
     font-size: 20px;
-    background-color: var(--themePrimaryColor);
+      background:
+        linear-gradient(135deg, var(--themePrimaryColor), var(--themeSecondaryColor)) padding-box,
+        linear-gradient(135deg, var(--themeSecondaryColor), var(--themePrimaryColor)) border-box;
     border-radius: 50%;
 }
 
@@ -26,7 +28,9 @@
     height: 48px;
     min-width: 48px;
     font-size: 20px;
-    background-color: var(--themePrimaryColor);
+      background:
+        linear-gradient(135deg, var(--themePrimaryColor), var(--themeSecondaryColor)) padding-box,
+        linear-gradient(135deg, var(--themeSecondaryColor), var(--themePrimaryColor)) border-box;
     border-radius: 50%;
 }
 
@@ -212,7 +216,9 @@
 }
 
 .account-menu .button.active {
-    background: #f16f21;
+      background:
+        linear-gradient(135deg, var(--themePrimaryColor), var(--themeSecondaryColor)) padding-box,
+        linear-gradient(135deg, var(--themeSecondaryColor), var(--themePrimaryColor)) border-box;
     color: #fff;
 }
 
@@ -406,21 +412,6 @@
 /* =========================================
     BUTTONS
 ========================================= */
-
-.btn-primary {
-    border: 0;
-    padding: 10px 17px;
-    background: #f16f21;
-    color: #fff;
-    border-radius: 7px;
-    font-size: 13px;
-    cursor: pointer;
-    transition: .25s ease;
-}
-
-.btn-primary:hover {
-    background: #d95e13;
-}
 
 .btn-outline {
     border: 1px solid #ddd;

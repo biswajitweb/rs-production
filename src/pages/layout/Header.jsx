@@ -89,7 +89,7 @@ export default function Header() {
                                                 {
                                                     authToken === null ? (
                                                         <>
-                                                            <Link className="btn-signin" to="/sign-in">Sign in</Link>
+                                                            <Link className="btn btn-primary btn-signin" to="/sign-in">Sign in</Link>
                                                         </>
                                                     ) : (
                                                         <>

@@ -103,7 +103,9 @@
   min-height: 60px;
   max-height: 60px;
   border-radius: 50%;
-  background-color: var(--themePrimaryColor);
+    background:
+        linear-gradient(135deg, var(--themePrimaryColor), var(--themeSecondaryColor)) padding-box,
+        linear-gradient(135deg, var(--themeSecondaryColor), var(--themePrimaryColor)) border-box;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -111,7 +113,9 @@
 }
 
 .input-wrap .btn-search:hover {
-  background-color: var(--themeSecondaryColor);
+    background:
+        linear-gradient(135deg, var(--themeSecondaryColor), var(--themePrimaryColor)) padding-box,
+        linear-gradient(135deg, var(--themePrimaryColor), var(--themeSecondaryColor)) border-box;
 }
 
 .popular-tag {
