@@ -1,5 +1,6 @@
 import React from 'react'
 import {STATIC_IMAGE} from '../../utils/staticImage'
+import { Link } from 'react-router-dom'
 
 export default function HomeSlider() {
     return (
@@ -28,11 +29,11 @@ export default function HomeSlider() {
                                     </a>
                                 </div>
                                 <div className="popular-tag">
-                                    <a href="" className="popular-list">Birhor</a>
-                                    <a href="" className="popular-list">Bonda</a>
-                                    <a href="" className="popular-list">Chuktia Bhunjia</a>
-                                    <a href="" className="popular-list">Didayi</a>
-                                    <a href="" className="popular-list">Dongaria</a>
+                                    <Link to="/" className="popular-list">Birhor</Link>
+                                    <Link to="/" className="popular-list">Bonda</Link>
+                                    <Link to="/" className="popular-list">Chuktia Bhunjia</Link>
+                                    <Link to="/" className="popular-list">Didayi</Link>
+                                    <Link to="/" className="popular-list">Dongaria</Link>
                                 </div>
                             </div>
                         </div>

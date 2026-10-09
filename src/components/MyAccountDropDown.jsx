@@ -136,7 +136,7 @@ const MyAccountDropDown = ({ user }) => {
                     <div className="p-2">
                         {/* My Account */}
                         <Link
-                            to="/my-account/profile"
+                            to="/my-account"
                             className="dropdown-item account-item rounded-2"
                             onClick={() => setShowDropdown(false)}
                         >
@@ -145,7 +145,7 @@ const MyAccountDropDown = ({ user }) => {
                             </span>
 
                             <span>
-                                <strong>My Profile</strong>
+                                <strong>My Account</strong>
                                 <small>
                                     Manage your profile
                                 </small>
