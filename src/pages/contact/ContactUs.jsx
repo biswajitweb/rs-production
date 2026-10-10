@@ -34,10 +34,9 @@ export default function ContactUs() {
                             <circle cx="12" cy="9" r="2.5"/>
                         </svg>
                     </div>
-
                     <div>
                         <span>Address</span>
-                        <p>611/998 (1st Floor), BJB Nagar</p>
+                        <p>611/998 (1st Floor), BJB Nagar, Bhubaneswar, Odisha</p>
                     </div>
                 </div>
 
@@ -48,14 +47,9 @@ export default function ContactUs() {
                             <path d="m4 7 8 6 8-6"/>
                         </svg>
                     </div>
-
                     <div>
-                        <span>Email</span>
-                        <p>
-                            <a href="mailto:rsrath13@gmail.com">
-                                rsrath13@gmail.com
-                            </a>
-                        </p>
+                        <span><a href="mailto:rsrath13@gmail.com">rsrath13@gmail.com</a></span>
+                        <p>For photo purchases, licensing, payments, downloads, and general enquiries.</p>
                     </div>
                 </div>
 
@@ -66,14 +60,8 @@ export default function ContactUs() {
                             <path d="M6.6 3.5 9 3l2 5-2.2 1.8a14 14 0 0 0 5.4 5.4L16 13l5 2 .5 2.4a2 2 0 0 1-2.2 2.3C10.6 18.8 5.2 13.4 4.3 4.7A2 2 0 0 1 6.6 3.5Z"/>
                         </svg>
                     </div>
-
-                    <div>
-                        <span>Phone</span>
-                        <p>
-                            <a href="tel:+918895267838">
-                                +91-88952-67838
-                            </a>
-                        </p>
+                    <div><span><a href="tel:+918895267838">+91-88952-67838</a></span>
+                        <p>Contact us for photo licensing, pricing, purchase assistance, and customer support.</p>
                     </div>
                 </div>
 
@@ -97,7 +85,6 @@ export default function ContactUs() {
                                 type="text"
                                 id="name"
                                 name="name"
-                                placeholder="Enter your name"
                                 required
                             />
                         </div>
@@ -108,7 +95,6 @@ export default function ContactUs() {
                                 type="email"
                                 id="email"
                                 name="email"
-                                placeholder="Enter your email"
                                 required
                             />
                         </div>
@@ -121,7 +107,6 @@ export default function ContactUs() {
                             type="tel"
                             id="phone"
                             name="phone"
-                            placeholder="Enter your phone number"
                         />
                     </div>
 
@@ -131,7 +116,6 @@ export default function ContactUs() {
                             type="text"
                             id="subject"
                             name="subject"
-                            placeholder="Enter subject"
                         />
                     </div>
 
@@ -141,12 +125,11 @@ export default function ContactUs() {
                             id="message"
                             name="message"
                             rows="6"
-                            placeholder="Write your message..."
                             required
                         ></textarea>
                     </div>
 
-                    <button type="submit" class="contact-btn">
+                    <button type="submit" class="btn btn-primary contact-btn">
                         Send Message
 
                         <svg viewBox="0 0 24 24" aria-hidden="true">

@@ -147,7 +147,6 @@ export default function Login() {
                         id="login"
                         name="email"
                         className="form-control"
-                        placeholder="Enter your email"
                         autoComplete="off"
                         value={fromData.login}
                         onChange={handleFromData}
@@ -184,7 +183,6 @@ export default function Login() {
                         id="password"
                         name="password"
                         className="form-control"
-                        placeholder="Enter your password"
                         autoComplete="off"
                         value={fromData.password}
                         onChange={handleFromData}
@@ -233,13 +231,8 @@ export default function Login() {
                 </button>
                 
 
-                {/* Divider */}
-                <div className="divider">
-                    <span>OR</span>
-                </div>
-
                 {/* Register */}
-                <div className="register-text">
+                <div className="register-text mt-3">
                     Don't have an account?{" "}
                     <Link to="/sign-up">
                         Create an account

@@ -23,7 +23,9 @@ body {
 .container {
   max-width: 1600px;
 }
-
+.custom-small-container{
+  max-width: 1320px;
+}
 /* Gradient Button */
 .btn-primary {
     display: inline-flex;
@@ -31,7 +33,7 @@ body {
     justify-content: center;
     padding: 15px 40px;
     border: 1px solid var(--themeSecondaryColor) !important;
-    border-radius: 30px;
+    border-radius: 50px;
     background:
         linear-gradient(135deg, var(--themePrimaryColor), var(--themeSecondaryColor)) padding-box,
         linear-gradient(135deg, var(--themeSecondaryColor), var(--themePrimaryColor)) border-box;

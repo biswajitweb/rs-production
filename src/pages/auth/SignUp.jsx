@@ -273,7 +273,6 @@ export default function SignUp() {
                             id="first_name"
                             name="first_name"
                             className="form-control"
-                            placeholder="Enter first name"
                             autoComplete="off"
                             value={fromData.first_name}
                             onChange={handleOnChange}
@@ -303,7 +302,6 @@ export default function SignUp() {
                             id="last_name"
                             name="last_name"
                             className="form-control"
-                            placeholder="Enter last name"
                             autoComplete="off"
                             value={fromData.last_name}
                             onChange={handleOnChange}
@@ -333,7 +331,6 @@ export default function SignUp() {
                             id="email"
                             name="email"
                             className="form-control"
-                            placeholder="Enter your email"
                             autoComplete="off"
                             value={fromData.email}
                             onChange={handleOnChange}
@@ -363,7 +360,6 @@ export default function SignUp() {
                             id="password"
                             name="password"
                             className="form-control"
-                            placeholder="Create a password"
                             autoComplete="off"
                             value={fromData.password}
                             onChange={handleOnChange}
@@ -396,7 +392,6 @@ export default function SignUp() {
                             id="confirmPassword"
                             name="confirm_password"
                             className="form-control"
-                            placeholder="Confirm your password"
                             autoComplete="off"
                             value={fromData.confirm_password}
                             onChange={handleOnChange}
@@ -417,7 +412,7 @@ export default function SignUp() {
                     </div>
 
                     {/* Terms */}
-                    <div className="form-check mb-1">
+                    <div className="form-check mb-4">
 
                         <input
                             type="checkbox"

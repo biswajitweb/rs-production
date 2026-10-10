@@ -11,6 +11,8 @@
     margin: 0;
     color: var(--themeBodyColor);
     text-decoration: none;
+    background-color: transparent !important;
+    border: 0 solid transparent !important;
 }
 
 .rs-card img {
