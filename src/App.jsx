@@ -19,7 +19,7 @@ function App() {
 
   return (
     <>
-      <BrowserRouter basename='/staging'>
+      <BrowserRouter>
         <ScrollToTop/>
         <AppRoutes/>
         

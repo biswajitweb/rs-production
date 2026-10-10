@@ -1089,7 +1089,9 @@ export default function Checkout() {
 
                                                     </table>
 
-                                                    <button
+                                                   {
+                                                    /**
+                                                     * <button
                                                         type="button"
                                                         className="btn btn-primary"
                                                         onClick={
@@ -1112,6 +1114,9 @@ export default function Checkout() {
                                                             : " Place Order"}
 
                                                     </button>
+                                                     */
+                                                   }
+                                                    
 
                                                 </div>
 
