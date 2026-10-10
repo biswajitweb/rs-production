@@ -148,6 +148,7 @@
   @media (max-width: 1024px) {
     .rs-list-details-wrap {
       grid-template-columns: 1fr;
+      gap: 0px;
     }
   }
 
@@ -157,7 +158,7 @@
     }
   }
 
-  .rs-list-details .header-col-left img {
+  .header-col-left img {
     max-width: 100%;
     border-radius: 10px;
   }
