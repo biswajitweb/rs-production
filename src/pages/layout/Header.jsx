@@ -44,7 +44,7 @@ export default function Header() {
                                 <div className="header-col-left">
                                     <Link to="/" className="logo-wrap">
                                         <img src={STATIC_IMAGE.LOGO}/>
-                                        <span className="logo-text">RS Production</span>
+                                        <span className="logo-text">R S Productions</span>
                                     </Link>
                                     <div className="nav-wrap">
                                         <ul>

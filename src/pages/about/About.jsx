@@ -20,7 +20,7 @@ export default function About() {
         <div class="split__body prose">
           <p class="prose__lead">We are a leading communication and audio-visual media production house based in Bhubaneswar, serving government, non-government, corporate, satellite channels, Doordarshan and news agencies.</p>
           <p>We provide quality service at a competitive price with a complete solution to advertising and production requirements. We integrate design and servers to maximise delivery and minimise downtime, giving faster, more consistent service at a good cost.</p>
-          <p>R.S Productions is a professionally managed production house offering photography services including portraits, ambience, candid happenings and rituals, along with complete audio-video solutions for electronic media.</p>
+          <p>R S Productions is a professionally managed production house offering photography services including portraits, ambience, candid happenings and rituals, along with complete audio-video solutions for electronic media.</p>
           <p>Our in-house, multi-generational creative team includes full-time copywriters, designers, art and set designers and marketing specialists. Multiple people with different styles means more choices and better execution for every client.</p>
           <p>We aspire to become a one-stop-shop solution provider in Odisha and to expand our services across India. In print, we provide logo design, packaging design, promotional advertising campaigns and recruitment advertising campaigns.</p>
           <aside class="callout">
@@ -237,7 +237,7 @@ export default function About() {
             <li><time>1985 – 92</time><h3>Executive Officer</h3><p>Help Age India, working for the cause and care of the elderly.</p></li>
             <li><time>1992 – 95</time><h3>Programme Officer</h3><p>Odisha Association for the Blind, Bhubaneswar.</p></li>
             <li><time>Later</time><h3>Director</h3><p>Opel Multi Media Training Institute (a division of ORBIT IT Consulting Pvt Ltd), Bhubaneswar centre: animation, gaming, entertainment, internet design and advertising.</p></li>
-            <li><time>Now</time><h3>Audio-visual freelancer &amp; Communication Consultant</h3><p>Leading R.S Productions.</p></li>
+            <li><time>Now</time><h3>Audio-visual freelancer &amp; Communication Consultant</h3><p>Leading R S Productions.</p></li>
           </ol>
         </div>
       </section>
