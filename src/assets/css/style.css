@@ -74,17 +74,8 @@ body {
     outline-offset: 4px;
 }
 
-
-.text-primary {
-    background: linear-gradient(
-        135deg,
-        var(--themeSecondaryColor),
-        var(--themePrimaryColor)
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
+.text-primary{
+  color: var(--themePrimaryColor) !important;
 }
 
 
@@ -254,4 +245,7 @@ table{
 }
 .term-section h1{
   margin-bottom: 30px;
+}
+.visually-hidden{
+  display: none !important;
 }
