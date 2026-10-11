@@ -20,6 +20,10 @@ export const PAGES = {
        AccountDetails : lazy(()=>import('../pages/my-account/AccountDetails')),
        ChangePassword : lazy(()=>import('../pages/my-account/ChangePassword')),
        OrderSuccess : lazy(()=>import('../pages/order/OrderSuccess')),
-       OrdersDetails : lazy(()=>import('../pages/my-account/OrdersDetails'))
+       OrdersDetails : lazy(()=>import('../pages/my-account/OrdersDetails')),
+       Help : lazy(()=>import('../pages/others/Help')),
+       PrivacyPolicy : lazy(()=>import('../pages/others/PrivacyPolicy')),
+       LicenseAgreement : lazy(()=>import('../pages/others/LicenseAgreement')),
+       RefundCancellation : lazy(()=>import('../pages/others/RefundCancellation')) 
     } 
 };

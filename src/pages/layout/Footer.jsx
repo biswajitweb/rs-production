@@ -1,5 +1,6 @@
 import React from 'react'
 import {STATIC_IMAGE} from '../../utils/staticImage'
+import { Link } from 'react-router-dom';
 
     // Combine the default background with search images
    const images = STATIC_IMAGE.footerBanner;
@@ -77,13 +78,13 @@ export default function Footer() {
                                 </div>
                                 <div className="rs-footer-widget term-wrap">
                                     <ul>
-                                        <li><a href="/about-us">About Us</a></li>
-                                        <li><a href="/contact-us">Contact Us</a></li>
-                                        <li><a href="/help">Help</a></li>
-                                        <li><a href="/privacy-policy">Privacy Policy</a></li>
-                                        <li><a href="/terms-conditions">Terms & Conditions</a></li>
-                                        <li><a href="/license-agreement">License Agreement</a></li>
-                                        <li><a href="/refund-cancellation-policy">Refund & Cancellation Policy</a></li>
+                                        <li><Link to="/about-us">About Us</Link></li>
+                                        <li><Link to="/contact-us">Contact Us</Link></li>
+                                        <li><Link to="/help">Help</Link></li>
+                                        <li><Link to="/privacy-policy">Privacy Policy</Link></li>
+                                        <li><Link to="/terms-conditions">Terms & Conditions</Link></li>
+                                        <li><Link to="/license-agreement">License Agreement</Link></li>
+                                        <li><Link to="/refund-cancellation-policy">Refund & Cancellation Policy</Link></li>
                                     </ul>
                                 </div>
                             </div>
