@@ -129,7 +129,7 @@ export default function ContactUs() {
                         ></textarea>
                     </div>
 
-                    <button type="submit" class="btn btn-primary contact-btn">
+                    <button type="submit" class="btn custom-btn btn-primary contact-btn">
                         Send Message
 
                         <svg viewBox="0 0 24 24" aria-hidden="true">

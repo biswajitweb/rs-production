@@ -1,5 +1,13 @@
 import React from 'react'
 import {STATIC_IMAGE} from '../../utils/staticImage'
+import { Link } from 'react-router-dom';
+
+    // Combine the default background with search images
+   const images = STATIC_IMAGE.footerBanner;
+
+    // Select a random background image on page refresh
+    const randomImage =
+    images[Math.floor(Math.random() * images.length)];
 
 export default function Footer() {
     return (
@@ -7,7 +15,7 @@ export default function Footer() {
             <footer 
                 className="rs-footer-area"
                 style={{
-                    backgroundImage: `url(${STATIC_IMAGE.FOOTER})`
+                    backgroundImage: `url("${randomImage}")`
                 }}
                 >
                 <div className="container">
@@ -22,8 +30,8 @@ export default function Footer() {
                                         <ul>
                                             <li>
                                                 <div className="rs-heading">Address</div>
-                                                <div className="rs-description">RS Productions (Rabi Sankar Rath), <br/>Plat No:
-                                                    611/998 (1st Floor), BJB Nagar</div>
+                                                <div className="rs-description">RS Productions (Rabi Sankar Rath), 
+                                                    <br/>Plat No: 611/998 (1st Floor), BJB Nagar, Bhubaneswar, Odisha</div>
                                             </li>
                                             <li>
                                                 <div className="rs-heading">Phone</div>
@@ -70,15 +78,15 @@ export default function Footer() {
                                 </div>
                                 <div className="rs-footer-widget term-wrap">
                                     <ul>
-                                        <li><a href="#">About Us</a></li>
-                                        <li><a href="#">Contact Us</a></li>
-                                        <li><a href="#">Help</a></li>
-                                        <li><a href="#">Privacy Policy</a></li>
-                                        <li><a href="#">Terms & Conditions</a></li>
-                                        <li><a href="#">License Agreement</a></li>
+                                        <li><Link to="/about-us">About Us</Link></li>
+                                        <li><Link to="/contact-us">Contact Us</Link></li>
+                                        <li><Link to="/help">Help</Link></li>
+                                        <li><Link to="/privacy-policy">Privacy Policy</Link></li>
+                                        <li><Link to="/terms-conditions">Terms & Conditions</Link></li>
+                                        <li><Link to="/license-agreement">License Agreement</Link></li>
+                                        <li><Link to="/refund-cancellation-policy">Refund & Cancellation Policy</Link></li>
                                     </ul>
                                 </div>
-
                             </div>
                             <div className="lower-area">
                                 © 2026 RS Productions. All rights reserved.

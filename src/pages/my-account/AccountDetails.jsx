@@ -144,7 +144,6 @@ export default function AccountDetails() {
                             label="First Name"
                             name="first_name"
                             type="text"
-                            placeholder="Enter first name"
                             value={
                                 formData.first_name
                             }
@@ -168,7 +167,6 @@ export default function AccountDetails() {
                             label="Last Name"
                             name="last_name"
                             type="text"
-                            placeholder="Enter last name"
                             value={
                                 formData.last_name
                             }
@@ -193,7 +191,6 @@ export default function AccountDetails() {
                             label="Email Address"
                             name="email"
                             type="text"
-                            placeholder="Enter email"
                             value={
                                 formData.email
                             }
@@ -218,7 +215,6 @@ export default function AccountDetails() {
                             label="Phone Number"
                             name="phone"
                             type="text"
-                            placeholder="Enter phone number"
                             value={
                                 formData.phone
                             }
@@ -279,7 +275,7 @@ export default function AccountDetails() {
                 </div>
             <Button
                 type="button"
-                className="btn-primary"
+                className="custom-btn btn-primary"
                 onClick={onSaveChanges}
                 loading={loader}
                 variant="primary"

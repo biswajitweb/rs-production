@@ -27,7 +27,7 @@ export default function Addresses() {
 
                 <button
                     type="button"
-                    className="btn-primary"
+                    className="custom-btn btn-primary"
                     onClick={() => setShowModal(true)}
                 >
                     + Add Address
@@ -111,7 +111,6 @@ export default function Addresses() {
                             id="firstName"
                             name="firstName"
                             defaultValue=""
-                            placeholder="Enter first name"
                             required
                         />
                     </div>

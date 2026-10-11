@@ -75,11 +75,11 @@ export default function Cart() {
                                         </p>
 
                                         <div className="d-flex justify-content-center gap-2">
-                                            <Link to="/" className="btn btn-primary">
+                                            <Link to="/" className="btn custom-btn btn-primary">
                                                 Continue Shopping
                                             </Link>
 
-                                            <Link to="/" className="btn btn-light">
+                                            <Link to="/" className="btn custom-btn btn-light">
                                                 Go to Home
                                             </Link>
                                         </div>
@@ -154,7 +154,7 @@ export default function Cart() {
                                         </table>
                                         <button 
                                             onClick={onHandlePageRequest}
-                                            className='btn btn-primary w-100'>
+                                            className='btn custom-btn btn-primary w-100'>
                                                 Proceed to checkout
                                         </button>
                                     </div>

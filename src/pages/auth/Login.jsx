@@ -219,7 +219,7 @@ export default function Login() {
                 {/* Login Button */}
                 <button
                     type="button"
-                    className="btn btn-primary login-btn"
+                    className="btn custom-btn btn-primary login-btn"
                     onClick={onHandleLogin}
                     disabled={loader}
                     style={{

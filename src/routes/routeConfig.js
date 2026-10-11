@@ -23,22 +23,22 @@ export const ROUTES = [
         is_show: "top-menu",
         title : "Home"
     },
-    {
-        path: "/tribal",
-        element: "Tribal",
-        area: ROUTE_AREA.WEBSITE,
-        guest: true,
-        is_show: "top-menu",
-        title : "Tribal"
-    },
-    {
-        path: "/temple",
-        element: "Temple",
-        area: ROUTE_AREA.WEBSITE,
-        guest: true,
-        is_show: "top-menu",
-        title : "Temple"
-    },
+    // {
+    //     path: "/tribal",
+    //     element: "Tribal",
+    //     area: ROUTE_AREA.WEBSITE,
+    //     guest: true,
+    //     is_show: "top-menu",
+    //     title : "Tribal"
+    // },
+    // {
+    //     path: "/temple",
+    //     element: "Temple",
+    //     area: ROUTE_AREA.WEBSITE,
+    //     guest: true,
+    //     is_show: "top-menu",
+    //     title : "Temple"
+    // },
     {
         path: "/about-us",
         element: "About",
@@ -182,6 +182,39 @@ export const ROUTES = [
         protected: true,
         roles: [ROLES.CUSTOMER],
         icon: "bi bi-shield-lock"
+    },
+    /** Footer Menu  */
+    {
+        path: "/help",
+        element: "Help",
+        area: ROUTE_AREA.WEBSITE,
+        guest: true,
+        is_show: "footer-menu",
+        title : "Help"
+    },
+    {
+        path: "/privacy-policy",
+        element: "PrivacyPolicy",
+        area: ROUTE_AREA.WEBSITE,
+        guest: true,
+        is_show: "footer-menu",
+        title : "PrivacyPolicy"
+    },
+    {
+        path: "/license-agreement",
+        element: "LicenseAgreement",
+        area: ROUTE_AREA.WEBSITE,
+        guest: true,
+        is_show: "footer-menu",
+        title : "LicenseAgreement"
+    },
+    {
+        path: "/refund-cancellation-policy",
+        element: "RefundCancellation",
+        area: ROUTE_AREA.WEBSITE,
+        guest: true,
+        is_show: "footer-menu",
+        title : "RefundCancellation"
     }
     
 ];

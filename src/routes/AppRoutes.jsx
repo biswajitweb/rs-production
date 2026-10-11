@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import ErrorBoundary from "../components/ErrorBoundary";
 import WebsiteLayout from "../pages/layout/WebsiteLayout";
@@ -9,6 +9,11 @@ import WebsiteProtectedRoute from "./WebsiteProtectedRoute";
 import WebsiteGuestRoute from "./WebsiteGuestRoute";
 import MyAccountLayout from "../pages/layout/MyAccountLayout";
 import { ROLES } from "../utils/roles";
+
+
+const NotFound = lazy(()=>import(
+    '../pages/others/NotFound'
+));
 
 export default function AppRoutes() {
 
@@ -118,6 +123,8 @@ export default function AppRoutes() {
                     </Route>
 
                 </Route>
+
+                <Route path="*" element={<NotFound/>} />
 
             </Routes>
         </ErrorBoundary>

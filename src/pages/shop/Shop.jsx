@@ -23,10 +23,10 @@ export default function Shop() {
                         original photographs from Odisha and India.
                     </p>
                     <div class="error-buttons">
-                        <a href="/" class="btn-primary">
+                        <a href="/" class="btn custom-btn btn-primary">
                             Go to Homepage
                         </a>
-                        <a href="/" class="btn-secondary">
+                        <a href="/" class="btn custom-btn btn-secondary">
                             Go to Contact
                         </a>
                     </div>
