@@ -6,6 +6,7 @@ import { calculateTax } from "../../utils/calculateTax";
 import { decryptData } from "../../utils/encryption";
 import { service } from "../../api/service";
 import { clearCart } from "../../features/cart/cartSlice";
+import { allAddressList } from "../../features/address/addressSlice";
 
 const Spinner = lazy(() => import("../../components/Spinner"));
 
@@ -21,9 +22,12 @@ export default function Checkout() {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
+    const {address} = useSelector(state => state.address);
+    
     const [userInfo, setUserInfo] = useState({});
     const [orderLoader, setOrderLoader] = useState(false);
+    const [userId, setUserId] = useState(0);
+    
 
     /*
      * Checkout form
@@ -73,9 +77,8 @@ export default function Checkout() {
         try {
             const userDecrypt = await decryptData(authToken);
             const userData = userDecrypt?.data;
-            console.log(userData);
-            
             setUserInfo(userData);
+            setUserId(userData.id);
             setFilterUserData({
                 first_name: userData?.first_name || "",
                 last_name: userData?.last_name || "",
@@ -437,6 +440,22 @@ export default function Checkout() {
         }
     };
 
+    const getAddressBooks = async(userId)=>{
+        try {
+            await dispatch(allAddressList(userId));
+        } catch (error) {
+            if(error) {
+                console.log(error.message);
+            }
+        }
+    }
+
+    useEffect(()=>{
+        if(userId > 0) {
+            getAddressBooks(userId);
+        }
+    }, [userId]);
+
     return (
         <>
             <section className="checkout-page">
@@ -453,524 +472,64 @@ export default function Checkout() {
                                 {/* =========================
                                     BILLING DETAILS
                                 ========================== */}
-
+                                
+                                
                                 <div className="col-md-6">
+                                    <div className="d-flex justify-content-between align-items-center mb-4">
+                                        <h3 className="mb-0">Delivery Address</h3>
 
-                                    <h3 className="mb-4">
-                                        Billing details
-                                    </h3>
+                                        <Link
+                                            to="/my-account/addresses"
+                                            className="btn btn-primary btn-sm rounded-pill px-3 py-2"
+                                        >
+                                            <i className="bi bi-plus-circle me-2"></i>
+                                            Add Address
+                                        </Link>
+                                    </div>
 
                                     <div className="row">
-
-                                        {/* First Name */}
-                                        <div className="col-md-6">
-                                            <div className="mb-3">
-
-                                                <label
-                                                    htmlFor="first_name"
-                                                    className="form-label"
-                                                >
-                                                    First Name{" "}
-                                                    <span className="text-danger">
-                                                        *
-                                                    </span>
-                                                </label>
-
-                                                <input
-                                                    type="text"
-                                                    className={`form-control ${
-                                                        hasError(
-                                                            "first_name"
-                                                        )
-                                                            ? "is-invalid"
-                                                            : ""
-                                                    }`}
-                                                    id="first_name"
-                                                    name="first_name"
-                                                    value={
-                                                        filterUserData.first_name
-                                                    }
-                                                    onChange={
-                                                        handleChange
-                                                    }
-                                                    onBlur={
-                                                        handleBlur
-                                                    }
-                                                    placeholder="Enter first name"
-                                                />
-
-                                                {hasError(
-                                                    "first_name"
-                                                ) && (
-                                                    <div className="invalid-feedback">
-                                                        {
-                                                            errors.first_name
-                                                        }
+                                        {address.length === 0 ? (
+                                            <div className="col-12">
+                                                <div className="card border-0 shadow-sm rounded-4 text-center p-4">
+                                                    <div className="mb-3">
+                                                        <div
+                                                            className="d-inline-flex align-items-center justify-content-center rounded-circle bg-light"
+                                                            style={{ width: "80px", height: "80px" }}
+                                                        >
+                                                            <i
+                                                                className="bi bi-geo-alt text-primary"
+                                                                style={{ fontSize: "2.5rem" }}
+                                                            ></i>
+                                                        </div>
                                                     </div>
-                                                )}
 
-                                            </div>
-                                        </div>
+                                                    <h5 className="fw-semibold mb-2">
+                                                        No Delivery Address Found
+                                                    </h5>
 
-                                        {/* Last Name */}
-                                        <div className="col-md-6">
-                                            <div className="mb-3">
+                                                    <p className="text-muted mb-4">
+                                                        You haven't added a delivery address yet.
+                                                        Add your address to make checkout faster and easier.
+                                                    </p>
 
-                                                <label
-                                                    htmlFor="last_name"
-                                                    className="form-label"
-                                                >
-                                                    Last Name{" "}
-                                                    <span className="text-danger">
-                                                        *
-                                                    </span>
-                                                </label>
-
-                                                <input
-                                                    type="text"
-                                                    className={`form-control ${
-                                                        hasError(
-                                                            "last_name"
-                                                        )
-                                                            ? "is-invalid"
-                                                            : ""
-                                                    }`}
-                                                    id="last_name"
-                                                    name="last_name"
-                                                    value={
-                                                        filterUserData.last_name
-                                                    }
-                                                    onChange={
-                                                        handleChange
-                                                    }
-                                                    onBlur={
-                                                        handleBlur
-                                                    }
-                                                    placeholder="Enter last name"
-                                                />
-
-                                                {hasError(
-                                                    "last_name"
-                                                ) && (
-                                                    <div className="invalid-feedback">
-                                                        {
-                                                            errors.last_name
-                                                        }
+                                                    <div>
+                                                        <Link
+                                                            to="/my-account/addresses"
+                                                            className="btn btn-primary rounded-pill px-4 py-2"
+                                                        >
+                                                            <i className="bi bi-plus-circle me-2"></i>
+                                                            Add Your First Address
+                                                        </Link>
                                                     </div>
-                                                )}
-
+                                                </div>
                                             </div>
-                                        </div>
-
-                                        {/* Country */}
-                                        <div className="col-md-12">
-                                            <div className="mb-3">
-
-                                                <label
-                                                    htmlFor="country"
-                                                    className="form-label"
-                                                >
-                                                    Country{" "}
-                                                    <span className="text-danger">
-                                                        *
-                                                    </span>
-                                                </label>
-
-                                                <select
-                                                    className={`form-select ${
-                                                        hasError(
-                                                            "country"
-                                                        )
-                                                            ? "is-invalid"
-                                                            : ""
-                                                    }`}
-                                                    id="country"
-                                                    name="country"
-                                                    value={
-                                                        filterUserData.country
-                                                    }
-                                                    onChange={
-                                                        handleChange
-                                                    }
-                                                    onBlur={
-                                                        handleBlur
-                                                    }
-                                                >
-                                                    <option value="">
-                                                        Select Country
-                                                    </option>
-
-                                                    <option value="IN">
-                                                        India
-                                                    </option>
-                                                </select>
-
-                                                {hasError(
-                                                    "country"
-                                                ) && (
-                                                    <div className="invalid-feedback">
-                                                        {
-                                                            errors.country
-                                                        }
-                                                    </div>
-                                                )}
-
-                                            </div>
-                                        </div>
-
-                                        {/* State */}
-                                        <div className="col-md-12">
-                                            <div className="mb-3">
-
-                                                <label
-                                                    htmlFor="state"
-                                                    className="form-label"
-                                                >
-                                                    State{" "}
-                                                    <span className="text-danger">
-                                                        *
-                                                    </span>
-                                                </label>
-
-                                                <select
-                                                    className={`form-select ${
-                                                        hasError(
-                                                            "state"
-                                                        )
-                                                            ? "is-invalid"
-                                                            : ""
-                                                    }`}
-                                                    id="state"
-                                                    name="state"
-                                                    value={
-                                                        filterUserData.state
-                                                    }
-                                                    onChange={
-                                                        handleChange
-                                                    }
-                                                    onBlur={
-                                                        handleBlur
-                                                    }
-                                                >
-                                                    <option value="">
-                                                        Select State
-                                                    </option>
-
-                                                    <option value="OD">
-                                                        Odisha
-                                                    </option>
-
-                                                    <option value="MH">
-                                                        Maharashtra
-                                                    </option>
-
-                                                    <option value="GJ">
-                                                        Gujarat
-                                                    </option>
-
-                                                    <option value="DL">
-                                                        Delhi
-                                                    </option>
-
-                                                    <option value="KA">
-                                                        Karnataka
-                                                    </option>
-
-                                                    <option value="WB">
-                                                        West Bengal
-                                                    </option>
-                                                </select>
-
-                                                {hasError(
-                                                    "state"
-                                                ) && (
-                                                    <div className="invalid-feedback">
-                                                        {
-                                                            errors.state
-                                                        }
-                                                    </div>
-                                                )}
-
-                                            </div>
-                                        </div>
-
-                                        {/* City */}
-                                        <div className="col-md-12">
-                                            <div className="mb-3">
-
-                                                <label
-                                                    htmlFor="city"
-                                                    className="form-label"
-                                                >
-                                                    Town / City{" "}
-                                                    <span className="text-danger">
-                                                        *
-                                                    </span>
-                                                </label>
-
-                                                <input
-                                                    type="text"
-                                                    className={`form-control ${
-                                                        hasError(
-                                                            "city"
-                                                        )
-                                                            ? "is-invalid"
-                                                            : ""
-                                                    }`}
-                                                    id="city"
-                                                    name="city"
-                                                    value={
-                                                        filterUserData.city
-                                                    }
-                                                    onChange={
-                                                        handleChange
-                                                    }
-                                                    onBlur={
-                                                        handleBlur
-                                                    }
-                                                    placeholder="Enter city"
-                                                />
-
-                                                {hasError(
-                                                    "city"
-                                                ) && (
-                                                    <div className="invalid-feedback">
-                                                        {errors.city}
-                                                    </div>
-                                                )}
-
-                                            </div>
-                                        </div>
-
-                                        {/* Address */}
-                                        <div className="col-md-12">
-                                            <div className="mb-3">
-
-                                                <label
-                                                    htmlFor="address_1"
-                                                    className="form-label"
-                                                >
-                                                    Address{" "}
-                                                    <span className="text-danger">
-                                                        *
-                                                    </span>
-                                                </label>
-
-                                                <input
-                                                    type="text"
-                                                    className={`form-control ${
-                                                        hasError(
-                                                            "address_1"
-                                                        )
-                                                            ? "is-invalid"
-                                                            : ""
-                                                    }`}
-                                                    id="address_1"
-                                                    name="address_1"
-                                                    value={
-                                                        filterUserData.address_1
-                                                    }
-                                                    onChange={
-                                                        handleChange
-                                                    }
-                                                    onBlur={
-                                                        handleBlur
-                                                    }
-                                                    placeholder="House number and street name"
-                                                />
-
-                                                {hasError(
-                                                    "address_1"
-                                                ) && (
-                                                    <div className="invalid-feedback">
-                                                        {
-                                                            errors.address_1
-                                                        }
-                                                    </div>
-                                                )}
-
-                                            </div>
-                                        </div>
-
-                                        {/* PIN Code */}
-                                        <div className="col-md-12">
-                                            <div className="mb-3">
-
-                                                <label
-                                                    htmlFor="postcode"
-                                                    className="form-label"
-                                                >
-                                                    PIN Code{" "}
-                                                    <span className="text-danger">
-                                                        *
-                                                    </span>
-                                                </label>
-
-                                                <input
-                                                    type="text"
-                                                    className={`form-control ${
-                                                        hasError(
-                                                            "postcode"
-                                                        )
-                                                            ? "is-invalid"
-                                                            : ""
-                                                    }`}
-                                                    id="postcode"
-                                                    name="postcode"
-                                                    value={
-                                                        filterUserData.postcode
-                                                    }
-                                                    onChange={
-                                                        handleChange
-                                                    }
-                                                    onBlur={
-                                                        handleBlur
-                                                    }
-                                                    maxLength="6"
-                                                    inputMode="numeric"
-                                                    placeholder="6 digit PIN code"
-                                                />
-
-                                                {hasError(
-                                                    "postcode"
-                                                ) && (
-                                                    <div className="invalid-feedback">
-                                                        {
-                                                            errors.postcode
-                                                        }
-                                                    </div>
-                                                )}
-
-                                            </div>
-                                        </div>
-
-                                        {/* Phone */}
-                                        <div className="col-md-12">
-                                            <div className="mb-3">
-
-                                                <label
-                                                    htmlFor="phone"
-                                                    className="form-label"
-                                                >
-                                                    Phone{" "}
-                                                    <span className="text-danger">
-                                                        *
-                                                    </span>
-                                                </label>
-
-                                                <input
-                                                    type="text"
-                                                    className={`form-control ${
-                                                        hasError(
-                                                            "phone"
-                                                        )
-                                                            ? "is-invalid"
-                                                            : ""
-                                                    }`}
-                                                    id="phone"
-                                                    name="phone"
-                                                    value={
-                                                        filterUserData.phone
-                                                    }
-                                                    onChange={
-                                                        handleChange
-                                                    }
-                                                    onBlur={
-                                                        handleBlur
-                                                    }
-                                                    maxLength="10"
-                                                    inputMode="numeric"
-                                                    placeholder="10 digit mobile number"
-                                                />
-
-                                                {hasError(
-                                                    "phone"
-                                                ) && (
-                                                    <div className="invalid-feedback">
-                                                        {
-                                                            errors.phone
-                                                        }
-                                                    </div>
-                                                )}
-
-                                            </div>
-                                        </div>
-
-                                        {/* Email */}
-                                        <div className="col-md-12">
-                                            <div className="mb-3">
-
-                                                <label
-                                                    htmlFor="email"
-                                                    className="form-label"
-                                                >
-                                                    Email address{" "}
-                                                    <span className="text-danger">
-                                                        *
-                                                    </span>
-                                                </label>
-
-                                                <input
-                                                    type="email"
-                                                    className={`form-control ${
-                                                        hasError(
-                                                            "email"
-                                                        )
-                                                            ? "is-invalid"
-                                                            : ""
-                                                    }`}
-                                                    id="email"
-                                                    name="email"
-                                                    value={
-                                                        filterUserData.email
-                                                    }
-                                                    readOnly
-                                                />
-
-                                                {hasError(
-                                                    "email"
-                                                ) && (
-                                                    <div className="invalid-feedback">
-                                                        {
-                                                            errors.email
-                                                        }
-                                                    </div>
-                                                )}
-
-                                            </div>
-                                        </div>
-
-                                        {/* Order Notes */}
-                                        <div className="col-md-12">
-                                            <div className="mb-3">
-
-                                                <label
-                                                    htmlFor="order_notes"
-                                                    className="form-label"
-                                                >
-                                                    Order notes
-                                                    (optional)
-                                                </label>
-
-                                                <textarea
-                                                    className="form-control"
-                                                    id="order_notes"
-                                                    name="order_notes"
-                                                    value={
-                                                        filterUserData.order_notes
-                                                    }
-                                                    onChange={
-                                                        handleChange
-                                                    }
-                                                    rows="4"
-                                                    placeholder="Notes about your order"
-                                                />
-
-                                            </div>
-                                        </div>
-
+                                        ) : (
+                                            <></>
+                                        )}
                                     </div>
                                 </div>
+
+
 
                                 {/* =========================
                                     YOUR ORDER
@@ -1095,9 +654,7 @@ export default function Checkout() {
                                                         onClick={
                                                             onPlaceOrder
                                                         }
-                                                        disabled={
-                                                            orderLoader
-                                                        }
+                                                        disabled={orderLoader || address.length === 0}
                                                     >
 
                                                         {orderLoader && (
