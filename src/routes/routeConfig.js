@@ -23,22 +23,22 @@ export const ROUTES = [
         is_show: "top-menu",
         title : "Home"
     },
-    {
-        path: "/tribal",
-        element: "Tribal",
-        area: ROUTE_AREA.WEBSITE,
-        guest: true,
-        is_show: "top-menu",
-        title : "Tribal"
-    },
-    {
-        path: "/temple",
-        element: "Temple",
-        area: ROUTE_AREA.WEBSITE,
-        guest: true,
-        is_show: "top-menu",
-        title : "Temple"
-    },
+    // {
+    //     path: "/tribal",
+    //     element: "Tribal",
+    //     area: ROUTE_AREA.WEBSITE,
+    //     guest: true,
+    //     is_show: "top-menu",
+    //     title : "Tribal"
+    // },
+    // {
+    //     path: "/temple",
+    //     element: "Temple",
+    //     area: ROUTE_AREA.WEBSITE,
+    //     guest: true,
+    //     is_show: "top-menu",
+    //     title : "Temple"
+    // },
     {
         path: "/about-us",
         element: "About",

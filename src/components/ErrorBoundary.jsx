@@ -41,10 +41,10 @@ class ErrorBoundary extends React.Component {
                         original photographs from Odisha and India.
                     </p>
                     <div class="error-buttons">
-                        <Link to="/" class="btn-primary">
+                        <Link to="/" class="custom-btn btn-primary">
                             Go to Homepage
                         </Link>
-                        <Link to="/contact-us" class="btn-secondary">
+                        <Link to="/contact-us" class="custom-btn btn-secondary">
                             Go to Contact
                         </Link>
                     </div>

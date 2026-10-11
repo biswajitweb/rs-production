@@ -187,7 +187,7 @@
 
     .prose strong {
         color: var(--text);
-        font-weight: 600;
+        font-weight: 500;
     }
 
     .callout {
@@ -283,7 +283,7 @@
         background: var(--themePrimaryLightColor);
         color: var(--themeSecondaryColor);
         font-size: 12px;
-        font-weight: 600;
+        font-weight: 500;
         letter-spacing: .06em;
     }
 
@@ -315,7 +315,7 @@
         display: inline-block;
         font-family: var(--sans) !important;
         font-size: 13px !important;
-        font-weight: 600 !important;
+        font-weight: 500 !important;
         letter-spacing: .06em !important;
         text-transform: uppercase;
         color: var(--themeSecondaryColor) !important;
@@ -404,7 +404,7 @@
         background: var(--themePrimaryLightColor);
         color: var(--themeSecondaryColor);
         font-size: 12px;
-        font-weight: 600;
+        font-weight: 500;
         letter-spacing: .04em;
     }
 

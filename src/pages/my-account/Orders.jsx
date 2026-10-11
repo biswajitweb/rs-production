@@ -279,9 +279,9 @@ export default function Orders() {
                                     <tr key={item.id}>
 
                                         <td>
-                                            <strong>
+                                           
                                                 #{item.order_number}
-                                            </strong>
+                                           
                                         </td>
 
                                         <td className="text-capitalize">
@@ -289,9 +289,9 @@ export default function Orders() {
                                         </td>
 
                                         <td>
-                                            <strong>
+                                         
                                                 ₹{item.total}
-                                            </strong>
+                                            
                                         </td>
 
                                         <td className="text-uppercase">

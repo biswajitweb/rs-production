@@ -446,7 +446,6 @@ export default function ChangePassword() {
                             label="Current Password"
                             name="current_password"
                             type="password"
-                            placeholder="Enter current password"
                             value={
                                 formData.current_password
                             }
@@ -476,7 +475,6 @@ export default function ChangePassword() {
                             label="New Password"
                             name="new_password"
                             type="password"
-                            placeholder="Enter new password"
                             value={
                                 formData.new_password
                             }
@@ -506,7 +504,6 @@ export default function ChangePassword() {
                             label="Confirm Password"
                             name="confirm_password"
                             type="password"
-                            placeholder="Enter confirm password"
                             value={
                                 formData.confirm_password
                             }
@@ -532,7 +529,7 @@ export default function ChangePassword() {
                     -------------------------------- */}
                     <Button
                         type="button"
-                        className="btn-primary"
+                        className="custom-btn btn-primary"
                         onClick={onPasswordUpdate}
                         loading={loader}
                         variant="primary"

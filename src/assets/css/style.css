@@ -13,11 +13,16 @@
   --themeGrayLight: #eeeeee;
   --themeGray: #dddddd;
   --themeGrayDark: #cccccc;
+
+  --themeBodyFontSize: 20px;
+
+  --themeFontFamily: "IBM Plex Sans", system-ui, sans-serif;
 }
 body {
-  font-size: 18px;
+  font-size: var(--themeBodyFontSize);
   color: var(--themeBodyColor);
   overflow-x: hidden;
+  font-family: var(--themeFontFamily) !important;
 }
 
 .container {
@@ -26,23 +31,26 @@ body {
 .custom-small-container{
   max-width: 1320px;
 }
-/* Gradient Button */
-.btn-primary {
+
+.custom-btn{
     display: inline-flex;
     align-items: center;
     justify-content: center;
     padding: 15px 40px;
-    border: 1px solid var(--themeSecondaryColor) !important;
     border-radius: 50px;
-    background:
-        linear-gradient(135deg, var(--themePrimaryColor), var(--themeSecondaryColor)) padding-box,
-        linear-gradient(135deg, var(--themeSecondaryColor), var(--themePrimaryColor)) border-box;
-    color: #ffffff;
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 500;
     text-decoration: none;
     cursor: pointer;
     transition: all 0.35s ease;
+}
+
+.btn-primary {
+  color: #ffffff;  
+  border: 1px solid var(--themeSecondaryColor) !important;
+    background:
+        linear-gradient(135deg, var(--themePrimaryColor), var(--themeSecondaryColor)) padding-box,
+        linear-gradient(135deg, var(--themeSecondaryColor), var(--themePrimaryColor)) border-box;
 }
 
 /* Hover Effect */
@@ -66,6 +74,24 @@ body {
     outline-offset: 4px;
 }
 
+
+.text-primary {
+    background: linear-gradient(
+        135deg,
+        var(--themeSecondaryColor),
+        var(--themePrimaryColor)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+
+table th,
+table td{
+  font-weight: 400;
+}
 
 /* SHOPPING CART PAGE ------------------------------------------------ */
 .shopping-cart-page{
@@ -171,7 +197,7 @@ table{
     outline: none;
     text-align: center;
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 500;
     color: #222;
     background: #fff;
     padding: 0;
@@ -221,4 +247,11 @@ table{
 
 .remove-btn:active {
     transform: scale(0.92);
+}
+
+.term-section{
+  margin-top: 100px;
+}
+.term-section h1{
+  margin-bottom: 30px;
 }

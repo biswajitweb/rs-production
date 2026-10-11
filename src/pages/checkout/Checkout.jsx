@@ -1091,7 +1091,7 @@ export default function Checkout() {
 
                                                     <button
                                                         type="button"
-                                                        className="btn btn-primary"
+                                                        className="btn custom-btn btn-primary"
                                                         onClick={
                                                             onPlaceOrder
                                                         }

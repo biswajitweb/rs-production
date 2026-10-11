@@ -74,7 +74,7 @@ export default function CommonModal({
                             <div className="modal-footer">
                                 <button
                                     type="button"
-                                    className="btn btn-secondary"
+                                    className="btn custom-btn btn-secondary"
                                     onClick={onClose}
                                     disabled={loading}
                                 >
@@ -84,7 +84,7 @@ export default function CommonModal({
                                 {onSubmit && (
                                     <button
                                         type="button"
-                                        className="btn btn-primary"
+                                        className="btn custom-btn btn-primary"
                                         onClick={onSubmit}
                                         disabled={loading}
                                     >

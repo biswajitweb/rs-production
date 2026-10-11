@@ -190,7 +190,7 @@ export default function ProductDetails() {
                                             </table>
                                         </div>
                                         <button 
-                                            className="btn btn-primary btn-buy-now"
+                                            className="btn custom-btn btn-primary btn-buy-now"
                                             onClick={()=>onHandleAddToCart()} 
                                             >
                                             <span>Buy Now</span>

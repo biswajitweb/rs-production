@@ -45,7 +45,7 @@
 
 .form-label {
     margin-bottom: 8px;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .form-control {
@@ -65,7 +65,7 @@
 
     a {
         color: var(--themePrimaryColor);
-        font-weight: 600;
+        font-weight: 500;
         text-decoration: none;
 
         &:hover {
@@ -85,7 +85,7 @@
 
     a {
         color: var(--themePrimaryColor);
-        font-weight: 600;
+        font-weight: 500;
         text-decoration: none;
 
         &:hover {

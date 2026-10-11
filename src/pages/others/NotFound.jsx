@@ -27,7 +27,7 @@ export default function NotFound() {
                 <div className="d-flex flex-wrap justify-content-center gap-3">
                     <Link
                         to="/"
-                        className="btn btn-primary px-4 py-2"
+                        className="btn custom-btn btn-primary px-4 py-2"
                     >
                         <i className="bi bi-house-door me-2"></i>
                         Go to Home
