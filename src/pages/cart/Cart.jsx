@@ -79,7 +79,7 @@ export default function Cart() {
                                                 Continue Shopping
                                             </Link>
 
-                                            <Link to="/" className="btn btn-light">
+                                            <Link to="/" className="btn custom-btn btn-light">
                                                 Go to Home
                                             </Link>
                                         </div>
