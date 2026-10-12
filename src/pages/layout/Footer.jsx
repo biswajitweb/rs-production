@@ -30,7 +30,7 @@ export default function Footer() {
                                         <ul>
                                             <li>
                                                 <div className="rs-heading">Address</div>
-                                                <div className="rs-description">RS Productions (Rabi Sankar Rath), 
+                                                <div className="rs-description">R S Productions (Rabi Sankar Rath), 
                                                     <br/>Plat No: 611/998 (1st Floor), BJB Nagar, Bhubaneswar, Odisha</div>
                                             </li>
                                             <li>
@@ -89,7 +89,7 @@ export default function Footer() {
                                 </div>
                             </div>
                             <div className="lower-area">
-                                © 2026 RS Productions. All rights reserved.
+                                © 2026 R S Productions. All rights reserved.
                             </div>
                         </div>
                     </div>
