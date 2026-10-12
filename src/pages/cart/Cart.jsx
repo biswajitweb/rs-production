@@ -91,34 +91,37 @@ export default function Cart() {
                             <div className='row'>
                                 <div className='col-12'>
                                     <h1 className='page-heading'>Shopping Cart</h1>
-                                    <table className='table'>
-                                        <thead>
-                                            <tr>
-                                                <th class="product-remove"><span class="screen-reader-text">&nbsp;</span></th>
-                                                <th class="product-thumbnail"><span class="screen-reader-text">Image</span></th>
-                                                <th class="product-name">Product</th>
-                                                <th class="product-price">Price</th>
-                                                <th class="product-quantity">Quantity</th>
-                                                <th class="product-subtotal">Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {
-                                                (Array.isArray(itmes) && itmes.length > 0) &&
-                                                itmes.map((item, index)=>{
-                                                    return (
-                                                        <CartItems 
-                                                            item = {item}
-                                                            key={index}
-                                                            deleteCartItem= {deleteCartItem}
-                                                            handleIncrement = {handleIncrement}
-                                                            handleDecrement= {handleDecrement}
-                                                        />
-                                                    )
-                                                })
-                                            }
-                                        </tbody>
-                                    </table>
+                                        <div className='table-responsive'>
+                                            <table className='table'>
+                                                <thead>
+                                                    <tr>
+                                                        <th class="product-remove"><span class="screen-reader-text">&nbsp;</span></th>
+                                                        <th class="product-thumbnail"><span class="screen-reader-text">Image</span></th>
+                                                        <th class="product-name">Product</th>
+                                                        <th class="product-price">Price</th>
+                                                        <th class="product-quantity">Quantity</th>
+                                                        <th class="product-subtotal">Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        (Array.isArray(itmes) && itmes.length > 0) &&
+                                                        itmes.map((item, index) => {
+                                                            return (
+                                                                <CartItems
+                                                                    item={item}
+                                                                    key={index}
+                                                                    deleteCartItem={deleteCartItem}
+                                                                    handleIncrement={handleIncrement}
+                                                                    handleDecrement={handleDecrement}
+                                                                />
+                                                            )
+                                                        })
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                   
                                     <div className='btn-group-cart'>
                                         <button 
                                             className='btn btn-light'
@@ -129,29 +132,32 @@ export default function Cart() {
                                         <Link className='btn btn-dark' to='/'>Continue Shopping</Link>
                                     </div>
                                     <div className='checkout-card shadow'>
-                                        <table className='table'>
-                                            <thead>
-                                                <tr>
-                                                <td>Subtotal</td>
-                                                <td>&#8377;{Number(totalAmount || 0).toFixed(2)}</td>
-                                            </tr>
-                                            </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Shipping</td>
-                                                <td>Free shipping</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tax</td>
-                                                <td>18%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Total</td>
-                                                <td>&#8377;{taxWithAmount.total}</td>
-                                            </tr>
-                                        </tbody>
-                                            
-                                        </table>
+                                            <div className='table-responsive'>
+                                                <table className='table'>
+                                                    <thead>
+                                                        <tr>
+                                                            <td>Subtotal</td>
+                                                            <td>&#8377;{Number(totalAmount || 0).toFixed(2)}</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Shipping</td>
+                                                            <td>Free shipping</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Tax</td>
+                                                            <td>18%</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Total</td>
+                                                            <td>&#8377;{taxWithAmount.total}</td>
+                                                        </tr>
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                        
                                         <button 
                                             onClick={onHandlePageRequest}
                                             className='btn custom-btn btn-primary w-100'>

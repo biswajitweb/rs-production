@@ -546,7 +546,7 @@ export default function Checkout() {
                                             <div className="card">
 
                                                 <div className="card-body">
-
+                                                <div className="table-responsive">
                                                     <table className="table">
 
                                                         <thead>
@@ -585,7 +585,7 @@ export default function Checkout() {
                                                                                     item.quantity
                                                                                 }
                                                                             </Link>
-                                                                            
+
                                                                         </td>
 
                                                                         <td>
@@ -647,6 +647,8 @@ export default function Checkout() {
                                                         </tbody>
 
                                                     </table>
+                                                </div>
+                                                    
 
                                                     <button
                                                         type="button"
