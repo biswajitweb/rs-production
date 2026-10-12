@@ -95,14 +95,12 @@ export const service = {
             });
         },
         save : async(params = {})=>{
-            return await axiosInstance.post(`${API_PREFIX}addresses`, {
-                params : params
-            });
+            return await axiosInstance.post(`${API_PREFIX}addresses`, params);
         },
         update : async(params = {})=>{
-            return await axiosInstance.put(`${API_PREFIX}addresses`, {
-                params : params
-            });
+            return await axiosInstance.put(`${API_PREFIX}addresses`, 
+                params
+            );
         },
         delete: async(params = {})=>{
             return await axiosInstance.delete(`${API_PREFIX}addresses`, {
@@ -110,9 +108,7 @@ export const service = {
             });
         },
         default : async(params = {})=>{
-            return await axiosInstance.patch(`${API_PREFIX}addresses/default`, {
-                params : params
-            });
+            return await axiosInstance.put(`${API_PREFIX}addresses/default`, params);
         }
     }
 };

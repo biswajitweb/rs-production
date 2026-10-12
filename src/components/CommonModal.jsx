@@ -14,6 +14,7 @@ export default function CommonModal({
     centered = true,
     scrollable = true,
     loading = false,
+    errorMessage = "",
 }) {
     if (!show) return null;
 
@@ -71,36 +72,53 @@ export default function CommonModal({
 
                         {/* Modal Footer */}
                         {showFooter && (
-                            <div className="modal-footer">
-                                <button
-                                    type="button"
-                                    className="btn custom-btn btn-secondary"
-                                    onClick={onClose}
-                                    disabled={loading}
-                                >
-                                    {closeText}
-                                </button>
+                            <div className="modal-footer d-flex justify-content-between align-items-center">
+                                {/* Error Message - Left Side */}
+                                <div className="me-auto">
+                                    {errorMessage && (
+                                        <small
+                                            className="text-danger"
+                                            role="alert"
+                                            aria-live="polite"
+                                        >
+                                            <i className="ri-error-warning-line me-1" />
+                                            {errorMessage}
+                                        </small>
+                                    )}
+                                </div>
 
-                                {onSubmit && (
+                                {/* Action Buttons - Right Side */}
+                                <div className="d-flex gap-2">
                                     <button
                                         type="button"
-                                        className="btn custom-btn btn-primary"
-                                        onClick={onSubmit}
+                                        className="btn custom-btn btn-secondary"
+                                        onClick={onClose}
                                         disabled={loading}
                                     >
-                                        {loading && (
-                                            <span
-                                                className="spinner-border spinner-border-sm me-2"
-                                                role="status"
-                                                aria-hidden="true"
-                                            />
-                                        )}
-
-                                        {loading
-                                            ? "Saving..."
-                                            : submitText}
+                                        {closeText}
                                     </button>
-                                )}
+
+                                    {onSubmit && (
+                                        <button
+                                            type="button"
+                                            className="btn custom-btn btn-primary"
+                                            onClick={onSubmit}
+                                            disabled={loading}
+                                        >
+                                            {loading && (
+                                                <span
+                                                    className="spinner-border spinner-border-sm me-2"
+                                                    role="status"
+                                                    aria-hidden="true"
+                                                />
+                                            )}
+
+                                            {loading
+                                                ? "Saving..."
+                                                : submitText}
+                                        </button>
+                                    )}
+                                </div>
                             </div>
                         )}
                     </div>
