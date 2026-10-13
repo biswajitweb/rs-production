@@ -2,7 +2,7 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 
-const SITE_NAME = "Tribal Culture & Temple Stories in Photos";
+const SITE_NAME = "R S Productions";
 const SITE_URL = "https://rabisankar.com/staging/";
 
 const SEO = ({
@@ -48,10 +48,7 @@ const SEO = ({
             <meta property="og:type" content="website" />
             <meta property="og:site_name" content={SITE_NAME} />
             <meta property="og:title" content={pageTitle} />
-            <meta
-                property="og:description"
-                content={description}
-            />
+            <meta property="og:description"  content={description} />
 
             {image && (
                 <meta

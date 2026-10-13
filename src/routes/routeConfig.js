@@ -30,9 +30,8 @@ export const ROUTES = [
         is_show: "top-menu",
         title: "Home",
         seo: {
-            title: "Home | Tribal Culture",
-            description:
-                "Discover our latest products, explore popular collections, and shop quality products at great prices.",
+            title: "Tribal Culture Photography for Sale | Buy Photos",
+            description: "Discover tribal culture photography for sale, featuring original photos of tribal communities, traditions, festivals and heritage in Odisha and India.",
             canonical: "/",
         },
     },
@@ -44,9 +43,8 @@ export const ROUTES = [
         is_show: "top-menu",
         title: "About Us",
         seo: {
-            title: "About Us | Tribal Culture",
-            description:
-                "Learn more about Tribal Culture, our story, our values, and our commitment to quality products and customer satisfaction.",
+            title: "About Us | Tribal Culture Photography",
+            description: "Learn about our photography collection documenting tribal culture, traditions, people and heritage in Odisha and India through original photographs.",
             canonical: "/about-us",
         },
     },
@@ -58,9 +56,8 @@ export const ROUTES = [
         is_show: "top-menu",
         title: "Contact Us",
         seo: {
-            title: "Contact Us | Tribal Culture",
-            description:
-                "Contact Tribal Culture for product enquiries, order assistance, customer support, and other questions.",
+            title: "Contact Us | Tribal Photography Sales",
+            description: "Contact us for tribal culture photography, photo purchases, commercial licensing, editorial use and enquiries about our original photography collection.",
             canonical: "/contact-us",
         },
     },
@@ -72,9 +69,8 @@ export const ROUTES = [
         is_show: "product-details",
         title: "Product Details",
         seo: {
-            title: "Product Details | Tribal Culture",
-            description:
-                "Explore product details, features, available variants, and pricing. Find the right product for your needs.",
+            title: "add dynamic from product title",
+            description: "add dynamic from product details",
             canonical: "/product-details/:id/variants/:variantId",
             noindex: true,
         },
@@ -87,9 +83,8 @@ export const ROUTES = [
         is_show: "cart",
         title: "Shopping Cart",
         seo: {
-            title: "Shopping Cart | Tribal Culture",
-            description:
-                "Review your shopping cart, check selected products, and prepare your order before checkout.",
+            title: "Shopping Cart | Tribal Culture Photos",
+            description: "Review your selected tribal culture photographs, check your order details and prepare to purchase original photos for your creative or commercial projects.",
             canonical: "/cart",
             noindex: true,
         },
@@ -102,9 +97,8 @@ export const ROUTES = [
         is_show: "login",
         title: "Login",
         seo: {
-            title: "Sign In | Tribal Culture",
-            description:
-                "Sign in to your Tribal Culture account to manage your profile, view orders, and access your saved addresses.",
+            title: "Login | Your Photography Account",
+            description: "Log in to manage your photo purchases, view orders, access available downloads and save your favourite tribal culture photographs.",
             canonical: "/sign-in",
             noindex: true,
         },
@@ -117,9 +111,8 @@ export const ROUTES = [
         is_show: "sign-up",
         title: "Create Account",
         seo: {
-            title: "Create an Account | Tribal Culture",
-            description:
-                "Create your Tribal Culture account to manage purchases, save addresses, and enjoy a convenient shopping experience.",
+            title: "Sign Up | Buy Tribal Culture Photos",
+            description: "Create an account to buy tribal culture photos, manage your purchases, access downloads and save photographs for your future projects.",
             canonical: "/sign-up",
             noindex: true,
         },
@@ -146,9 +139,8 @@ export const ROUTES = [
         is_show: "checkout",
         title: "Checkout",
         seo: {
-            title: "Checkout | Tribal Culture",
-            description:
-                "Review your order details and complete your purchase securely through the checkout process.",
+            title: "Checkout | Buy Tribal Culture Photography",
+            description: "Complete your purchase of tribal culture photography. Review your order details and follow the available payment steps to buy original photographs online.",
             canonical: "/checkout",
             noindex: true,
         },
@@ -303,9 +295,8 @@ export const ROUTES = [
         is_show: "footer-menu",
         title: "Help",
         seo: {
-            title: "Help and Support | Tribal Culture",
-            description:
-                "Find help with shopping, orders, payments, deliveries, and other customer support questions.",
+            title: "Help Centre | Photo Sales & Downloads",
+            description:  "Get help with buying tribal culture photography, photo licensing, payments, downloads and orders. Find answers to common questions about our website.",
             canonical: "/help",
         },
     },
