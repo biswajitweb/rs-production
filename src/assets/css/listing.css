@@ -10,6 +10,7 @@
     width: 100%;
     min-width: 0;
     margin: 0;
+    padding: 0;
     color: var(--themeBodyColor);
     text-decoration: none;
     background-color: transparent !important;

@@ -3,7 +3,7 @@ import React from "react";
 import { Helmet } from "react-helmet-async";
 
 const SITE_NAME = "R S Productions";
-const SITE_URL = "https://rabisankar.com/staging/";
+const SITE_URL = "https://rabisankar.com";
 
 const SEO = ({
     title,

@@ -258,12 +258,14 @@ export default function SignUp() {
                         <h1>Create Your Account</h1>
 
                         <p className="signup-subtitle">
-                            Join our photography community and discover original images.
+                            Discover original tribal culture photos
                         </p>
                     </div>
 
-                    {/* First Name */}
-                    <div className="mb-3">
+                    <div className='row'>
+                        <div className='col-md-6'>
+                              {/* First Name */}
+                                <div className="mb-3">
                         <label htmlFor="first_name" className="form-label">
                             First Name
                         </label>
@@ -290,8 +292,9 @@ export default function SignUp() {
                             </small>
                         )}
                     </div>
-
-                    {/* Last Name */}
+                        </div>
+                        <div className='col-md-6'>
+                            {/* Last Name */}
                     <div className="mb-3">
                         <label htmlFor="last_name" className="form-label">
                             Last Name
@@ -319,6 +322,12 @@ export default function SignUp() {
                             </small>
                         )}
                     </div>
+                        </div>
+                    </div>
+                  
+                    
+
+                    
 
                     {/* Email */}
                     <div className="mb-3">
