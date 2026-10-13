@@ -6,6 +6,8 @@ import { calculateTax } from "../../utils/calculateTax";
 import { decryptData } from "../../utils/encryption";
 import { service } from "../../api/service";
 import { allAddressList } from "../../features/address/addressSlice";
+import { loadCashfreeSDK } from "../../utils/loadCashfree";
+import { createCashfreePayment } from "../../api/cashfreeService";
 
 const Spinner = lazy(() => import("../../components/Spinner"));
 
@@ -27,6 +29,29 @@ export default function Checkout() {
     const [orderLoader, setOrderLoader] = useState(false);
     const [userId, setUserId] = useState(0);
     const [addressLoading, setAddressLoading] = useState(true);
+    {/** For cash free */}
+    const [cashfreeReady, setCashfreeReady] = useState(false);
+    const [error, setError] = useState("");
+
+    useEffect(()=>{
+        let isMounted = true;
+
+        loadCashfreeSDK()
+            .then(() => {
+                if (isMounted) {
+                    setCashfreeReady(true);
+                }
+            })
+            .catch((err) => {
+                if (isMounted) {
+                    setError(err.message);
+                }
+            });
+
+        return () => {
+            isMounted = false;
+        };
+    }, []);
     
     /*
      * Redirect if not logged in or cart is empty
@@ -111,15 +136,43 @@ export default function Checkout() {
             if (orderId > 0) {
                 /*
                  * Redirect to success page
-                 */
-                navigate(`/order-success`, {
-                    replace: true,
-                    state: {
-                        orderId,
-                        createdAt,
-                        total
-                    },
+                */
+
+                let paymentData = {
+                    user_id : userInfo.id,
+                    order_id : orderId,
+                };
+
+                
+
+                // Create Cashfree payment session through WordPress.
+                const result = await createCashfreePayment(paymentData);
+
+                if (!result.payment_session_id) {
+                    throw new Error("Payment session was not returned.");
+                }
+
+                // Check that the Cashfree SDK loaded.
+                if (typeof window.Cashfree !== "function") {
+                    throw new Error("Cashfree SDK is not loaded.");
+                }
+                //Initialize sandbox checkout.
+
+                const cashfree = window.Cashfree({
+                    mode: result.mode,
                 });
+
+                //Open the hosted Cashfree checkout.
+                 const checkoutResponse = await cashfree.checkout({
+                    paymentSessionId: result.payment_session_id,
+                    redirectTarget: "_self",
+                });
+
+                console.log(checkoutResponse);
+                
+
+            
+                
 
                 
             }
