@@ -1,22 +1,25 @@
+
 import React, { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
+
 import ErrorBoundary from "../components/ErrorBoundary";
 import WebsiteLayout from "../pages/layout/WebsiteLayout";
+import MyAccountLayout from "../pages/layout/MyAccountLayout";
+import SEO from "../components/SEO";
+
 import { ROUTES } from "./routeConfig";
 import { ROUTE_AREA } from "../api/constants/common";
 import { PAGES } from "./pages";
+
 import WebsiteProtectedRoute from "./WebsiteProtectedRoute";
 import WebsiteGuestRoute from "./WebsiteGuestRoute";
-import MyAccountLayout from "../pages/layout/MyAccountLayout";
 import { ROLES } from "../utils/roles";
 
-
-const NotFound = lazy(()=>import(
-    '../pages/others/NotFound'
-));
+const NotFound = lazy(() =>
+    import("../pages/others/NotFound")
+);
 
 export default function AppRoutes() {
-
     // Normal website routes
     const websiteRoutes = ROUTES.filter(
         (route) =>
@@ -34,12 +37,9 @@ export default function AppRoutes() {
     return (
         <ErrorBoundary>
             <Routes>
-
                 {/* ==================== WEBSITE ==================== */}
                 <Route element={<WebsiteLayout />}>
-
                     {websiteRoutes.map((route) => {
-
                         const WebsiteComponent =
                             PAGES.website[route.element];
 
@@ -47,8 +47,15 @@ export default function AppRoutes() {
                             return null;
                         }
 
-                        let element = <WebsiteComponent />;
+                        // Add SEO metadata to the current page
+                        let element = (
+                            <>
+                                <SEO {...route.seo} />
+                                <WebsiteComponent />
+                            </>
+                        );
 
+                        // Protected routes
                         if (route.protected) {
                             element = (
                                 <WebsiteProtectedRoute
@@ -58,6 +65,7 @@ export default function AppRoutes() {
                                 </WebsiteProtectedRoute>
                             );
                         } else if (route.guest) {
+                            // Guest-only routes
                             element = (
                                 <WebsiteGuestRoute>
                                     {element}
@@ -74,7 +82,6 @@ export default function AppRoutes() {
                         );
                     })}
 
-
                     {/* ==================== MY ACCOUNT ==================== */}
                     <Route
                         path="/my-account"
@@ -82,30 +89,44 @@ export default function AppRoutes() {
                             <WebsiteProtectedRoute
                                 allowedRoles={[ROLES.CUSTOMER]}
                             >
-                                <MyAccountLayout />
+                                <SEO
+                                    title="My Account"
+                                    description="Manage your customer account."
+                                    noIndex={true}
+                                />
 
+                                <MyAccountLayout />
                             </WebsiteProtectedRoute>
                         }
                     >
-
                         {myAccountRoutes.map((route) => {
-
                             const AccountComponent =
                                 PAGES.website[route.element];
 
                             if (!AccountComponent) {
                                 return null;
                             }
+
+                            // SEO for the account page
+                            const accountElement = (
+                                <>
+                                    <SEO {...route.seo} />
+                                    <AccountComponent />
+                                </>
+                            );
+
+                            // /my-account
                             if (route.path === "/my-account") {
                                 return (
                                     <Route
                                         key={route.path}
                                         index
-                                        element={<AccountComponent />}
+                                        element={accountElement}
                                     />
                                 );
                             }
 
+                            // /my-account/orders -> orders
                             const childPath = route.path.replace(
                                 "/my-account/",
                                 ""
@@ -115,17 +136,27 @@ export default function AppRoutes() {
                                 <Route
                                     key={route.path}
                                     path={childPath}
-                                    element={<AccountComponent />}
+                                    element={accountElement}
                                 />
                             );
                         })}
-
                     </Route>
-
                 </Route>
 
-                <Route path="*" element={<NotFound/>} />
-
+                {/* ==================== 404 ==================== */}
+                <Route
+                    path="*"
+                    element={
+                        <>
+                            <SEO
+                                title="Page Not Found"
+                                description="The requested page could not be found."
+                                noIndex={true}
+                            />
+                            <NotFound />
+                        </>
+                    }
+                />
             </Routes>
         </ErrorBoundary>
     );

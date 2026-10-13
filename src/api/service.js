@@ -63,6 +63,9 @@ export const service = {
             return axiosInstance.post(`${API_PREFIX}update-password`, 
                 params
             );
+        },
+        states : async(countryCode) =>{
+            return await axiosInstance.get(`${API_PREFIX}states/${countryCode}`);
         }
     },
     
@@ -80,6 +83,32 @@ export const service = {
         },
         single : (orderId)=>{
             return axiosInstance.get(`${API_PREFIX}orders/${orderId}`);
+        }
+    },
+    /**
+     * Address book 
+    */
+    address: {
+        getAll : async (params = {})=>{
+            return await axiosInstance.get(`${API_PREFIX}addresses`, {
+                params : params
+            });
+        },
+        save : async(params = {})=>{
+            return await axiosInstance.post(`${API_PREFIX}addresses`, params);
+        },
+        update : async(params = {})=>{
+            return await axiosInstance.put(`${API_PREFIX}addresses`, 
+                params
+            );
+        },
+        delete: async(params = {})=>{
+            return await axiosInstance.delete(`${API_PREFIX}addresses`, {
+                params : params
+            });
+        },
+        default : async(params = {})=>{
+            return await axiosInstance.put(`${API_PREFIX}addresses/default`, params);
         }
     }
 };

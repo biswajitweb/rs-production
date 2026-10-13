@@ -241,7 +241,10 @@ table{
 }
 
 .term-section{
-  margin-top: 100px;
+  margin-top: 75px;
+     @media (max-width: 1024px) {
+      margin-top: 25px;
+     }
 }
 .term-section h1{
   margin-bottom: 30px;
