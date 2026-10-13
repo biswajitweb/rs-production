@@ -1,11 +1,12 @@
 .rs-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 40px 32px;
+    gap: 32px;
 }
 
 .rs-card {
     display: block;
+    position: relative;
     width: 100%;
     min-width: 0;
     margin: 0;
@@ -13,6 +14,9 @@
     text-decoration: none;
     background-color: transparent !important;
     border: 0 solid transparent !important;
+    border-radius: 12px;
+    transition: all .3s;
+    overflow: hidden;
 }
 
 .rs-card img {
@@ -21,7 +25,6 @@
     aspect-ratio: 4 / 3;
     object-fit: cover;
     object-position: top;
-    border-radius: 12px;
     transition: all 0.3s ease;
 }
 
@@ -29,7 +32,7 @@
 @media (max-width: 991px) {
     .rs-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 30px 24px;
+        gap: 24px;
     }
 }
 
@@ -37,7 +40,7 @@
 @media (max-width: 767px) {
     .rs-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 24px 16px;
+        gap: 16px;
     }
 }
 
@@ -45,32 +48,74 @@
 @media (max-width: 480px) {
     .rs-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 20px 12px;
+        gap: 12px;
     }
 }
 
-/* Hover effect */
-.rs-card img:hover {
-    transform: translateY(-4px);
-}
-
-
-.rs-card:hover img {
-  transform: translateY(-.3rem);
-  box-shadow: 0 .6rem 2rem #13386f42;
+.rs-card:hover {
+    transform: translateY(-.3rem);
+    box-shadow: 0 .6rem 2rem #13386f42;
 }
 .rs-lower-info{
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
+.rs-card .action-area{
+  display: none;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  padding-left: 15px;
+  padding-right: 14px;
+  padding-bottom: 12px;
+}
+.rs-card:hover .action-area{
+  display: flex;
+
+}
 .rs-card figcaption {
-  margin-top: 12px;
-  font-size: 0.95rem;
+  z-index: 3;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
   line-height: 1.3;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: all .3s;
+  padding-right: 10px;
+}
+.rs-card:hover::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    background: linear-gradient(to bottom, rgba(0, 4, 58, 0), rgba(0, 4, 58, .5));
+    width: 100%;
+    height:50%;
+    transition: all .3s;
+}
+.btn-buy-icon{
+  min-width: 30px;
+  max-width: 30px;
+  min-height: 30px;
+  max-height: 30px;
+  border-radius: 50%;
+  background-color: #fff;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-buy-icon svg{
+  fill: var(--themePrimaryColor);
+  width: 18px;
+  height: 18px;
 }
 .header-col-left .rs-stats{
   margin-top: 10px;
