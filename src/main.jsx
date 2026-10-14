@@ -10,13 +10,27 @@ import 'bootstrap/dist/js/bootstrap.bundle.js';
 import { Provider } from 'react-redux';
 import { store } from './app/store.js';
 import { HelmetProvider } from 'react-helmet-async';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient({
+    defaultOptions : {
+      queries : {
+        staleTime : 5 * 60 * 1000,
+        retry : 2,
+        refetchOnWindowFocus: false
+      }
+    }
+});
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <HelmetProvider>
-        <Provider store={store}>
-          <App />
-        </Provider>
+        <QueryClientProvider client={queryClient}>
+            <Provider store={store}>
+              <App />
+          </Provider>
+        </QueryClientProvider>
+        
     </HelmetProvider>
     
     

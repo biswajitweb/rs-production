@@ -14,8 +14,6 @@ export default function Cart() {
     const location = useLocation();
     const {authToken} =  useSelector((state)=>state.user);
     
-    
-    
     const taxWithAmount = calculateTax(totalAmount);
     
 
