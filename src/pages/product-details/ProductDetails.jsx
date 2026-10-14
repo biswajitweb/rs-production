@@ -12,7 +12,7 @@ const Spinner = lazy(()=>import('../../components/Spinner'));
 export default function ProductDetails() {
     const {id, variantId} =  useParams();
     const [productDetails, setProductDetails] = useState({});
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [imageLoading, setImageLoading] = useState(true);
     const [thumbnailLoading, setThumbnailLoading] = useState(true);
     const [quantity, setQuantity] = useState(1);

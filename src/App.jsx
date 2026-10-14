@@ -3,8 +3,9 @@ import './App.css'
 import AppRoutes from './routes/AppRoutes'
 import { useDispatch } from 'react-redux'
 import { getSiteInfo } from './features/site/siteSlice'
-import { useEffect } from 'react'
+import { Suspense, useEffect } from 'react'
 import ScrollToTop from './components/ScrollToTop'
+import PageLoader from './components/PageLoader'
 
 function App() {
 
@@ -22,7 +23,6 @@ function App() {
       <BrowserRouter basename='/staging'>
         <ScrollToTop/>
         <AppRoutes/>
-        
       </BrowserRouter>
     </>
   )

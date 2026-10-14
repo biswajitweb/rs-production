@@ -1,0 +1,24 @@
+.product-skeleton {
+    width: 100%;
+}
+
+.skeleton-image,
+.skeleton-line {
+    background: #e9ecef;
+    border-radius: 6px;
+}
+
+.skeleton-image {
+    width: 100%;
+    height: 260px;
+}
+
+.skeleton-line {
+    height: 16px;
+    width: 85%;
+    margin-top: 12px;
+}
+
+.skeleton-line.short {
+    width: 50%;
+}
