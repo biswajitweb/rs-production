@@ -5,7 +5,7 @@
   background-position: center bottom;
   background-repeat: no-repeat;
   position: relative;
-  margin-top: 75px;
+  margin-top: 40px;
 }
 
 @media (max-width: 1024px) {
@@ -112,4 +112,179 @@
 
 .contact-info .rs-description {
   max-width: 400px;
+}
+
+/* -------------------- */
+
+.rs-trust-section {
+    padding: 75px 0 0 0;
+    background: #ffffff;
+    color: #00043a;
+    font-family: inherit;
+}
+
+.rs-trust-container {
+    width: 100%;
+    max-width: 1320px;
+    margin: 0 auto;
+}
+
+.rs-trust-header h2 {
+    margin: 0 0 16px;
+    color: #00043a;
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.rs-trust-header p {
+    margin: 0;
+    color: #646b7b;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.rs-trust-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.rs-trust-card {
+    min-width: 0;
+    padding: 28px 18px;
+    text-align: center;
+    background: #ffffff;
+    border: 1px solid #eeeeee;
+    border-radius: 16px;
+    transition: transform 0.3s ease,
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+}
+
+.rs-trust-card:hover {
+    transform: translateY(-5px);
+    border-color: #fbd5bf;
+    box-shadow: 0 12px 30px rgba(0, 4, 58, 0.07);
+}
+
+.rs-trust-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 20px;
+    border-radius: 16px;
+}
+
+.rs-trust-icon svg {
+    display: block;
+    width: 30px;
+    height: 30px;
+}
+
+.rs-icon-green {
+    color: #16834a;
+    background: #eaf7ef;
+}
+
+.rs-icon-orange {
+    color: #f16f21;
+    background: #fff0e5;
+}
+
+.rs-icon-blue {
+    color: #244a80;
+    background: #edf2ff;
+}
+
+.rs-icon-purple {
+    color: #6650a4;
+    background: #f1edff;
+}
+
+.rs-icon-teal {
+    color: #13877b;
+    background: #e7f7f5;
+}
+
+.rs-trust-card h3 {
+    margin: 0 0 10px;
+    color: #00043a;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.rs-trust-card p {
+    margin: 0;
+    color: #646b7b;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .rs-trust-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .rs-trust-section {
+        padding: 64px 20px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+    .rs-trust-section {
+        padding: 48px 16px;
+    }
+
+    .rs-trust-header {
+        margin-bottom: 30px;
+    }
+
+    .rs-trust-header p {
+        font-size: 14px;
+    }
+
+    .rs-trust-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .rs-trust-card {
+        padding: 22px 12px;
+        border-radius: 12px;
+    }
+
+    .rs-trust-icon {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 14px;
+        border-radius: 13px;
+    }
+
+    .rs-trust-icon svg {
+        width: 26px;
+        height: 26px;
+    }
+
+    .rs-trust-card h3 {
+        font-size: 15px;
+    }
+
+    .rs-trust-card p {
+        font-size: 13px;
+        line-height: 1.65;
+    }
+
+    /* Center the fifth card on mobile */
+    .rs-trust-card:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+        width: calc(50% - 6px);
+        justify-self: center;
+    }
 }
