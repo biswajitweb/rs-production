@@ -15,6 +15,24 @@ export default function Header() {
     const {authToken} =  useSelector((state)=>state.user);
     const [userInfo, setUserInfo] = useState({});
 
+    const [isSticky, setIsSticky] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsSticky(window.scrollY > 100);
+        };
+
+        window.addEventListener("scroll", handleScroll, {
+            passive: true,
+        });
+
+        handleScroll();
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+
     useEffect(() => {
         decryptAuth();
     }, [authToken]);
@@ -36,7 +54,9 @@ export default function Header() {
     
     return (
         <>
-            <header className="rs-header-area">
+           <header
+                className={`rs-header-area ${isSticky ? "sticky-header" : ""}`}
+            >
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
