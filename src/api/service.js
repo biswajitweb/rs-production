@@ -66,6 +66,9 @@ export const service = {
         },
         states : async(countryCode) =>{
             return await axiosInstance.get(`${API_PREFIX}states/${countryCode}`);
+        },
+        contact : async(params)=>{
+            return await axiosInstance.post(`${API_PREFIX}/contact`, params);
         }
     },
     
