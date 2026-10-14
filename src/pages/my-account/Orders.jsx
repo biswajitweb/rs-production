@@ -337,7 +337,7 @@ export default function Orders() {
                         <div className="d-flex justify-content-between align-items-center mt-4">
 
                             <div className="text-muted">
-                                Total Orders: <strong>{totalPages}</strong>
+                                Total Orders Pages: <strong>{totalPages}</strong>
                             </div>
 
                             <nav>
@@ -814,7 +814,7 @@ export default function Orders() {
 
                                 <div className="row">
 
-                                    <div className="col-md-4">
+                                    <div className={`col-md-${orderDetails.transaction_id ? "3" : "4" }`}>
                                         <small className="text-muted d-block">
                                             Payment Method
                                         </small>
@@ -824,7 +824,22 @@ export default function Orders() {
                                         </strong>
                                     </div>
 
-                                    <div className="col-md-4">
+                                    {
+                                        orderDetails.transaction_id && (
+                                            <div className={`col-md-${orderDetails.transaction_id ? "3" : "4" }`}>
+                                                <small className="text-muted d-block">
+                                                    Transaction Id
+                                                </small>
+
+                                                <strong>
+                                                    {orderDetails.transaction_id}
+                                                </strong>
+                                            </div>
+                                        )
+                                    }
+                                    
+
+                                    <div className={`col-md-${orderDetails.transaction_id ? "3" : "4" }`}>
                                         <small className="text-muted d-block">
                                             Currency
                                         </small>
@@ -834,13 +849,13 @@ export default function Orders() {
                                         </strong>
                                     </div>
 
-                                    <div className="col-md-4">
+                                    <div className={`col-md-${orderDetails.transaction_id ? "3" : "4" }`}>
                                         <small className="text-muted d-block">
                                             Payment Status
                                         </small>
 
                                         <span className="badge bg-warning text-dark text-capitalize">
-                                            {orderDetails.status}
+                                            { orderDetails.transaction_id ? "Paid" : orderDetails.status}
                                         </span>
                                     </div>
 

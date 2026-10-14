@@ -101,7 +101,10 @@ export default function OrderSuccess() {
                                     <span>Payment Status</span>
                                     <strong class="paid">
                                         <i class="fa-solid fa-circle-check"></i>
-                                        Paid
+                                        {paymentData.payment_status
+                                            ? paymentData.payment_status.charAt(0).toUpperCase() +
+                                            paymentData.payment_status.slice(1).toLowerCase()
+                                        : ''}
                                     </strong>
                                 </div>
                                 <div class="info-item">
