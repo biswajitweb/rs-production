@@ -14,8 +14,8 @@
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
 
         .login-logo {
-            width: 60px;
-            height: 60px;
+            width: 80px;
+            height: 80px;
             margin: 0 auto 20px;
             display: flex;
             align-items: center;
@@ -27,6 +27,9 @@
             color: #ffffff;
             font-size: 24px;
             font-weight: 700;
+        }
+        .login-logo img{
+            height: 80px;
         }
 
         h1 {

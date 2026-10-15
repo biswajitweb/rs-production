@@ -6,6 +6,7 @@ import { FORM_ERROR_STYLE } from '../../utils/formStyles';
 import { encryptData } from '../../utils/encryption';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginSuccess } from '../../features/auth/authSlice';
+import {STATIC_IMAGE} from '../../utils/staticImage';
 
 
 
@@ -149,7 +150,7 @@ export default function Login() {
             <div className="login-card">
                 {/* Logo */}
                 <div className="login-logo">
-                    RS
+                    <img src={STATIC_IMAGE.LOGO}/>
                 </div>
 
                 {/* Heading */}

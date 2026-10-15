@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { FORM_ERROR_STYLE } from '../../utils/formStyles';
 import { service } from '../../api/service';
+import {STATIC_IMAGE} from '../../utils/staticImage';
 
 
 const Toast = lazy(()=>
@@ -278,7 +279,7 @@ export default function SignUp() {
 
                     {/* Logo */}
                     <div className="signup-logo">
-                        RS
+                         <img src={STATIC_IMAGE.LOGO}/>
                     </div>
 
                     {/* Heading */}
