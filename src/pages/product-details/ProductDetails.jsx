@@ -5,9 +5,19 @@ import { useQuery } from '@tanstack/react-query';
 
 import { service } from '../../api/service';
 import { addToCart } from '../../features/cart/cartSlice';
+import { REDIRECT_DELAY } from '../../utils/staticImage';
 
-const SimilarProducts = lazy(() => import('./SimilarProducts'));
-const Spinner = lazy(() => import('../../components/Spinner'));
+
+
+const SimilarProducts = lazy(() => 
+    import('./SimilarProducts')
+);
+const Spinner = lazy(() => 
+    import('../../components/Spinner')
+);
+const Toast = lazy(()=>
+    import('../../components/Toast')
+);
 
 export default function ProductDetails() {
     const { id, variantId } = useParams();
@@ -17,6 +27,29 @@ export default function ProductDetails() {
 
     const [quantity, setQuantity] = useState(1);
     const [totalPrice, setTotalPrice] = useState(0);
+
+    const [toast, setToast] = useState({
+        show: false,
+        message: "",
+        type: "success",
+    });
+
+    const showToast = (message, type = "success") => {
+        setToast({
+            show: true,
+            message,
+            type,
+        });
+    };
+
+    const closeToast = () => {
+        setToast((prev) => ({
+            ...prev,
+            show: false,
+        }));
+    };
+
+    
 
     /**
      * Fetch product details
@@ -114,8 +147,16 @@ export default function ProductDetails() {
         };
 
         dispatch(addToCart(preparingCart));
+        showToast(
+            "Added to cart successfully!",
+            "success"
+        );
 
-        navigate('/cart');
+        setTimeout(() => {
+            navigate('/cart');     
+        }, REDIRECT_DELAY);
+
+       
     };
 
     /**
@@ -364,6 +405,14 @@ export default function ProductDetails() {
                 onClick={(productId, newVariantId) =>
                     updateProduct(productId, newVariantId)
                 }
+            />
+
+            <Toast
+                show={toast.show}
+                message={toast.message}
+                type={toast.type}
+                duration={3000}
+                onClose={closeToast}
             />
         </>
     );

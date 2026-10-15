@@ -55,7 +55,7 @@ export default function Header() {
     return (
         <>
            <header
-                className={`rs-header-area ${isSticky ? "sticky-header" : ""}`}
+                className={`rs-header-area ${isSticky ? "sticky-header-1" : ""}`}
             >
                 <div className="container">
                     <div className="row">

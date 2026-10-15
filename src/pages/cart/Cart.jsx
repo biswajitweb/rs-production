@@ -1,9 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { lazy, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, replace, useLocation, useNavigate } from 'react-router-dom';
 import { clearCart, decreaseQuantity, increaseQuantity, removeFromCart } from '../../features/cart/cartSlice';
 import CartItems from './CartItems';
 import { calculateTax } from '../../utils/calculateTax';
+
+const Toast = lazy(()=>
+    import('../../components/Toast')
+);
 
 export default function Cart() {
 
@@ -15,6 +19,27 @@ export default function Cart() {
     const {authToken} =  useSelector((state)=>state.user);
     
     const taxWithAmount = calculateTax(totalAmount);
+
+    const [toast, setToast] = useState({
+            show: false,
+            message: "",
+            type: "success",
+        });
+    
+    const showToast = (message, type = "success") => {
+        setToast({
+            show: true,
+            message,
+            type,
+        });
+    };
+
+    const closeToast = () => {
+        setToast((prev) => ({
+            ...prev,
+            show: false,
+        }));
+    };
     
 
     useEffect(()=>{
@@ -28,12 +53,20 @@ export default function Cart() {
 
     const deleteCartItem = (productId)=>{
         if(productId) {
-           dispatch(removeFromCart(productId));
+            dispatch(removeFromCart(productId));
+            showToast(
+                "Item removed from your cart successfully!",
+                "success"
+            );
         }
     }
 
     const removeAllItemsFromCart = ()=>{
         dispatch(clearCart())
+        showToast(
+            "All items have been removed from your cart!",
+            "success"
+        );
     }
 
     const handleIncrement = (productId)=>{
@@ -170,6 +203,13 @@ export default function Cart() {
                     
                 </div>
         </section>
+        <Toast
+            show={toast.show}
+            message={toast.message}
+            type={toast.type}
+            duration={3000}
+            onClose={closeToast}
+        />
        </>
     )
 }
