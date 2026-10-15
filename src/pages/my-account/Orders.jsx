@@ -701,7 +701,7 @@ export default function Orders() {
                                                     <td>
                                                         ₹
                                                         {Number(
-                                                            item.product?.price || 0
+                                                            item?.price || 0
                                                         ).toFixed(2)}
                                                     </td>
 
@@ -768,7 +768,7 @@ export default function Orders() {
 
                                         <div className="d-flex justify-content-between mb-2">
                                             <span>
-                                                Tax
+                                                Tax Amount
                                             </span>
 
                                             <span>
@@ -778,6 +778,19 @@ export default function Orders() {
                                                 ).toFixed(2)}
                                             </span>
                                         </div>
+                                        {
+                                            orderDetails.transaction_id && 
+                                                <div className="d-flex justify-content-between mb-2">
+                                                    <span>
+                                                        Tax Rat
+                                                    </span>
+
+                                                    <span>
+                                                        {orderDetails.tax_rat}%
+                                                    </span>
+                                                </div>
+                                        }
+                                        
 
                                         <hr />
 
