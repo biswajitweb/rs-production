@@ -1,83 +1,21 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import { Link } from 'react-router-dom';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import NoProductsFound from './NoProductsFound';
 
-import { pagination } from '../../api/pagination';
-import { service } from '../../api/service';
-import Spinner from '../../components/Spinner';
+const Spinner = lazy(()=>
+    import('../../components/Spinner')
+);
 
-export default function HomePageProductListing() {
-    const initialParams = pagination.HOME_PAGE;
-
-    const {
-        data,
-        error,
-        isLoading,
-        isFetchingNextPage,
-        hasNextPage,
-        fetchNextPage,
-        isError,
-    } = useInfiniteQuery({
-        queryKey: ['home-products', initialParams],
-
-        queryFn: async ({ pageParam = initialParams.page }) => {
-            const requestParams = {
-                ...initialParams,
-                page: pageParam,
-            };
-
-            const response =
-                await service.product.getAll(requestParams);
-
-            const productData = response?.data;
-
-            return {
-                products: Array.isArray(productData?.data)
-                    ? productData.data
-                    : [],
-
-                totalRecords: Number(
-                    productData?.meta?.total_records ?? 0
-                ),
-
-                totalPages: Number(
-                    productData?.meta?.total_pages ?? 0
-                ),
-
-                currentPage: pageParam,
-            };
-        },
-
-        initialPageParam: initialParams.page,
-
-        getNextPageParam: (lastPage) => {
-            const currentPage = lastPage.currentPage;
-            const totalPages = lastPage.totalPages;
-
-            if (currentPage >= totalPages) {
-                return undefined;
-            }
-
-            return currentPage + 1;
-        },
-    });
-
-    /**
-     * Flatten all pages into one product array
-     */
-    const products =
-        data?.pages?.flatMap((page) => page.products) ?? [];
-
-    const total =
-        data?.pages?.[0]?.totalRecords ?? 0;
-
-    const handleLoadMore = () => {
-        if (!hasNextPage || isFetchingNextPage) {
-            return;
-        }
-
-        fetchNextPage();
-    };
+export default function HomePageProductListing({
+    isLoading,
+    products,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+    isError,
+    handleLoadMore
+}) {
+    
 
     return (
         <section className="rs-listing-area">
@@ -196,11 +134,7 @@ export default function HomePageProductListing() {
                         {!isLoading &&
                             !isError &&
                             products.length === 0 && (
-                                <div className="text-center py-5">
-                                    <p className="mb-0">
-                                        No products found.
-                                    </p>
-                                </div>
+                                <NoProductsFound/>
                             )}
 
                         

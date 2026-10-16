@@ -4,9 +4,14 @@ import { STATIC_IMAGE } from '../../utils/staticImage'
 import { Link } from 'react-router-dom'
 
 
-const CustomersView = lazy(()=>import('./CustomersView'));
+const CustomersView = lazy(()=>
+    import('./CustomersView')
+);
 
-export default function HomeSlider() {
+export default function HomeSlider({
+    search,
+    setSearch
+}) {
 
     // Combine the default background with search images
     const images = STATIC_IMAGE.searchBanner;
@@ -41,8 +46,12 @@ export default function HomeSlider() {
                                 <div className="input-wrap">
                                     <input
                                         type="text"
+                                        name='search'
                                         placeholder="Search photos by place, culture, category or keyword..."
                                         data-mobile-placeholder="Search photos..."
+                                        value={search}
+                                        onChange={(e)=>setSearch(e.target.value)}
+                                        autoComplete='off'
                                     />
 
                                     <button
