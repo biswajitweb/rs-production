@@ -161,12 +161,12 @@ export default function Cart() {
                                             <table className='table'>
                                                 <thead>
                                                     <tr>
-                                                        <th class="product-remove"><span class="screen-reader-text">&nbsp;</span></th>
-                                                        <th class="product-thumbnail"><span class="screen-reader-text">Image</span></th>
-                                                        <th class="product-name">Product</th>
-                                                        <th class="product-price">Price</th>
-                                                        <th class="product-quantity">Quantity</th>
-                                                        <th class="product-subtotal">Total</th>
+                                                        <th className="product-remove"><span className="screen-reader-text">&nbsp;</span></th>
+                                                        <th className="product-thumbnail"><span className="screen-reader-text">Image</span></th>
+                                                        <th className="product-name">Product</th>
+                                                        <th className="product-price">Price</th>
+                                                        <th className="product-quantity">Quantity</th>
+                                                        <th className="product-subtotal">Total</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>

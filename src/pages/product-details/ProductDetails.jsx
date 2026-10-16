@@ -147,6 +147,7 @@ export default function ProductDetails() {
             price: Number(productDetails?.price || 0).toFixed(2),
             full_image: productDetails?.image?.src,
             thumbnail: productDetails?.image?.thumbnail,
+            product_code : productDetails?.product_code || ''
         };
 
         dispatch(addToCart(preparingCart));

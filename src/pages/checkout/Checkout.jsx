@@ -9,7 +9,13 @@ import { allAddressList } from "../../features/address/addressSlice";
 import { loadCashfreeSDK } from "../../utils/loadCashfree";
 import { createCashfreePayment } from "../../api/cashfreeService";
 
-const Spinner = lazy(() => import("../../components/Spinner"));
+const Spinner = lazy(() => 
+    import("../../components/Spinner")
+);
+
+const Toast = lazy(()=>
+    import('../../components/Toast')
+);
 
 export default function Checkout() {
     const { authToken } = useSelector((state) => state.user);
@@ -18,6 +24,7 @@ export default function Checkout() {
         totalAmount,
         itmes,
     } = useSelector((state) => state.cart);
+    
 
     const taxWithAmount = calculateTax(totalAmount);
 
@@ -32,6 +39,27 @@ export default function Checkout() {
     {/** For cash free */}
     const [cashfreeReady, setCashfreeReady] = useState(false);
     const [error, setError] = useState("");
+
+    const [toast, setToast] = useState({
+        show: false,
+        message: "",
+        type: "success",
+    });
+    
+    const showToast = (message, type = "success") => {
+        setToast({
+            show: true,
+            message,
+            type,
+        });
+    };
+
+    const closeToast = () => {
+        setToast((prev) => ({
+            ...prev,
+            show: false,
+        }));
+    };
 
     useEffect(()=>{
         let isMounted = true;
@@ -91,11 +119,12 @@ export default function Checkout() {
         /*
          * Prepare line items
          */
-        const result = itmes.map(({ productId, quantity }) => ({
+        const result = itmes.map(({ productId, quantity, product_code }) => ({
             product_id: productId,
             quantity,
+            product_code
         }));
-
+        
         const getDefaultAddress = address.find(
             (item) =>
                 item.is_default === true ||
@@ -168,13 +197,10 @@ export default function Checkout() {
                     redirectTarget: "_self",
                 });
 
-                console.log(checkoutResponse);
-                
-
-            
-                
-
-                
+                showToast(
+                    checkoutResponse,
+                    "error"
+                );
             }
         } catch (error) {
             console.error("Place order error:", error);
@@ -187,7 +213,10 @@ export default function Checkout() {
                 error?.response?.data?.data?.message ||
                 "Unable to place order. Please try again.";
 
-            console.error(apiMessage);
+            showToast(
+                apiMessage,
+                "error"
+            );
         } finally {
             setOrderLoader(false);
         }
@@ -535,6 +564,13 @@ export default function Checkout() {
                     </div>
                 </div>
             </section>
+            <Toast
+                show={toast.show}
+                message={toast.message}
+                type={toast.type}
+                duration={3000}
+                onClose={closeToast}
+            />
         </>
     );
 }

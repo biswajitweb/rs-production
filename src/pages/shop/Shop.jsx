@@ -13,25 +13,25 @@ export default function Shop() {
           
 
 
-            <main class="error-page d-none">
-                <div class="error-content">
-                    <div class="error-number">404</div>
+            <main className="error-page d-none">
+                <div className="error-content">
+                    <div className="error-number">404</div>
                     <h1>This Moment Couldn't Be Found</h1>
                     <p>
                         The page you're looking for may have been moved, removed,
                         or is no longer available. Explore our collection of
                         original photographs from Odisha and India.
                     </p>
-                    <div class="error-buttons">
-                        <a href="/" class="btn custom-btn btn-primary">
+                    <div className="error-buttons">
+                        <a href="/" className="btn custom-btn btn-primary">
                             Go to Homepage
                         </a>
-                        <a href="/" class="btn custom-btn btn-secondary">
+                        <a href="/" className="btn custom-btn btn-secondary">
                             Go to Contact
                         </a>
                     </div>
 
-                    <div class="error-note">
+                    <div className="error-note">
                         Discover tribal culture, temples, festivals, people and
                         everyday life through original photography.
                     </div>

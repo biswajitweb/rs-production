@@ -142,11 +142,11 @@ export default function ContactUs() {
 
     return (
         <>
-        <section class="contact-section">
-            <div class="container">
+        <section className="contact-section">
+            <div className="container">
 
-                <div class="contact-header">
-                    <span class="contact-label">GET IN TOUCH</span>
+                <div className="contact-header">
+                    <span className="contact-label">GET IN TOUCH</span>
                     <h1>Contact Us</h1>
                     <p>
                         Have a question or want to know more about our services?
@@ -154,18 +154,18 @@ export default function ContactUs() {
                     </p>
                 </div>
 
-                <div class="contact-grid">
+                <div className="contact-grid">
 
         
-                    <div class="contact-info">
+                    <div className="contact-info">
 
                         <h2>Contact Info</h2>
-                        <p class="info-intro">
+                        <p className="info-intro">
                             Feel free to reach out to us through the details below.
                         </p>
 
-                        <div class="contact-item">
-                            <div class="contact-icon">
+                        <div className="contact-item">
+                            <div className="contact-icon">
                                 <svg viewBox="0 0 24 24" aria-hidden="true">
                                     <path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12Z"/>
                                     <circle cx="12" cy="9" r="2.5"/>
@@ -177,8 +177,8 @@ export default function ContactUs() {
                             </div>
                         </div>
 
-                        <div class="contact-item">
-                            <div class="contact-icon">
+                        <div className="contact-item">
+                            <div className="contact-icon">
                                 <svg viewBox="0 0 24 24" aria-hidden="true">
                                     <rect x="3" y="5" width="18" height="14" rx="2"/>
                                     <path d="m4 7 8 6 8-6"/>
@@ -191,8 +191,8 @@ export default function ContactUs() {
                         </div>
 
                 
-                        <div class="contact-item">
-                            <div class="contact-icon">
+                        <div className="contact-item">
+                            <div className="contact-icon">
                                 <svg viewBox="0 0 24 24" aria-hidden="true">
                                     <path d="M6.6 3.5 9 3l2 5-2.2 1.8a14 14 0 0 0 5.4 5.4L16 13l5 2 .5 2.4a2 2 0 0 1-2.2 2.3C10.6 18.8 5.2 13.4 4.3 4.7A2 2 0 0 1 6.6 3.5Z"/>
                                 </svg>
@@ -205,18 +205,18 @@ export default function ContactUs() {
                     </div>
 
 
-                    <div class="contact-form-wrapper">
+                    <div className="contact-form-wrapper">
 
                         <h2>Contact Form</h2>
-                        <p class="form-intro">
+                        <p className="form-intro">
                             Fill out the form below and we will get back to you soon.
                         </p>
 
-                        <form class="contact-form">
+                        <form className="contact-form">
 
-                            <div class="form-row">
+                            <div className="form-row">
 
-                                <div class="form-group">
+                                <div className="form-group">
                                     <InputField
                                         label="Your Name"
                                         name="name"
@@ -239,7 +239,7 @@ export default function ContactUs() {
                                     />
                                 </div>
 
-                                <div class="form-group">
+                                <div className="form-group">
                                     <InputField
                                         label="Email Address"
                                         name="email"
@@ -264,7 +264,7 @@ export default function ContactUs() {
 
                             </div>
 
-                            <div class="form-group">
+                            <div className="form-group">
                                 <InputField
                                     label="Phone Number"
                                     name="mobile"
@@ -287,7 +287,7 @@ export default function ContactUs() {
                                 />
                             </div>
 
-                            <div class="form-group">
+                            <div className="form-group">
                                 <InputField
                                     label="Subject"
                                     name="subject"
@@ -310,7 +310,7 @@ export default function ContactUs() {
                                 />
                             </div>
 
-                            <div class="form-group">
+                            <div className="form-group">
                                <TextareaField
                                     label="Message"
                                     name="message"
@@ -331,7 +331,7 @@ export default function ContactUs() {
 
                             <button 
                                 type="button" 
-                                class="btn custom-btn btn-primary contact-btn"
+                                className="btn custom-btn btn-primary contact-btn"
                                 onClick={onSendMessage}
                                 >
                                 Send Message
