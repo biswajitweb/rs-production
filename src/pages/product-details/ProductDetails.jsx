@@ -175,7 +175,7 @@ export default function ProductDetails() {
                     <Spinner
                         centered
                         label="Loading product..."
-                        color="success"
+                        color="primary"
                     />
                 </div>
             </div>

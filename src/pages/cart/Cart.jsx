@@ -9,6 +9,10 @@ const Toast = lazy(()=>
     import('../../components/Toast')
 );
 
+const Spinner = lazy(() => 
+    import("../../components/Spinner")
+);
+
 export default function Cart() {
 
     const {totalQuantity, totalAmount, itmes} =  useSelector((state)=> state.cart);
@@ -17,6 +21,7 @@ export default function Cart() {
     const dispatch =  useDispatch();
     const location = useLocation();
     const {authToken} =  useSelector((state)=>state.user);
+    const [isLoading, setIsLoading] = useState(true);
     
     const taxWithAmount = calculateTax(totalAmount);
 
@@ -40,6 +45,17 @@ export default function Cart() {
             show: false,
         }));
     };
+
+     /**
+     * Cart initialization
+    */
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 300);
+
+        return () => clearTimeout(timer);
+    }, []);
     
 
     useEffect(()=>{
@@ -89,6 +105,25 @@ export default function Cart() {
             }
         });
 
+    }
+
+    if (isLoading) {
+        return (
+            <section className="shopping-cart-page">
+                <div className="container">
+                    <div
+                        className="d-flex flex-column justify-content-center align-items-center"
+                        style={{ minHeight: "400px" }}
+                    >
+                        <Spinner
+                            centered={true}
+                            label="Loading cart..."
+                            color="primary"
+                        />
+                    </div>
+                </div>
+            </section>
+        );
     }
 
     return (

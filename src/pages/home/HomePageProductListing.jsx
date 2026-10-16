@@ -30,7 +30,7 @@ export default function HomePageProductListing({
                             <Spinner
                                 centered={true}
                                 label="Loading products..."
-                                color="success"
+                                color="primary"
                             />
                         )}
 

@@ -7,7 +7,7 @@ export default function CartItems({
     return (
        <>
         <tr 
-            class="cart_item"
+            className="cart_item"
             key={item.productId}
             >
                                        
@@ -21,7 +21,7 @@ export default function CartItems({
                     <span aria-hidden="true">&times;</span>
                 </button>
             </td>
-            <td class="product-thumbnail">
+            <td className="product-thumbnail">
                 <Link 
                     to={`/product-details/${item.productId}/variants/${item.variantId}`}>
                     <img 
@@ -30,16 +30,16 @@ export default function CartItems({
                         src={item?.thumbnail} />
                 </Link>
             </td>
-            <td class="product-name" data-title="Product">
+            <td className="product-name" data-title="Product">
                 <a href="#">{item?.name}</a>
             </td>
             <td 
-                class="product-price" 
+                className="product-price" 
                 data-title="Price">
                 <span 
-                    class="woocommerce-Price-amount">
+                    className="woocommerce-Price-amount">
                     <bdi>
-                        <span class="woocommerce-Price-currencySymbol">&#8377;</span>{Number(item?.price).toFixed(2)}
+                        <span className="woocommerce-Price-currencySymbol">&#8377;</span>{Number(item?.price).toFixed(2)}
                     </bdi>
                 </span>
             </td>
@@ -77,10 +77,10 @@ export default function CartItems({
                     </button>
                 </div>
             </td>
-            <td class="product-subtotal" data-title="Total">
-                <span class="woocommerce-Price-amount">
+            <td className="product-subtotal" data-title="Total">
+                <span className="woocommerce-Price-amount">
                     <bdi>
-                        <span class="woocommerce-Price-currencySymbol">&#8377;</span>
+                        <span className="woocommerce-Price-currencySymbol">&#8377;</span>
                         {(Number(item?.price) * Number(item?.quantity)).toFixed(2)}
                     </bdi>
                 </span>                        
