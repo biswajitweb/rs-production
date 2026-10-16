@@ -72,10 +72,11 @@ export const ROUTES = [
         is_show: "product-details",
         title: "Product Details",
         seo: {
-            title: "add dynamic from product title",
-            description: "add dynamic from product details",
-            canonical: "/product-details/:id/variants/:variantId",
+            title: "Product Details",
+            description: "Explore product details and pricing.",
+            canonical: "/product-details",
             robots: "index, follow",
+            noIndex: true
         },
     },
     {

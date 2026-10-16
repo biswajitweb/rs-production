@@ -14,7 +14,7 @@ export default function NoProductsFound() {
                                 }}
                             >
                                 <i
-                                    className="bi bi-bag-x text-secondary"
+                                    className="bi bi-bag-x text-danger"
                                     style={{ fontSize: "2.5rem" }}
                                 ></i>
                             </div>

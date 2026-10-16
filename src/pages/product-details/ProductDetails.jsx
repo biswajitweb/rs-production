@@ -8,7 +8,6 @@ import { addToCart } from '../../features/cart/cartSlice';
 import { REDIRECT_DELAY } from '../../utils/staticImage';
 
 
-
 const SimilarProducts = lazy(() => 
     import('./SimilarProducts')
 );
@@ -17,6 +16,10 @@ const Spinner = lazy(() =>
 );
 const Toast = lazy(()=>
     import('../../components/Toast')
+);
+
+const SEO = lazy(()=>
+    import('../../components/SEO')
 );
 
 export default function ProductDetails() {
@@ -212,6 +215,14 @@ export default function ProductDetails() {
 
     return (
         <>
+            <SEO
+                title={productDetails?.name}
+                description={productDetails?.description}
+                canonical={`/product-details/${id}/variants/${variantId}`}
+                image={productDetails?.image?.src}
+                noIndex={!productDetails}
+                type="product-details"
+            />
             <section className="rs-list-details mt-4">
                 <div className="container">
                     <div
