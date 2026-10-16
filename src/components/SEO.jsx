@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 
 const SITE_NAME = "R S Productions";
 const SITE_URL = "https://rabisankar.com";
+
 const DEFAULT_DESCRIPTION =
     "Explore our products and services.";
 
@@ -12,6 +13,7 @@ const SEO = ({
     canonical,
     image,
     noIndex = false,
+    robots,
     type = "website",
 }) => {
     // Dynamic page title
@@ -29,9 +31,12 @@ const SEO = ({
         ? new URL(image, SITE_URL).href
         : undefined;
 
-    const robotsContent = noIndex
-        ? "noindex, nofollow"
-        : "index, follow";
+    // Robots
+    const robotsContent =
+        robots ||
+        (noIndex
+            ? "noindex, nofollow"
+            : "index, follow");
 
     return (
         <Helmet>
@@ -48,6 +53,7 @@ const SEO = ({
                 content={robotsContent}
             />
 
+            {/* Canonical */}
             {canonicalUrl && (
                 <link
                     rel="canonical"
@@ -56,7 +62,10 @@ const SEO = ({
             )}
 
             {/* Open Graph */}
-            <meta property="og:type" content={type} />
+            <meta
+                property="og:type"
+                content={type}
+            />
 
             <meta
                 property="og:site_name"

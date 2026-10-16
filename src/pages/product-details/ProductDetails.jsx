@@ -217,11 +217,15 @@ export default function ProductDetails() {
         <>
             <SEO
                 title={productDetails?.name}
-                description={productDetails?.description}
+                description={
+                    productDetails?.short_description ||
+                    productDetails?.description ||
+                    "Explore product details and pricing."
+                }
                 canonical={`/product-details/${id}/variants/${variantId}`}
                 image={productDetails?.image?.src}
                 noIndex={!productDetails}
-                type="product-details"
+                type="product"
             />
             <section className="rs-list-details mt-4">
                 <div className="container">

@@ -74,10 +74,8 @@ export const ROUTES = [
         seo: {
             title: "Product Details",
             description: "Explore product details and pricing.",
-            canonical: "/product-details",
-            robots: "index, follow",
-            noIndex: true
-        },
+            noIndex: true,
+        }
     },
     {
         path: "/cart",
