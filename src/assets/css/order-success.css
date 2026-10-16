@@ -264,3 +264,179 @@
     }
   }
 }
+
+
+.payment-verification-card {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 45px 30px;
+    background: #fff;
+    border-radius: 18px;
+    text-align: center;
+}
+
+.payment-verification-icon {
+    width: 82px;
+    height: 82px;
+    margin: 0 auto 25px;
+    border-radius: 50%;
+    background: #eef6ff;
+    color: #0d6efd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.payment-verification-icon svg {
+    position: relative;
+    z-index: 2;
+}
+
+.verification-spinner {
+    position: absolute;
+    inset: -5px;
+    border: 3px solid #dbeafe;
+    border-top-color: #0d6efd;
+    border-radius: 50%;
+    animation: paymentSpin 1s linear infinite;
+}
+
+@keyframes paymentSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.payment-verification-title {
+    margin: 0 0 10px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #212529;
+}
+
+.payment-verification-message {
+    margin: 0;
+    color: #6c757d;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.payment-progress {
+    width: 100%;
+    height: 5px;
+    margin: 28px auto 18px;
+    background: #edf0f3;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.payment-progress-bar {
+    width: 45%;
+    height: 100%;
+    background: #0d6efd;
+    border-radius: inherit;
+    animation: paymentProgress 1.8s ease-in-out infinite;
+}
+
+@keyframes paymentProgress {
+    0% {
+        transform: translateX(-120%);
+    }
+
+    100% {
+        transform: translateX(250%);
+    }
+}
+
+.payment-verification-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: #495057;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background: #0d6efd;
+    border-radius: 50%;
+    animation: statusPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+    0%,
+    100% {
+        opacity: 0.4;
+        transform: scale(0.8);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.payment-verification-note {
+    display: block;
+    color: #adb5bd;
+    font-size: 12px;
+}
+
+
+/* Payment failed */
+
+.payment-failed-card {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 45px 30px;
+    background: #fff;
+    border-radius: 18px;
+}
+
+.payment-failed-icon {
+    width: 75px;
+    height: 75px;
+    margin: 0 auto 22px;
+    border-radius: 50%;
+    background: #fff3cd;
+    color: #dc3545;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.payment-failed-card h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #212529;
+}
+
+.payment-failed-card > p {
+    margin-bottom: 25px;
+    color: #6c757d;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.payment-failed-order {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    margin-bottom: 25px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.payment-failed-order span {
+    color: #6c757d;
+}
+
+.payment-failed-order strong {
+    color: #212529;
+}
