@@ -1,13 +1,41 @@
-import React, { useEffect, useState } from 'react'
+import React, { lazy, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { FORM_ERROR_STYLE } from '../../utils/formStyles';
 import { service } from '../../api/service';
+import {STATIC_IMAGE} from '../../utils/staticImage';
+
+
+const Toast = lazy(()=>
+    import('../../components/Toast')
+);
 
 export default function SignUp() {
 
     const { authToken } = useSelector((state) => state.user);
     const navigate = useNavigate();
+
+    const [toast, setToast] = useState({
+        show: false,
+        message: "",
+        type: "success",
+    });
+
+    const showToast = (message, type = "success") => {
+        setToast({
+            show: true,
+            message,
+            type,
+        });
+    };
+
+    const closeToast = () => {
+        setToast((prev) => ({
+            ...prev,
+            show: false,
+        }));
+    };
+    
 
     useEffect(() => {
         if (authToken !== null) {
@@ -60,7 +88,7 @@ export default function SignUp() {
     const [touched, setTouched] = useState(initialTouched);
     const [errors, setErrors] = useState({});
     const [isLoader, setIsLoader] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
+    
 
     /**
      * Handle input change
@@ -151,8 +179,6 @@ export default function SignUp() {
      * Handle Register
      */
     const onHandleRegister = async() => {
-
-        setErrorMessage('');
         // Mark all fields as touched
         setTouched({
             first_name: true,
@@ -234,7 +260,10 @@ export default function SignUp() {
            
         } catch (error) {
             if(error) {
-                setErrorMessage(error.message);
+                showToast(
+                    error.message,
+                    "error"
+                );
             }
         } finally {
             setIsLoader(false);
@@ -250,7 +279,7 @@ export default function SignUp() {
 
                     {/* Logo */}
                     <div className="signup-logo">
-                        RS
+                         <img src={STATIC_IMAGE.LOGO}/>
                     </div>
 
                     {/* Heading */}
@@ -258,12 +287,14 @@ export default function SignUp() {
                         <h1>Create Your Account</h1>
 
                         <p className="signup-subtitle">
-                            Join our photography community and discover original images.
+                            Discover original tribal culture photos
                         </p>
                     </div>
 
-                    {/* First Name */}
-                    <div className="mb-3">
+                    <div className='row'>
+                        <div className='col-md-6'>
+                              {/* First Name */}
+                                <div className="mb-3">
                         <label htmlFor="first_name" className="form-label">
                             First Name
                         </label>
@@ -290,8 +321,9 @@ export default function SignUp() {
                             </small>
                         )}
                     </div>
-
-                    {/* Last Name */}
+                        </div>
+                        <div className='col-md-6'>
+                            {/* Last Name */}
                     <div className="mb-3">
                         <label htmlFor="last_name" className="form-label">
                             Last Name
@@ -319,6 +351,12 @@ export default function SignUp() {
                             </small>
                         )}
                     </div>
+                        </div>
+                    </div>
+                  
+                    
+
+                    
 
                     {/* Email */}
                     <div className="mb-3">
@@ -451,15 +489,6 @@ export default function SignUp() {
                     >
                         {isLoader ? "Creating Account..." : "Create Account"}
                     </button>
-
-                    {
-                        errorMessage && (
-                            <small className="text-danger d-block mb-3">
-                                {errorMessage}
-                            </small>
-                        )
-                    }
-
                     {/* Login */}
                     <div className="login-text">
                         Already have an account?{" "}
@@ -470,6 +499,13 @@ export default function SignUp() {
 
                 </div>
             </main>
+            <Toast
+                show={toast.show}
+                message={toast.message}
+                type={toast.type}
+                duration={3000}
+                onClose={closeToast}
+            />
         </>
     );
 }

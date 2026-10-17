@@ -22,8 +22,8 @@
 }
 
 .signup-logo {
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     margin: 0 auto 20px;
     display: flex;
     align-items: center;
@@ -36,7 +36,9 @@
     font-size: 24px;
     font-weight: 700;
 }
-
+.signup-logo img{
+    width: 80px;
+}
 .signup-subtitle {
     margin-bottom: 0;
     color: #777;

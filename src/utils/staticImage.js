@@ -30,3 +30,4 @@ export const STATIC_IMAGE = {
 };
 
 export const TAX = 18.00;
+export const REDIRECT_DELAY  = 2000;

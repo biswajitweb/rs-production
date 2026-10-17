@@ -10,6 +10,7 @@
     width: 100%;
     min-width: 0;
     margin: 0;
+    padding: 0;
     color: var(--themeBodyColor);
     text-decoration: none;
     background-color: transparent !important;
@@ -238,9 +239,9 @@
   }
 
   .p-price {
-    font-size: 30px;
+    font-size: 42px;
     margin-bottom: 25px;
-    color: var(--themeSecondaryColor);
+    color: #0f9f31;
   }
 
   .p-table td {
@@ -255,6 +256,6 @@
   .p-phone {
     font-size: 30px;
     font-weight: 500;
-    color: #05b101;
+    color: #003eff;
   }
 }

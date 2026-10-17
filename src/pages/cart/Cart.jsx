@@ -1,9 +1,17 @@
-import React, { useEffect } from 'react'
+import React, { lazy, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, replace, useLocation, useNavigate } from 'react-router-dom';
 import { clearCart, decreaseQuantity, increaseQuantity, removeFromCart } from '../../features/cart/cartSlice';
 import CartItems from './CartItems';
 import { calculateTax } from '../../utils/calculateTax';
+
+const Toast = lazy(()=>
+    import('../../components/Toast')
+);
+
+const Spinner = lazy(() => 
+    import("../../components/Spinner")
+);
 
 export default function Cart() {
 
@@ -13,10 +21,41 @@ export default function Cart() {
     const dispatch =  useDispatch();
     const location = useLocation();
     const {authToken} =  useSelector((state)=>state.user);
-    
-    
+    const [isLoading, setIsLoading] = useState(true);
     
     const taxWithAmount = calculateTax(totalAmount);
+
+    const [toast, setToast] = useState({
+            show: false,
+            message: "",
+            type: "success",
+        });
+    
+    const showToast = (message, type = "success") => {
+        setToast({
+            show: true,
+            message,
+            type,
+        });
+    };
+
+    const closeToast = () => {
+        setToast((prev) => ({
+            ...prev,
+            show: false,
+        }));
+    };
+
+     /**
+     * Cart initialization
+    */
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 300);
+
+        return () => clearTimeout(timer);
+    }, []);
     
 
     useEffect(()=>{
@@ -30,12 +69,20 @@ export default function Cart() {
 
     const deleteCartItem = (productId)=>{
         if(productId) {
-           dispatch(removeFromCart(productId));
+            dispatch(removeFromCart(productId));
+            showToast(
+                "Item removed from your cart successfully!",
+                "success"
+            );
         }
     }
 
     const removeAllItemsFromCart = ()=>{
         dispatch(clearCart())
+        showToast(
+            "All items have been removed from your cart!",
+            "success"
+        );
     }
 
     const handleIncrement = (productId)=>{
@@ -58,6 +105,25 @@ export default function Cart() {
             }
         });
 
+    }
+
+    if (isLoading) {
+        return (
+            <section className="shopping-cart-page">
+                <div className="container">
+                    <div
+                        className="d-flex flex-column justify-content-center align-items-center"
+                        style={{ minHeight: "400px" }}
+                    >
+                        <Spinner
+                            centered={true}
+                            label="Loading cart..."
+                            color="primary"
+                        />
+                    </div>
+                </div>
+            </section>
+        );
     }
 
     return (
@@ -95,12 +161,12 @@ export default function Cart() {
                                             <table className='table'>
                                                 <thead>
                                                     <tr>
-                                                        <th class="product-remove"><span class="screen-reader-text">&nbsp;</span></th>
-                                                        <th class="product-thumbnail"><span class="screen-reader-text">Image</span></th>
-                                                        <th class="product-name">Product</th>
-                                                        <th class="product-price">Price</th>
-                                                        <th class="product-quantity">Quantity</th>
-                                                        <th class="product-subtotal">Total</th>
+                                                        <th className="product-remove"><span className="screen-reader-text">&nbsp;</span></th>
+                                                        <th className="product-thumbnail"><span className="screen-reader-text">Image</span></th>
+                                                        <th className="product-name">Product</th>
+                                                        <th className="product-price">Price</th>
+                                                        <th className="product-quantity">Quantity</th>
+                                                        <th className="product-subtotal">Total</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -172,6 +238,13 @@ export default function Cart() {
                     
                 </div>
         </section>
+        <Toast
+            show={toast.show}
+            message={toast.message}
+            type={toast.type}
+            duration={3000}
+            onClose={closeToast}
+        />
        </>
     )
 }

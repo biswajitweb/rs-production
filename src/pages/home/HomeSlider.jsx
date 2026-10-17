@@ -1,9 +1,17 @@
 
-import React from 'react'
+import React, { lazy } from 'react'
 import { STATIC_IMAGE } from '../../utils/staticImage'
 import { Link } from 'react-router-dom'
 
-export default function HomeSlider() {
+
+const CustomersView = lazy(()=>
+    import('./CustomersView')
+);
+
+export default function HomeSlider({
+    search,
+    setSearch
+}) {
 
     // Combine the default background with search images
     const images = STATIC_IMAGE.searchBanner;
@@ -13,77 +21,87 @@ export default function HomeSlider() {
     images[Math.floor(Math.random() * images.length)];
 
     return (
-        <section
-            className="rs-search-area"
-            style={{
-                backgroundImage: `url("${randomImage}")`,
-            }}
-        >
-            <div className="container">
-                <div className="row">
-                    <div className="col-12">
-                        <div className="search-wrap">
+        <>
+            <section
+                className="rs-search-area"
+                style={{
+                    backgroundImage: `url("${randomImage}")`,
+                }}
+            >
+                <div className="container">
+                    <div className="row">
+                        <div className="col-12">
+                            <div className="search-wrap">
 
-                            <h1 className="rs-heading">
-                                Tribal Culture & Temple Stories in Photos
-                            </h1>
+                                <h1 className="rs-heading">
+                                    Tribal Culture & Temple Stories in Photos
+                                </h1>
 
-                            <p className="rs-description">
-                                Buy original photos of tribal culture, temples,
-                                people, festivals and heritage for commercial,
-                                editorial and creative projects.
-                            </p>
+                                <p className="rs-description">
+                                    Buy original photos of tribal culture, temples,
+                                    people, festivals and heritage for commercial,
+                                    editorial and creative projects.
+                                </p>
 
-                            <div className="input-wrap">
-                                <input
-                                    type="text"
-                                    placeholder="Search photos by place, culture, category or keyword..."
-                                    data-mobile-placeholder="Search photos..."
-                                />
+                                <div className="input-wrap">
+                                    <input
+                                        type="text"
+                                        name='search'
+                                        placeholder="Search photos by place, culture, category or keyword..."
+                                        data-mobile-placeholder="Search photos..."
+                                        value={search}
+                                        onChange={(e)=>setSearch(e.target.value)}
+                                        autoComplete='off'
+                                    />
 
-                                <button
-                                    type="button"
-                                    className="btn-search"
-                                    aria-label="Search photos"
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="16"
-                                        height="16"
-                                        fill="currentColor"
-                                        viewBox="0 0 16 16"
+                                    <button
+                                        type="button"
+                                        className="btn-search"
+                                        aria-label="Search photos"
                                     >
-                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                    </svg>
-                                </button>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="16"
+                                            height="16"
+                                            fill="currentColor"
+                                            viewBox="0 0 16 16"
+                                        >
+                                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <div className="popular-tag">
+                                    <Link to="/" className="popular-list">
+                                        Birhor
+                                    </Link>
+
+                                    <Link to="/" className="popular-list">
+                                        Bonda
+                                    </Link>
+
+                                    <Link to="/" className="popular-list">
+                                        Chuktia Bhunjia
+                                    </Link>
+
+                                    <Link to="/" className="popular-list">
+                                        Didayi
+                                    </Link>
+
+                                    <Link to="/" className="popular-list">
+                                        Dongaria
+                                    </Link>
+                                </div>
+
                             </div>
-
-                            <div className="popular-tag">
-                                <Link to="/" className="popular-list">
-                                    Birhor
-                                </Link>
-
-                                <Link to="/" className="popular-list">
-                                    Bonda
-                                </Link>
-
-                                <Link to="/" className="popular-list">
-                                    Chuktia Bhunjia
-                                </Link>
-
-                                <Link to="/" className="popular-list">
-                                    Didayi
-                                </Link>
-
-                                <Link to="/" className="popular-list">
-                                    Dongaria
-                                </Link>
-                            </div>
-
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+
+    
+            <CustomersView/>
+
+      </>  
     )
 }

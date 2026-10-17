@@ -138,3 +138,13 @@
     border-radius: 30px;
     text-decoration: none;
 }
+.rs-header-area.sticky-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 2147483647 !important;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}

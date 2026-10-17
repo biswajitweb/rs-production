@@ -6,9 +6,17 @@ import { FORM_ERROR_STYLE } from '../../utils/formStyles';
 import { encryptData } from '../../utils/encryption';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginSuccess } from '../../features/auth/authSlice';
+import {STATIC_IMAGE} from '../../utils/staticImage';
 
 
-const Spinner = lazy(()=>import('../../components/Spinner'));
+
+const Spinner = lazy(()=>
+    import('../../components/Spinner')
+);
+
+const Toast = lazy(()=>
+    import('../../components/Toast')
+);
 
 export default function Login() {
 
@@ -16,6 +24,28 @@ export default function Login() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
+
+    const [toast, setToast] = useState({
+            show: false,
+            message: "",
+            type: "success",
+        });
+    
+    const showToast = (message, type = "success") => {
+        setToast({
+            show: true,
+            message,
+            type,
+        });
+    };
+    
+    const closeToast = () => {
+        setToast((prev) => ({
+            ...prev,
+            show: false,
+        }));
+    };
+
     useEffect(()=>{
         if(authToken !== null) {
             navigate(`/my-account`);
@@ -38,10 +68,7 @@ export default function Login() {
     const [errors, setErrors] = useState({});
     const [loader, setLoader] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const [loginErrorMessage, setLoginErrorMessage] = useState('');
     
-    
-
     const handleFromData = (e)=>{
         const {name, value} = e.target;
         setFromData((prev)=>({
@@ -63,7 +90,7 @@ export default function Login() {
     };
 
     const onHandleLogin = async()=>{
-        setLoginErrorMessage('');
+        
         // Mark all fields as touched
         const touchedFields  = REQURIED_FIELD.reduce((acc, field )=>{
             acc[field] = true;
@@ -106,7 +133,10 @@ export default function Login() {
             }
         } catch (error) {
             if(error) {
-                setLoginErrorMessage(error.message);
+               showToast(
+                    error.message,
+                    "error"
+                );
             }
         } finally {
             setLoader(false);
@@ -120,7 +150,7 @@ export default function Login() {
             <div className="login-card">
                 {/* Logo */}
                 <div className="login-logo">
-                    RS
+                    <img src={STATIC_IMAGE.LOGO}/>
                 </div>
 
                 {/* Heading */}
@@ -130,12 +160,6 @@ export default function Login() {
                         Login to explore and manage your photo collection.
                     </p>
                 </div>
-
-                {/* Login Form */}
-                {
-                    loginErrorMessage && <span className='text-danger'>{loginErrorMessage}</span>
-                }
-               
                 {/* Email */}
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">
@@ -240,6 +264,13 @@ export default function Login() {
                 </div>
             </div>
         </main>
+        <Toast
+            show={toast.show}
+            message={toast.message}
+            type={toast.type}
+            duration={3000}
+            onClose={closeToast}
+        />
        </>
     )
 }

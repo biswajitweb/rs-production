@@ -129,8 +129,8 @@ axiosInstance.interceptors.response.use(
                 localStorage.removeItem("token");
                 localStorage.removeItem("refreshToken");
 
-                if (!window.location.pathname.includes("/login")) {
-                    window.location.assign("/login");
+                if (!window.location.pathname.includes("/sign-in")) {
+                    window.location.assign("/sign-in");
                 }
 
                 return Promise.reject(refreshError);

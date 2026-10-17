@@ -52,9 +52,14 @@ export default function SimilarProducts({ productId, onClick }) {
                                             loading="lazy"
                                         />
 
-                                        <figcaption>
-                                            {item.name || "Similar image"}
-                                        </figcaption>
+                                        <div className='action-area'>
+                                            <figcaption>
+                                                {item?.name}
+                                            </figcaption>
+                                            <div className='btn-buy-icon'>
+                                                <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall mui-4defme-downloadIcon" focusable="false" aria-hidden="true" viewBox="0 0 32 32" aria-label="download-icon"><path d="M24.933 15.733l-1.867-1.867-5.733 5.733V3.332h-2.667v16.267l-5.733-5.733-1.867 1.867 8.933 8.933 8.933-8.933zm-22.266 11.6V30h26.667v-2.667H2.667z"></path></svg>
+                                            </div>
+                                        </div>
                                     </button>
                                 ))}
 

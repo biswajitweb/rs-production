@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Keep private/customer-specific pages out of search results
+Disallow: /my-account/
+Disallow: /cart/
+Disallow: /checkout/
+
+Sitemap: https://rabisankar.com/sitemap.xml
