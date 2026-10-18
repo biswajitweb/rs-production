@@ -86,7 +86,13 @@ export const service = {
         },
         single : (orderId)=>{
             return axiosInstance.get(`${API_PREFIX}orders/${orderId}`);
-        }
+        },
+        generate_token : (params = {})=>{
+            return axiosInstance.post(`${API_PREFIX}order/generate-token`, params);
+        },
+        download_image : (token)=>{
+            return axiosInstance.get(`${API_PREFIX}order/download-image?token=${token}`);
+        } 
     },
     /**
      * Address book 

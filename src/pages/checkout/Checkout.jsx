@@ -396,6 +396,7 @@ export default function Checkout() {
                 user_id: Number(userInfo.id),
                 order_id: orderId,
             };
+            
 
             const paymentResult =
                 await createCashfreePayment(
