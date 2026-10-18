@@ -289,35 +289,38 @@ export default function ProductDetails() {
                                     <div className="table-responsive">
                                         <table className="table table-borderless p-table">
                                             <tbody>
-                                                {
-                                                    
-                                                    Object.entries(productDetails.image_meta)
-                                                    .filter(([key, value]) => value !== "" && value !== null && value !== undefined)
-                                                    .map(([key, value])=>{
-                                                        return(
-                                                            <>
+                                                {productDetails?.image_meta &&
+                                                    Object.entries(productDetails.image_meta).filter(
+                                                        ([key, value]) =>
+                                                            value !== "" &&
+                                                            value !== null &&
+                                                            value !== undefined
+                                                    ).length > 0 ? (
+                                                        Object.entries(productDetails.image_meta)
+                                                            .filter(
+                                                                ([key, value]) =>
+                                                                    value !== "" &&
+                                                                    value !== null &&
+                                                                    value !== undefined
+                                                            )
+                                                            .map(([key, value]) => (
                                                                 <tr key={key}>
                                                                     <th scope="row">
                                                                         {key
-        .replace(/_/g, " ")
-        .replace(/\b\w/g, char => char.toUpperCase())}
+                                                                            .replace(/_/g, " ")
+                                                                            .replace(/\b\w/g, char => char.toUpperCase())}
                                                                     </th>
-                                                                    <td>
-                                                                        {value}
-                                                                    </td>
+                                                                    <td>{value}</td>
                                                                 </tr>
-                                                            </>
-                                                        )
-                                                        
-                                                    })
-                                                    
-                                                }
-                                                
-
-                                                
-
-                                                
-                                            </tbody>
+                                                            ))
+                                                    ) : (
+                                                        <tr>
+                                                            <td colSpan="2" className="text-center text-muted">
+                                                                No additional image information to display.
+                                                            </td>
+                                                        </tr>
+                                                    )}
+                                                </tbody>
                                         </table>
                                     </div>
 
