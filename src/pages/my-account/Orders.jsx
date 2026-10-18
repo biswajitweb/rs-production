@@ -15,6 +15,10 @@ const Spinner = lazy(()=>
     import('../../components/Spinner')
 );
 
+const Toast = lazy(()=>
+    import('../../components/Toast')
+);
+
 
 export default function Orders() {
 
@@ -22,6 +26,8 @@ export default function Orders() {
 
     const [userInfo, setUserInfo] = useState(null);
     const [orderList, setOrderList] = useState([]);
+
+    const [downloadLoader, setDownloadLoader] = useState(false);
 
     const navigate = useNavigate();
 
@@ -41,6 +47,28 @@ export default function Orders() {
     const [orderDetails, setOrderDetails] = useState({});
 
     const [offcanvasId, setoffcanvasId] = useState('offcanvasRight');
+
+
+    const [toast, setToast] = useState({
+        show: false,
+        message: "",
+        type: "success",
+    });
+    
+    const showToast = (message, type = "success") => {
+        setToast({
+            show: true,
+            message,
+            type,
+        });
+    };
+
+    const closeToast = () => {
+        setToast((prev) => ({
+            ...prev,
+            show: false,
+        }));
+    };
 
     /**
      * Decrypt logged-in user
@@ -200,6 +228,38 @@ export default function Orders() {
         );
     };
 
+    const downloadOrderFile = async(orderId, transactionId)=>{
+        try {
+            
+            if(orderId && userInfo.id && transactionId) {
+                setDownloadLoader(true);
+                let tokenData = {
+                    user_id : userInfo.id,
+                    order_id : orderId
+                }
+                const response = await service.order.generate_token(tokenData);
+                const tokenResponse =  response.data;
+                if(tokenResponse.success === true || tokenResponse.token) {
+                    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+                    const downloadWindow = window.open('about:blank', '_blank');
+                    const downloadUrl = new URL(`${API_BASE_URL}/custom-store/v1/order/download-image`);
+                    downloadUrl.searchParams.set('token', tokenResponse.token);
+                    downloadWindow.location.replace(downloadUrl.toString());
+                }
+                
+            }
+        } catch (error) {
+            if(error) {
+                showToast(
+                    error.message,
+                    "error"
+                );
+            }
+        } finally {
+            setDownloadLoader(false);
+        }
+    }
+
 
     return (
         <>
@@ -290,7 +350,7 @@ export default function Orders() {
 
                                         <td>
                                          
-                                                ₹{item.total}
+                                                ₹{item.total} 
                                             
                                         </td>
 
@@ -305,18 +365,29 @@ export default function Orders() {
                                         </td>
 
                                         <td className="text-center">
-
-                                            <button
-                                                type="button"
-                                                className="btn btn-sm btn-outline-primary"
-                                                data-bs-toggle="offcanvas"
-                                                data-bs-target={`#${offcanvasId}`}
-                                                aria-controls={offcanvasId}
-                                                onClick={()=>onHandleOrderView(item.id)}
-                                            >
-                                                View
-                                            </button>
-
+                                            <div 
+                                                className="d-flex justify-content-center gap-2">
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-sm btn-outline-primary"
+                                                    data-bs-toggle="offcanvas"
+                                                    data-bs-target={`#${offcanvasId}`}
+                                                    aria-controls={offcanvasId}
+                                                    onClick={() => onHandleOrderView(item.id)}
+                                                    disabled={downloadLoader}
+                                                >
+                                                    <i className="bi bi-eye me-1"></i>
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-sm btn-outline-danger"
+                                                    disabled={!item.transaction_id || downloadLoader}
+                                                    onClick={()=>downloadOrderFile(item.id, item?.transaction_id)}
+                                                    
+                                                >
+                                                     <i className="bi bi-download me-1"></i>
+                                                </button>
+                                            </div>
                                         </td>
 
                                     </tr>
@@ -888,6 +959,14 @@ export default function Orders() {
                     </div>
                 )}
             </Offcanvas>
+
+            <Toast
+                show={toast.show}
+                message={toast.message}
+                type={toast.type}
+                duration={3000}
+                onClose={closeToast}
+            />
         </>
         
     );
