@@ -2,6 +2,8 @@ import React, { lazy, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
+import DOMPurify from "dompurify";
+
 
 import { service } from '../../api/service';
 import { addToCart } from '../../features/cart/cartSlice';
@@ -272,9 +274,13 @@ export default function ProductDetails() {
                                         {productDetails?.name}
                                     </h1>
 
-                                    <p className="p-description">
-                                        {productDetails?.description}
-                                    </p>
+                                    
+                                        <div
+                                            className="p-description"
+                                            dangerouslySetInnerHTML={{
+                                                __html: DOMPurify.sanitize(productDetails?.description || ""),
+                                            }}
+                                        />
 
                                     <h3 className="p-price">
                                         ₹{Number(totalPrice).toFixed(2)}
