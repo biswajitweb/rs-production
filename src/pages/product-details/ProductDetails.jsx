@@ -289,77 +289,34 @@ export default function ProductDetails() {
                                     <div className="table-responsive">
                                         <table className="table table-borderless p-table">
                                             <tbody>
-                                                <tr>
-                                                    <th scope="row">
-                                                        Location
-                                                    </th>
-                                                    <td>
-                                                        Koraput, Odisha, India
-                                                    </td>
-                                                </tr>
+                                                {
+                                                    
+                                                    Object.entries(productDetails.image_meta)
+                                                    .filter(([key, value]) => value !== "" && value !== null && value !== undefined)
+                                                    .map(([key, value])=>{
+                                                        return(
+                                                            <>
+                                                                <tr key={key}>
+                                                                    <th scope="row">
+                                                                        {key
+        .replace(/_/g, " ")
+        .replace(/\b\w/g, char => char.toUpperCase())}
+                                                                    </th>
+                                                                    <td>
+                                                                        {value}
+                                                                    </td>
+                                                                </tr>
+                                                            </>
+                                                        )
+                                                        
+                                                    })
+                                                    
+                                                }
+                                                
 
-                                                <tr>
-                                                    <th scope="row">
-                                                        Date taken
-                                                    </th>
-                                                    <td>
-                                                        25 July 2026
-                                                    </td>
-                                                </tr>
+                                                
 
-                                                <tr>
-                                                    <th scope="row">
-                                                        Category
-                                                    </th>
-                                                    <td>
-                                                        Tribal Culture
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th scope="row">
-                                                        File Format
-                                                    </th>
-                                                    <td>
-                                                        JPG
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th scope="row">
-                                                        Dimensions
-                                                    </th>
-                                                    <td>
-                                                        6000 × 4000
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th scope="row">
-                                                        File Size
-                                                    </th>
-                                                    <td>
-                                                        12.4 MB
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th scope="row">
-                                                        Orientation
-                                                    </th>
-                                                    <td>
-                                                        Landscape
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th scope="row">
-                                                        License
-                                                    </th>
-                                                    <td>
-                                                        Commercial
-                                                    </td>
-                                                </tr>
+                                                
                                             </tbody>
                                         </table>
                                     </div>
