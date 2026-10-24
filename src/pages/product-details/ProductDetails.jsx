@@ -1,6 +1,6 @@
 import React, { lazy, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
 import DOMPurify from "dompurify";
 
@@ -26,6 +26,8 @@ const SEO = lazy(()=>
 
 export default function ProductDetails() {
     const { id, variantId } = useParams();
+
+    const {store} = useSelector(state=> state.site.info);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -362,10 +364,12 @@ export default function ProductDetails() {
                                     <p className="p-question">
                                         Have a question about this photo?
                                     </p>
-
-                                    <h3 className="p-phone">
-                                        +91-88952-67838
-                                    </h3>
+                                    {store?.woocommerce_pos_store_phone && (
+                                        <h3 className="p-phone">
+                                            {store.woocommerce_pos_store_phone}
+                                        </h3>
+                                    )}
+                                    
 
                                     {/* Optional background refetch indicator */}
                                     {isFetching && !isLoading && (

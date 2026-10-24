@@ -1,12 +1,19 @@
 import React, { lazy, useState } from 'react'
 import { FORM_ERROR_STYLE } from '../../utils/formStyles';
 import TextareaField from '../../components/form/TextareaField';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const InputField =lazy(()=>
     import('../../components/form/InputField')
 );
 
 export default function ContactUs() {
+
+    const {store} = useSelector(state => state.site.info);
+    
+    
+
     // --------------------------------
     // Default Form Data
     // --------------------------------
@@ -173,7 +180,10 @@ export default function ContactUs() {
                             </div>
                             <div>
                                 <span>Address</span>
-                                <p>611/998 (1st Floor), BJB Nagar, Bhubaneswar, Odisha</p>
+                                {store?.woocommerce_store_address && (
+                                    <p>{store.woocommerce_store_address}</p>
+                                )}
+                               
                             </div>
                         </div>
 
@@ -185,7 +195,12 @@ export default function ContactUs() {
                                 </svg>
                             </div>
                             <div>
-                                <span><a href="mailto:rsrath13@gmail.com">rsrath13@gmail.com</a></span>
+                                {store?.woocommerce_pos_store_email && (
+                                   <span>
+                                        <Link to={`mailto:${store.woocommerce_pos_store_email}`}>{store.woocommerce_pos_store_email}</Link>
+                                    </span>
+                                )}
+                                
                                 <p>For photo purchases, licensing, payments, downloads, and general enquiries.</p>
                             </div>
                         </div>
@@ -197,7 +212,11 @@ export default function ContactUs() {
                                     <path d="M6.6 3.5 9 3l2 5-2.2 1.8a14 14 0 0 0 5.4 5.4L16 13l5 2 .5 2.4a2 2 0 0 1-2.2 2.3C10.6 18.8 5.2 13.4 4.3 4.7A2 2 0 0 1 6.6 3.5Z"/>
                                 </svg>
                             </div>
-                            <div><span><a href="tel:+918895267838">+91-88952-67838</a></span>
+                            <div>
+                                {store?.woocommerce_pos_store_phone && (
+                                   <span><Link to={`tel:${store?.woocommerce_pos_store_phone}`}>{store.woocommerce_pos_store_phone}</Link></span>
+                                )}
+                               
                                 <p>Contact us for photo licensing, pricing, purchase assistance, and customer support.</p>
                             </div>
                         </div>
