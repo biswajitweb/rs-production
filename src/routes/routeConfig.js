@@ -120,6 +120,20 @@ export const ROUTES = [
         },
     },
     {
+        path: "/forgot-password",
+        element: "ForgotPassword",
+        area: ROUTE_AREA.WEBSITE,
+        guest: true,
+        is_show: "forgot-password",
+        title: "Create Account",
+        seo: {
+            title: "Forgot Password | Buy Tribal Culture Photos",
+            description: "Reset your password to regain access to your account and continue exploring, purchasing and downloading tribal culture photographs.",
+            canonical: "/forgot-password",
+            robots: "index, follow",
+        },
+    },
+    {
         path: "/terms-conditions",
         element: "TermsConditions",
         area: ROUTE_AREA.WEBSITE,
