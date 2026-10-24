@@ -10,7 +10,9 @@ export default function TextareaField({
     rows = 4,
     required = false,
     error = "",
-    disabled = false
+    disabled = false,
+    style = {},
+    max = {max}
 }) {
     return (
         <div className="mb-3">
@@ -39,6 +41,8 @@ export default function TextareaField({
                 className={`form-control ${
                     error ? "is-invalid" : ""
                 }`}
+                style={style}
+                maxLength={max}
             />
 
             {error && (

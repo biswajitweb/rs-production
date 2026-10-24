@@ -119,5 +119,13 @@ export const service = {
         default : async(params = {})=>{
             return await axiosInstance.put(`${API_PREFIX}addresses/default`, params);
         }
+    },
+    /**
+     * Contact us
+    */
+    contact : {
+        sendMessage : async(params = {})=>{
+            return await axiosInstance.post(`${API_PREFIX}/send-message`, params);
+        }
     }
 };
