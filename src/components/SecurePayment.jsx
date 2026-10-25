@@ -4,7 +4,7 @@ export default function SecurePayment() {
     return (
         <>
             <section className="rs-trust-section">
-                <div className="rs-trust-container">
+                <div className="container">
                     <div className="rs-trust-grid">
                         <div className="rs-trust-card">
                             <div className="rs-trust-icon rs-icon-green">

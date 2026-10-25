@@ -2,7 +2,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
   background-size: cover;
   background-position: center bottom;
   background-repeat: no-repeat;
@@ -150,7 +149,7 @@
     padding: 14px 20px;
     font-family: inherit;
     font-size: 18px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 
 .rs-rating-label {
