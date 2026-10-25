@@ -386,8 +386,10 @@ export default function SignUp() {
                             </small>
                         )}
                     </div>
-
-                    {/* Password */}
+                    
+                    <div className='row'>
+                        <div className='col-md-6'>
+                             {/* Password */}
                     <div className="mb-3">
                         <label htmlFor="password" className="form-label">
                             Password
@@ -415,8 +417,9 @@ export default function SignUp() {
                             </small>
                         )}
                     </div>
-
-                    {/* Confirm Password */}
+                        </div>
+                        <div className='col-md-6'>
+                                 {/* Confirm Password */}
                     <div className="mb-3">
                         <label
                             htmlFor="confirmPassword"
@@ -448,6 +451,9 @@ export default function SignUp() {
                             </small>
                         )}
                     </div>
+                        </div>
+                    </div>
+                   
 
                     {/* Terms */}
                     <div className="form-check mb-4">

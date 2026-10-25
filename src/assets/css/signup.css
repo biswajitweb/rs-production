@@ -8,10 +8,10 @@
 
 .signup-card {
     width: 100%;
-    max-width: 550px;
+    max-width: 650px;
     padding: 60px;
-    background: #ffffff;
     border-radius: 24px;
+    border: 1px solid var(--bs-border-color);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
 
     h1 {
@@ -43,37 +43,6 @@
     margin-bottom: 0;
     color: #777;
     line-height: 1.6;
-}
-
-.form-label {
-    margin-bottom: 8px;
-    font-weight: 500;
-}
-
-.form-control {
-    min-height: 50px;
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-
-    &:focus {
-        border-color: var(--themePrimaryColor);
-        box-shadow: 0 0 0 0.2rem rgba(241, 111, 33, 0.12);
-    }
-}
-
-.form-check-label {
-    color: #666;
-
-    a {
-        color: var(--themePrimaryColor);
-        font-weight: 500;
-        text-decoration: none;
-
-        &:hover {
-            color: var(--themeSecondaryColor);
-        }
-    }
 }
 
 .signup-btn {

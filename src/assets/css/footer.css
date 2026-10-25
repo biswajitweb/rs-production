@@ -1,11 +1,12 @@
 .rs-footer-area {
-  background-color: #060e2a;
+  background-color: var(--bs-body-color);
   padding: 100px 0;
   background-size: cover;
   background-position: center bottom;
   background-repeat: no-repeat;
   position: relative;
   margin-top: 40px;
+  border-top: 1px solid var(--bs-border-color);
 }
 
 @media (max-width: 1024px) {
@@ -25,12 +26,7 @@
   bottom: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom, rgba(0, 4, 58, 1),  rgba(0, 4, 58, .9), rgba(0, 4, 58, .1));
-}
-@media (max-width: 1024px) {
-  .rs-footer-area:before {
-  background: linear-gradient(to bottom, rgba(0, 4, 58, 1),  rgba(0, 4, 58, .9), rgba(0, 4, 58, .5));
-}
+  background: var(--themeImageGradient);
 }
 .rs-footer-area .container {
   position: relative;
@@ -118,8 +114,6 @@
 
 .rs-trust-section {
     padding: 75px 0 0 0;
-    background: #ffffff;
-    color: #00043a;
     font-family: inherit;
 }
 
@@ -131,7 +125,6 @@
 
 .rs-trust-header h2 {
     margin: 0 0 16px;
-    color: #00043a;
     font-size: clamp(28px, 4vw, 40px);
     font-weight: 700;
     line-height: 1.2;
@@ -251,12 +244,15 @@
     }
 
     .rs-trust-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(1, minmax(0, 1fr));
         gap: 12px;
     }
 
     .rs-trust-card {
-        padding: 22px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+        padding: 12px 12px;
         border-radius: 12px;
     }
 
@@ -265,6 +261,7 @@
         height: 50px;
         margin-bottom: 14px;
         border-radius: 13px;
+        margin: 0 15px 0 0;
     }
 
     .rs-trust-icon svg {
@@ -274,17 +271,13 @@
 
     .rs-trust-card h3 {
         font-size: 15px;
+        text-align: left;
+        margin-bottom: 5px;
     }
 
     .rs-trust-card p {
-        font-size: 13px;
+        font-size: 12px;
         line-height: 1.65;
-    }
-
-    /* Center the fifth card on mobile */
-    .rs-trust-card:last-child:nth-child(odd) {
-        grid-column: 1 / -1;
-        width: calc(50% - 6px);
-        justify-self: center;
+        text-align: left;
     }
 }

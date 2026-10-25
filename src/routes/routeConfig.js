@@ -219,7 +219,7 @@ export const ROUTES = [
         element: "Orders",
         area: ROUTE_AREA.WEBSITE,
         is_show: "my-account",
-        title: "My Orders / Purchases",
+        title: "My Orders",
         protected: true,
         roles: [ROLES.CUSTOMER],
         icon: "bi bi-bag-check",
