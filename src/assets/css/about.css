@@ -1,13 +1,52 @@
-:root {
+:root,
+[data-bs-theme="light"] {
     --bg: #fffaf6;
     --surface: #ffffff;
-    --text: var(--themeBodyColor);
-    --muted: #5f6188;
-    --muted: color-mix(in srgb, var(--themeBodyColor) 62%, white);
+    --text: var(--bs-body-color);
+    --muted: color-mix(in srgb, var(--bs-body-color) 62%, white);
     --line: rgba(0, 4, 58, .10);
-    --grad: linear-gradient(120deg, var(--themePrimaryColor), var(--themeSecondaryColor));
-    --shadow-sm: 0 1px 2px rgba(0, 4, 58, .05), 0 8px 24px -12px rgba(0, 4, 58, .12);
-    --shadow-md: 0 2px 6px rgba(0, 4, 58, .05), 0 24px 48px -24px rgba(157, 11, 14, .22);
+
+    --grad: linear-gradient(
+        120deg,
+        var(--themePrimaryColor),
+        var(--themeSecondaryColor)
+    );
+
+    --shadow-sm: 0 1px 2px rgba(0, 4, 58, .05),
+                 0 8px 24px -12px rgba(0, 4, 58, .12);
+
+    --shadow-md: 0 2px 6px rgba(0, 4, 58, .05),
+                 0 24px 48px -24px rgba(157, 11, 14, .22);
+
+    --display: "Bricolage Grotesque", "Inter", system-ui, sans-serif;
+    --sans: "Inter", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+
+    --gutter: clamp(14px, 3vw, 40px);
+    --pad: clamp(22px, 5vw, 72px);
+    --sticky-top: 100px;
+    --r-lg: 36px;
+    --r-md: 24px;
+}
+
+[data-bs-theme="dark"] {
+    --bg: #0a0f2e;
+    --surface: #151a38;
+    --text: var(--bs-body-color);
+    --muted: color-mix(in srgb, var(--bs-body-color) 62%, #0a0f2e);
+    --line: rgba(255, 255, 255, .12);
+
+    --grad: linear-gradient(
+        120deg,
+        var(--themePrimaryColor),
+        var(--themeSecondaryColor)
+    );
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, .20),
+                 0 8px 24px -12px rgba(0, 0, 0, .35);
+
+    --shadow-md: 0 2px 6px rgba(0, 0, 0, .20),
+                 0 24px 48px -24px rgba(0, 0, 0, .45);
 
     --display: "Bricolage Grotesque", "Inter", system-ui, sans-serif;
     --sans: "Inter", system-ui, sans-serif;

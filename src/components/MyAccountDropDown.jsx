@@ -124,7 +124,7 @@ const MyAccountDropDown = ({ user }) => {
                                 </div>
 
                                 {email && (
-                                    <small className="text-muted text-truncate d-block">
+                                    <small className="text-dark text-truncate d-block">
                                         {email}
                                     </small>
                                 )}

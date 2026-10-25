@@ -134,10 +134,9 @@
 ========================================= */
 
 .account-sidebar {
-    background: #fff;
-    border: 1px solid #e8e8e8;
     border-radius: 14px;
     padding: 20px;
+    border: 1px solid var(--bs-border-color);
 }
 
 
@@ -199,10 +198,9 @@
     border-radius: 8px;
 
     background: transparent;
-    color: #444;
+    color: var(--bs-body-color);
 
     text-align: left;
-    font-size: 14px;
 
     cursor: pointer;
     transition: all .25s ease;
@@ -283,7 +281,6 @@
 .page-header p {
     margin: 0;
     color: #777;
-    font-size: 14px;
 }
 
 
@@ -292,11 +289,10 @@
 ========================================= */
 
 .account-card {
-    background: #fff;
-    border: 1px solid #e8e8e8;
     border-radius: 14px;
     padding: 25px;
     margin-bottom: 20px;
+    border: 1px solid var(--bs-border-color);
 }
 
 .card-title {
@@ -331,10 +327,9 @@
 }
 
 .stat-card {
-    background: #fff;
-    border: 1px solid #e8e8e8;
     border-radius: 12px;
     padding: 20px;
+    border: 1px solid var(--bs-border-color);
 }
 
 .stat-icon {
@@ -714,30 +709,24 @@
 .form-group label {
     display: block;
     margin-bottom: 7px;
-    color: #444;
     font-weight: 500;
 }
 
-.form-group input,
+/* .form-group input,
 .form-group select,
 .form-group textarea {
     width: 100%;
     min-height: 44px;
     padding: 10px 12px;
-
-    border: 1px solid #ddd;
     border-radius: 7px;
-
-    background: #fff;
-    color: #333;
     font-size: 13px;
     outline: none;
-}
+} */
 
-.form-group textarea {
+/* .form-group textarea {
     height: 100px;
     resize: vertical;
-}
+} */
 
 .form-group input:focus,
 .form-group select:focus,

@@ -194,12 +194,12 @@ export default function Login() {
                             Password
                         </label>
 
-                        <a
-                            href="/forgot-password"
+                        <Link
+                            to="/forgot-password"
                             className="forgot-password"
                         >
                             Forgot Password?
-                        </a>
+                        </Link>
                     </div>
 
                     <input

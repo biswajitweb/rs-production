@@ -2,7 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 export default function CartItems({
-    item, deleteCartItem,handleDecrement, handleIncrement
+    item, 
+    deleteCartItem,
+    handleDecrement, 
+    handleIncrement, 
+    handleImageLoad,
+    handleImageError
 }) {
     return (
        <>
@@ -27,11 +32,14 @@ export default function CartItems({
                     <img 
                         decoding="async" 
                         width="200" 
-                        src={item?.thumbnail} />
+                        src={item?.thumbnail} 
+                        onLoad={() => handleImageLoad(item.productId)}
+                        onError={() => handleImageError(item.productId)}
+                        />
                 </Link>
             </td>
             <td className="product-name" data-title="Product">
-                <a href="#">{item?.name}</a>
+                <Link to={`/product-details/${item.productId}/variants/${item.variantId}`}>{item?.name}</Link>
             </td>
             <td 
                 className="product-price" 

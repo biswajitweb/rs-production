@@ -1,12 +1,31 @@
 import React, { lazy, useState } from 'react'
 import { FORM_ERROR_STYLE } from '../../utils/formStyles';
 import TextareaField from '../../components/form/TextareaField';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { service } from '../../api/service';
+import { contactSubject } from '../../utils/contactSubjects';
+import SelectField from '../../components/form/SelectField';
 
 const InputField =lazy(()=>
     import('../../components/form/InputField')
 );
 
+const Spinner = lazy(()=>
+    import('../../components/Spinner')
+);
+
+const Toast = lazy(()=>
+    import('../../components/Toast')
+);
+
 export default function ContactUs() {
+
+    const {store} = useSelector(state => state.site.info);
+    
+    
+    
+
     // --------------------------------
     // Default Form Data
     // --------------------------------
@@ -51,12 +70,35 @@ export default function ContactUs() {
         type: 'danger'
     });
 
+    const [toast, setToast] = useState({
+        show: false,
+        message: "",
+        type: "success",
+    });
+    
+    const showToast = (message, type = "success") => {
+        setToast({
+            show: true,
+            message,
+            type,
+        });
+    };
+
+    const closeToast = () => {
+        setToast((prev) => ({
+            ...prev,
+            show: false,
+        }));
+    };
+    
+
     // --------------------------------
     // Handle Input Change
     // --------------------------------
     const handleChange = (event) => {
 
         const { name, value } = event.target;
+        debugger;
 
         setFormData((prev) => ({
             ...prev,
@@ -119,9 +161,11 @@ export default function ContactUs() {
 
             return updatedErrors;
         });
+        
+        
     };
 
-    const onSendMessage = ()=>{
+    const onSendMessage = async()=>{
         // --------------------------------
         // Mark All Fields as Touched
         // --------------------------------
@@ -138,6 +182,52 @@ export default function ContactUs() {
             );
 
         setTouched(touchedFields);
+
+        // Validate all fields
+        const newErrors = {};
+
+        REQUIRED_FIELDS.forEach((field) => {
+            if (!formData[field].trim()) {
+                newErrors[field] = FIELD_ERRORS[field];
+            }
+        });
+
+        setErrors(newErrors);
+
+        // Stop if validation fails
+        if (Object.keys(newErrors).length > 0) {
+            return;
+        }
+        try {
+            setLoader(true);
+            const response = await service.contact.sendMessage(formData);
+            const messageResponse = response.data;
+            if(messageResponse.success === true) {
+                 showToast(
+                    messageResponse.message,
+                    "success"
+                );
+            } else {
+                showToast(
+                    messageResponse.message,
+                    "error"
+                );
+            }
+            setFormData(defaultContactUsData);
+            setTouched(initialTouched);           
+        } catch (error) {
+            if(error) {
+                showToast(
+                    error.message,
+                    "error"
+                );
+            }
+        } finally {
+            setLoader(false);
+        }
+       
+        
+        
     }
 
     return (
@@ -173,7 +263,10 @@ export default function ContactUs() {
                             </div>
                             <div>
                                 <span>Address</span>
-                                <p>611/998 (1st Floor), BJB Nagar, Bhubaneswar, Odisha</p>
+                                {store?.woocommerce_store_address && (
+                                    <p>{store.woocommerce_store_address}</p>
+                                )}
+                               
                             </div>
                         </div>
 
@@ -185,7 +278,12 @@ export default function ContactUs() {
                                 </svg>
                             </div>
                             <div>
-                                <span><a href="mailto:rsrath13@gmail.com">rsrath13@gmail.com</a></span>
+                                {store?.woocommerce_pos_store_email && (
+                                   <span>
+                                        <Link to={`mailto:${store.woocommerce_pos_store_email}`}>{store.woocommerce_pos_store_email}</Link>
+                                    </span>
+                                )}
+                                
                                 <p>For photo purchases, licensing, payments, downloads, and general enquiries.</p>
                             </div>
                         </div>
@@ -197,7 +295,11 @@ export default function ContactUs() {
                                     <path d="M6.6 3.5 9 3l2 5-2.2 1.8a14 14 0 0 0 5.4 5.4L16 13l5 2 .5 2.4a2 2 0 0 1-2.2 2.3C10.6 18.8 5.2 13.4 4.3 4.7A2 2 0 0 1 6.6 3.5Z"/>
                                 </svg>
                             </div>
-                            <div><span><a href="tel:+918895267838">+91-88952-67838</a></span>
+                            <div>
+                                {store?.woocommerce_pos_store_phone && (
+                                   <span><Link to={`tel:${store?.woocommerce_pos_store_phone}`}>{store.woocommerce_pos_store_phone}</Link></span>
+                                )}
+                               
                                 <p>Contact us for photo licensing, pricing, purchase assistance, and customer support.</p>
                             </div>
                         </div>
@@ -228,7 +330,7 @@ export default function ContactUs() {
                                         onBlur={handleBlur}
                                         style={
                                             touched.name &&
-                                            errors.name
+                                            formData.name === ''
                                                 ? FORM_ERROR_STYLE
                                                 : {}
                                         }
@@ -251,7 +353,7 @@ export default function ContactUs() {
                                         onBlur={handleBlur}
                                         style={
                                             touched.email &&
-                                            errors.email
+                                            formData.email === ""
                                                 ? FORM_ERROR_STYLE
                                                 : {}
                                         }
@@ -276,7 +378,7 @@ export default function ContactUs() {
                                     onBlur={handleBlur}
                                     style={
                                         touched.mobile &&
-                                        errors.mobile
+                                        formData.mobile === ""
                                             ? FORM_ERROR_STYLE
                                             : {}
                                     }
@@ -288,24 +390,20 @@ export default function ContactUs() {
                             </div>
 
                             <div className="form-group">
-                                <InputField
+                               <SelectField
                                     label="Subject"
                                     name="subject"
-                                    type="text"
-                                    value={
-                                        formData.subject
-                                    }
+                                    value={formData.subject}
                                     onChange={handleChange}
-                                    onBlur={handleBlur}
+                                    options={contactSubject}
+                                    placeholder=""
+                                    required
+                                    error={errors.subject}
                                     style={
                                         touched.subject &&
-                                        errors.subject
+                                        formData.subject === ""
                                             ? FORM_ERROR_STYLE
                                             : {}
-                                    }
-                                    required
-                                    error={
-                                        errors.subject
                                     }
                                 />
                             </div>
@@ -322,10 +420,11 @@ export default function ContactUs() {
                                     error={errors.message}
                                     style={
                                         touched.message &&
-                                        errors.message
+                                        formData.message === ""
                                             ? FORM_ERROR_STYLE
                                             : {}
                                     }
+                                    max = "500"
                                 />
                             </div>
 
@@ -333,8 +432,15 @@ export default function ContactUs() {
                                 type="button" 
                                 className="btn custom-btn btn-primary contact-btn"
                                 onClick={onSendMessage}
+                                disabled={loader}
                                 >
                                 Send Message
+                                {
+                                    loader && <Spinner
+                                        color = "white"
+                                        size='md'
+                                    />
+                                }
 
                                 <svg viewBox="0 0 24 24" aria-hidden="true">
                                     <path d="M5 12h13"/>
@@ -351,6 +457,13 @@ export default function ContactUs() {
             </div>
         </section>
 
+         <Toast
+            show={toast.show}
+            message={toast.message}
+            type={toast.type}
+            duration={3000}
+            onClose={closeToast}
+        />
 
         </>
     )

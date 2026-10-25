@@ -22,6 +22,7 @@ export default function Cart() {
     const location = useLocation();
     const {authToken} =  useSelector((state)=>state.user);
     const [isLoading, setIsLoading] = useState(true);
+    const [loadedImages, setLoadedImages] = useState({});
     
     const taxWithAmount = calculateTax(totalAmount);
 
@@ -45,6 +46,36 @@ export default function Cart() {
             show: false,
         }));
     };
+
+    const handleImageLoad = (productId) => {
+        setLoadedImages((prev) => ({
+            ...prev,
+            [productId]: true,
+        }));
+    };
+
+    const handleImageError = (productId) => {
+        // Prevent the loader from running forever if an image fails.
+        setLoadedImages((prev) => ({
+            ...prev,
+            [productId]: true,
+        }));
+    };
+
+    useEffect(() => {
+        if (!Array.isArray(itmes) || itmes.length === 0) {
+            setIsLoading(false);
+            return;
+        }
+
+        const allImagesLoaded = itmes.every(
+            (item) => loadedImages[item.productId]
+        );
+
+        if (allImagesLoaded) {
+            setIsLoading(false);
+        }
+    }, [itmes, loadedImages]);
 
      /**
      * Cart initialization
@@ -180,6 +211,8 @@ export default function Cart() {
                                                                     deleteCartItem={deleteCartItem}
                                                                     handleIncrement={handleIncrement}
                                                                     handleDecrement={handleDecrement}
+                                                                    handleImageLoad={handleImageLoad}
+                                                                    handleImageError={handleImageError}
                                                                 />
                                                             )
                                                         })

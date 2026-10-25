@@ -69,6 +69,12 @@ export const service = {
         },
         contact : async(params)=>{
             return await axiosInstance.post(`${API_PREFIX}/contact`, params);
+        },
+        forgotPassword  : async(params)=>{
+            return await axiosInstance.post(`${API_PREFIX}customer/forgot-password`, params);
+        },
+        resetPassword  : async(params)=>{
+            return await axiosInstance.post(`${API_PREFIX}customer/reset-password`, params);
         }
     },
     
@@ -118,6 +124,14 @@ export const service = {
         },
         default : async(params = {})=>{
             return await axiosInstance.put(`${API_PREFIX}addresses/default`, params);
+        }
+    },
+    /**
+     * Contact us
+    */
+    contact : {
+        sendMessage : async(params = {})=>{
+            return await axiosInstance.post(`${API_PREFIX}send-message`, params);
         }
     }
 };

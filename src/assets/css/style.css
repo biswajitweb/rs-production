@@ -4,23 +4,45 @@
   box-sizing: border-box;
 }
 :root{
-  --themePrimaryColor:#f16f21;
-  --themePrimaryLightColor:#fff4ed;
+  --themeBodyFontSize: 19px;
+  --themeFontFamily: "IBM Plex Sans", system-ui, sans-serif;
+}
+:root,
+[data-bs-theme="light"] {
+  color-scheme: light;
 
-  --themeSecondaryColor:#9d0b0e;
-  --themeBodyColor:#00043a;
-  
+  --themePrimaryColor: #f16f21;
+  --themePrimaryLightColor: #fff4ed;
+  --themeSecondaryColor: #9d0b0e;
   --themeGrayLight: #eeeeee;
   --themeGray: #dddddd;
   --themeGrayDark: #cccccc;
+  --themeImageGradient:  linear-gradient(to bottom, rgba(10, 15, 46, 1),  rgba(10, 15, 46, .9), rgba(10, 15, 46, .1));
 
-  --themeBodyFontSize: 20px;
+  --bs-body-color: #0a0f2e;
+  --bs-body-bg: #ffffff;
+  --bs-border-color: #dddddd;
+  --bs-card-bg: #ffffff;
+}
+[data-bs-theme="dark"] {
+  color-scheme: dark;
 
-  --themeFontFamily: "IBM Plex Sans", system-ui, sans-serif;
+  --themePrimaryColor: #f16f21;
+  --themePrimaryLightColor: #38251c;
+  --themeSecondaryColor: #9d0b0e;
+  --themeGrayLight: #252525;
+  --themeGray: #383838;
+  --themeGrayDark: #555555;
+  --themeImageGradient:  linear-gradient(to bottom, rgba(10, 15, 46, 1),  rgba(10, 15, 46, .9), rgba(10, 15, 46, .1));
+
+  --bs-body-color: #f1f1f1;
+  --bs-body-bg: #0a0f2e;
+  --bs-border-color: #383838;
+  --bs-card-bg: #1e1e1e;
 }
 body {
-  font-size: var(--themeBodyFontSize);
-  color: var(--themeBodyColor);
+  font-size: var(--themeBodyFontSize) !important;
+  color: var(--bs-body-color);
   overflow-x: hidden;
   font-family: var(--themeFontFamily) !important;
 }
@@ -84,6 +106,26 @@ table td{
   font-weight: 400;
 }
 
+.form-label {
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-control {
+    min-height: 60px !important;
+    font-size: var(--themeBodyFontSize);
+    border-radius: 10px;
+
+    &:focus {
+        border-color: var(--themePrimaryColor);
+        box-shadow: 0 0 0 0.2rem rgba(241, 111, 33, 0.12);
+    }
+}
+.form-select{
+  min-height: 60px !important;
+  font-size: var(--themeBodyFontSize);
+  border-radius: 10px;
+}
 /* SHOPPING CART PAGE ------------------------------------------------ */
 .shopping-cart-page{
   .page-heading{
@@ -100,7 +142,7 @@ table{
         font-size: 24px;
       }
       a{
-        color: var(--themeBodyColor);
+        color: var(--bs-body-color);
         text-decoration: none;
       }
     }

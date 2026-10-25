@@ -1,6 +1,6 @@
 import React, { lazy, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
 import DOMPurify from "dompurify";
 
@@ -26,6 +26,8 @@ const SEO = lazy(()=>
 
 export default function ProductDetails() {
     const { id, variantId } = useParams();
+
+    const {store} = useSelector(state=> state.site.info);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -289,78 +291,38 @@ export default function ProductDetails() {
                                     <div className="table-responsive">
                                         <table className="table table-borderless p-table">
                                             <tbody>
-                                                <tr>
-                                                    <th scope="row">
-                                                        Location
-                                                    </th>
-                                                    <td>
-                                                        Koraput, Odisha, India
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th scope="row">
-                                                        Date taken
-                                                    </th>
-                                                    <td>
-                                                        25 July 2026
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th scope="row">
-                                                        Category
-                                                    </th>
-                                                    <td>
-                                                        Tribal Culture
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th scope="row">
-                                                        File Format
-                                                    </th>
-                                                    <td>
-                                                        JPG
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th scope="row">
-                                                        Dimensions
-                                                    </th>
-                                                    <td>
-                                                        6000 × 4000
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th scope="row">
-                                                        File Size
-                                                    </th>
-                                                    <td>
-                                                        12.4 MB
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th scope="row">
-                                                        Orientation
-                                                    </th>
-                                                    <td>
-                                                        Landscape
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th scope="row">
-                                                        License
-                                                    </th>
-                                                    <td>
-                                                        Commercial
-                                                    </td>
-                                                </tr>
-                                            </tbody>
+                                                {productDetails?.image_meta &&
+                                                    Object.entries(productDetails.image_meta).filter(
+                                                        ([key, value]) =>
+                                                            value !== "" &&
+                                                            value !== null &&
+                                                            value !== undefined
+                                                    ).length > 0 ? (
+                                                        Object.entries(productDetails.image_meta)
+                                                            .filter(
+                                                                ([key, value]) =>
+                                                                    value !== "" &&
+                                                                    value !== null &&
+                                                                    value !== undefined
+                                                            )
+                                                            .map(([key, value]) => (
+                                                                <tr key={key}>
+                                                                    <th scope="row">
+                                                                        {key
+                                                                            .replace(/_/g, " ")
+                                                                            .replace(/\b\w/g, char => char.toUpperCase())}
+                                                                    </th>
+                                                                    <td>{value}</td>
+                                                                </tr>
+                                                            ))
+                                                    ) : (
+                                                        <tr>
+                                                            <td colSpan="2" className="text-center text-muted">
+                                                                No additional image information to display.
+                                                            </td>
+                                                        </tr>
+                                                    )}
+                                                </tbody>
                                         </table>
                                     </div>
 
@@ -402,10 +364,12 @@ export default function ProductDetails() {
                                     <p className="p-question">
                                         Have a question about this photo?
                                     </p>
-
-                                    <h3 className="p-phone">
-                                        +91-88952-67838
-                                    </h3>
+                                    {store?.woocommerce_pos_store_phone && (
+                                        <h3 className="p-phone">
+                                            {store.woocommerce_pos_store_phone}
+                                        </h3>
+                                    )}
+                                    
 
                                     {/* Optional background refetch indicator */}
                                     {isFetching && !isLoading && (
