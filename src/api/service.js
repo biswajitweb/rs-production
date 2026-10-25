@@ -72,6 +72,9 @@ export const service = {
         },
         forgotPassword  : async(params)=>{
             return await axiosInstance.post(`${API_PREFIX}customer/forgot-password`, params);
+        },
+        resetPassword  : async(params)=>{
+            return await axiosInstance.post(`${API_PREFIX}customer/reset-password`, params);
         }
     },
     

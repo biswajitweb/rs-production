@@ -1,13 +1,18 @@
-import React, { lazy, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { lazy, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { STATIC_IMAGE } from '../../utils/staticImage';
 import { validateField } from '../../utils/validateField';
 import { service } from '../../api/service';
+import { useSelector } from 'react-redux';
 
 const Spinner = lazy(() => import('../../components/Spinner'));
 const Toast = lazy(() => import('../../components/Toast'));
 
 export default function ForgotPassword() {
+
+    const {authToken} =  useSelector((state)=>state.user);
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState('');
 
     const [touch, setTouched] = useState({
@@ -22,6 +27,12 @@ export default function ForgotPassword() {
         message: '',
         type: 'success',
     });
+
+    useEffect(()=>{
+        if(authToken !== null) {
+            navigate(`/my-account`);
+        }
+    }, [authToken]);
 
     const handleBlur = (e) => {
         const { name, value } = e.target;
