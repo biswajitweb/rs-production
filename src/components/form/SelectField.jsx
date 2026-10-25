@@ -37,9 +37,11 @@ export default function SelectField({
                     error ? "is-invalid" : ""
                 }`}
             >
-                <option value="">
-                    {placeholder}
-                </option>
+                {placeholder && (
+                    <option value="">
+                        {placeholder}
+                    </option>
+                )}
 
                 {options.map((option) => (
                     <option

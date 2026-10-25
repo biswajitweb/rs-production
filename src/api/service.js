@@ -125,7 +125,7 @@ export const service = {
     */
     contact : {
         sendMessage : async(params = {})=>{
-            return await axiosInstance.post(`${API_PREFIX}/send-message`, params);
+            return await axiosInstance.post(`${API_PREFIX}send-message`, params);
         }
     }
 };

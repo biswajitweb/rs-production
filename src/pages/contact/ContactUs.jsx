@@ -4,6 +4,8 @@ import TextareaField from '../../components/form/TextareaField';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { service } from '../../api/service';
+import { contactSubject } from '../../utils/contactSubjects';
+import SelectField from '../../components/form/SelectField';
 
 const InputField =lazy(()=>
     import('../../components/form/InputField')
@@ -20,6 +22,7 @@ const Toast = lazy(()=>
 export default function ContactUs() {
 
     const {store} = useSelector(state => state.site.info);
+    
     
     
 
@@ -95,6 +98,7 @@ export default function ContactUs() {
     const handleChange = (event) => {
 
         const { name, value } = event.target;
+        debugger;
 
         setFormData((prev) => ({
             ...prev,
@@ -157,6 +161,8 @@ export default function ContactUs() {
 
             return updatedErrors;
         });
+        
+        
     };
 
     const onSendMessage = async()=>{
@@ -196,9 +202,9 @@ export default function ContactUs() {
             setLoader(true);
             const response = await service.contact.sendMessage(formData);
             const messageResponse = response.data;
-            if(messageResponse.status === 1) {
+            if(messageResponse.success === true) {
                  showToast(
-                    "All items have been removed from your cart!",
+                    messageResponse.message,
                     "success"
                 );
             } else {
@@ -384,24 +390,20 @@ export default function ContactUs() {
                             </div>
 
                             <div className="form-group">
-                                <InputField
+                               <SelectField
                                     label="Subject"
                                     name="subject"
-                                    type="text"
-                                    value={
-                                        formData.subject
-                                    }
+                                    value={formData.subject}
                                     onChange={handleChange}
-                                    onBlur={handleBlur}
+                                    options={contactSubject}
+                                    placeholder=""
+                                    required
+                                    error={errors.subject}
                                     style={
                                         touched.subject &&
                                         formData.subject === ""
                                             ? FORM_ERROR_STYLE
                                             : {}
-                                    }
-                                    required
-                                    error={
-                                        errors.subject
                                     }
                                 />
                             </div>

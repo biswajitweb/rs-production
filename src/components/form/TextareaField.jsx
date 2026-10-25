@@ -1,4 +1,3 @@
-
 import React from "react";
 
 export default function TextareaField({
@@ -6,17 +5,17 @@ export default function TextareaField({
     name,
     value,
     onChange,
+    onBlur,
     placeholder = "",
     rows = 4,
     required = false,
     error = "",
     disabled = false,
     style = {},
-    max = {max}
+    max
 }) {
     return (
         <div className="mb-3">
-
             <label
                 htmlFor={name}
                 className="form-label"
@@ -35,14 +34,16 @@ export default function TextareaField({
                 name={name}
                 value={value}
                 onChange={onChange}
+                onBlur={onBlur}
                 placeholder={placeholder}
                 rows={rows}
                 disabled={disabled}
+                required={required}
+                maxLength={max}
                 className={`form-control ${
                     error ? "is-invalid" : ""
                 }`}
                 style={style}
-                maxLength={max}
             />
 
             {error && (
@@ -50,7 +51,6 @@ export default function TextareaField({
                     {error}
                 </div>
             )}
-
         </div>
     );
 }
