@@ -52,7 +52,10 @@
     font-size: 28px;
   }
 }
-
+/* Dark Theme */
+[data-bs-theme="dark"] .rs-search-area .search-wrap .rs-heading {
+    color: #dfe9ff;
+}
 .rs-search-area .search-wrap .rs-description {
   font-size: 20px;
   color: #fff;
@@ -65,7 +68,10 @@
     display: none;
   }
 }
-
+/* Dark Theme */
+[data-bs-theme="dark"] .rs-search-area .search-wrap .rs-description {
+   color: #c3cbe4;
+}
 .input-wrap {
   background-color: #fff;
   border-radius: 70px;
@@ -78,7 +84,10 @@
   margin-bottom: 20px;
   overflow: hidden;
 }
-
+/* Dark Theme */
+[data-bs-theme="dark"] .input-wrap {
+    background-color: #000;
+}
 .input-wrap input {
   background-color: transparent;
   border: 0;

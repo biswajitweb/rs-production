@@ -49,7 +49,7 @@
 .lower-area {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 30px;
-  color: #fff;
+  color: var(--bs-body-color);
   font-size: 18px;
 }
 
@@ -58,7 +58,7 @@
 }
 
 .contact-info {
-  color: #fff;
+  color: var(--bs-body-color);
 }
 
 .contact-info li {
@@ -88,7 +88,7 @@
 }
 
 .rs-footer-area ul li a {
-  color: #fff;
+  color: var(--bs-body-color);
   text-decoration: none;
 }
 
@@ -519,7 +519,7 @@ html[data-bs-theme="dark"] .rs-trust-card:hover {
     gap: 9px;
     white-space: nowrap;
     color: var(--award-text);
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 500;
 }
 
@@ -530,7 +530,7 @@ html[data-bs-theme="dark"] .rs-trust-card:hover {
 
 /* Dark Theme */
 [data-bs-theme="dark"] .rs-award-strip {
-    --award-bg: #120101;
+    --award-bg: var(--bs-body-bg);
     --award-border: #303030;
     --award-text: #d6d6d6;
     --award-accent: #ff8a45;

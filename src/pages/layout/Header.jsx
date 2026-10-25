@@ -77,7 +77,7 @@ export default function Header() {
                                                                 <NavLink
                                                                     to={item.path}
                                                                     className={({ isActive }) =>
-                                                                        `nav-link ${isActive ? 'text-danger' : ''}`
+                                                                        `nav-link ${isActive ? 'active' : ''}`
                                                                     }
                                                                 >
                                                                     {item.title}

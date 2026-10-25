@@ -87,7 +87,7 @@ const MyAccountDropDown = ({ user }) => {
                         Welcome
                     </small>
 
-                    <span className="fw-semibold text-dark account-name">
+                    <span className="fw-semibold account-name">
                         {displayName}
                     </span>
                 </span>

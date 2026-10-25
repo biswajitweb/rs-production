@@ -542,7 +542,7 @@ export default function Orders() {
 
                         {/* Customer Information */}
                         <div className="card border-0 shadow-sm mb-4">
-                            <div className="card-header bg-white">
+                            <div className="card-header">
                                 <h6 className="mb-0">
                                     Customer Information
                                 </h6>
@@ -593,7 +593,7 @@ export default function Orders() {
                             <div className="col-md-6">
                                 <div className="card border-0 shadow-sm h-100">
 
-                                    <div className="card-header bg-white">
+                                    <div className="card-header">
                                         <h6 className="mb-0">
                                             Billing Address
                                         </h6>
@@ -652,7 +652,7 @@ export default function Orders() {
                             <div className="col-md-6">
                                 <div className="card border-0 shadow-sm h-100">
 
-                                    <div className="card-header bg-white">
+                                    <div className="card-header">
                                         <h6 className="mb-0">
                                             Shipping Address
                                         </h6>
@@ -700,7 +700,7 @@ export default function Orders() {
                         {/* Order Items */}
                         <div className="card border-0 shadow-sm mb-4">
 
-                            <div className="card-header bg-white">
+                            <div className="card-header">
                                 <h6 className="mb-0">
                                     Order Items
                                 </h6>
@@ -812,7 +812,7 @@ export default function Orders() {
 
                                 <div className="card border-0 shadow-sm">
 
-                                    <div className="card-header bg-white">
+                                    <div className="card-header">
                                         <h6 className="mb-0">
                                             Order Summary
                                         </h6>
@@ -888,7 +888,7 @@ export default function Orders() {
                         {/* Payment Information */}
                         <div className="card border-0 shadow-sm mb-4">
 
-                            <div className="card-header bg-white">
+                            <div className="card-header">
                                 <h6 className="mb-0">
                                     Payment Information
                                 </h6>
