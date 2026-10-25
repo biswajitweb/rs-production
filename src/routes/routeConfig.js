@@ -134,6 +134,20 @@ export const ROUTES = [
         },
     },
     {
+        path: "/reset-password",
+        element: "ResetPassword",
+        area: ROUTE_AREA.WEBSITE,
+        guest: true,
+        is_show: "reset-password",
+        title: "Reset Password",
+        seo: {
+            title: "Reset Password | Buy Tribal Culture Photos",
+            description: "Reset your password to regain access to your account and continue exploring, purchasing and downloading tribal culture photographs.",
+            canonical: "/reset-password",
+            robots: "index, follow",
+        },
+    },
+    {
         path: "/terms-conditions",
         element: "TermsConditions",
         area: ROUTE_AREA.WEBSITE,

@@ -69,6 +69,9 @@ export const service = {
         },
         contact : async(params)=>{
             return await axiosInstance.post(`${API_PREFIX}/contact`, params);
+        },
+        forgotPassword  : async(params)=>{
+            return await axiosInstance.post(`${API_PREFIX}customer/forgot-password`, params);
         }
     },
     
