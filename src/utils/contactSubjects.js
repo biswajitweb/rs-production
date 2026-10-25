@@ -1,38 +1,42 @@
 export const contactSubject = [
     {
-        "label": "Photo Purchase Inquiry",
-        "value": "Photo Purchase Inquiry"
+        label: "Photo Purchase & Orders",
+        value: "Photo Purchase & Orders"
     },
     {
-        "label": "Photo Licensing",
-        "value": "Photo Licensing"
+        label: "Licensing & Usage Rights",
+        value: "Licensing & Usage Rights"
     },
     {
-        "label": "Photo Pricing",
-        "value": "Photo Pricing"
+        label: "Pricing & Plans",
+        value: "Pricing & Plans"
     },
     {
-        "label": "Download Issue",
-        "value": "Download Issue"
+        label: "Download Issues",
+        value: "Download Issues"
     },
     {
-        "label": "Payment Issue",
-        "value": "Payment Issue"
+        label: "Payment & Billing Issues",
+        value: "Payment & Billing Issues"
     },
     {
-        "label": "Custom Photography Request",
-        "value": "Custom Photography Request"
+        label: "Custom Photography Request",
+        value: "Custom Photography Request"
     },
     {
-        "label": "Refund & Cancellation",
-        "value": "Refund & Cancellation"
+        label: "Refund & Cancellation",
+        value: "Refund & Cancellation"
     },
     {
-        "label": "Technical Support",
-        "value": "Technical Support"
+        label: "Account & Login Issues",
+        value: "Account & Login Issues"
     },
     {
-        "label": "Other Inquiry",
-        "value": "Other Inquiry"
+        label: "Technical Support",
+        value: "Technical Support"
+    },
+    {
+        label: "Other Inquiry",
+        value: "Other Inquiry"
     }
 ];

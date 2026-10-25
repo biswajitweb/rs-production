@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 :root{
---themeBodyFontSize: 20px;
+  --themeBodyFontSize: 19px;
   --themeFontFamily: "IBM Plex Sans", system-ui, sans-serif;
 }
 :root,
@@ -41,7 +41,7 @@
   --bs-card-bg: #1e1e1e;
 }
 body {
-  font-size: var(--themeBodyFontSize);
+  font-size: var(--themeBodyFontSize) !important;
   color: var(--bs-body-color);
   overflow-x: hidden;
   font-family: var(--themeFontFamily) !important;
@@ -113,15 +113,19 @@ table td{
 
 .form-control {
     min-height: 60px !important;
-    padding: 12px 15px;
-    border-radius: 8px;
+    font-size: var(--themeBodyFontSize);
+    border-radius: 10px;
 
     &:focus {
         border-color: var(--themePrimaryColor);
         box-shadow: 0 0 0 0.2rem rgba(241, 111, 33, 0.12);
     }
 }
-
+.form-select{
+  min-height: 60px !important;
+  font-size: var(--themeBodyFontSize);
+  border-radius: 10px;
+}
 /* SHOPPING CART PAGE ------------------------------------------------ */
 .shopping-cart-page{
   .page-heading{

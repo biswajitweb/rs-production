@@ -241,7 +241,8 @@
   .p-price {
     font-size: 42px;
     margin-bottom: 25px;
-    color: #0f9f31;
+    color: #0079ff;
+    
   }
 
   .p-table td {
@@ -256,6 +257,6 @@
   .p-phone {
     font-size: 30px;
     font-weight: 500;
-    color: #003eff;
+    color: #0f9f31;
   }
 }
