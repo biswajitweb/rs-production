@@ -133,5 +133,15 @@ export const service = {
         sendMessage : async(params = {})=>{
             return await axiosInstance.post(`${API_PREFIX}send-message`, params);
         }
-    }
+    },
+    /**
+     * Other end point 
+    */
+    other : {
+        getTemples : async(params = {})=>{
+            return await axiosInstance.get(`${API_PREFIX}posts`, {
+                params : params
+            });
+        }
+   }
 };

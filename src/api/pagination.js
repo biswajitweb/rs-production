@@ -8,5 +8,11 @@ export const pagination = {
         page: 1,
         per_page: 10,
         search: "",
+    },
+    POST_PAGE : {
+        page: 1,
+        per_page: 12,
+        search: "",
+        post_type : "temple"
     }
 }
