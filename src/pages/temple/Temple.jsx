@@ -26,12 +26,12 @@ export default function Temple() {
     } = useInfiniteQuery({
         queryKey: ['temple-list', initialParams, debouncedSearch],
 
-        queryFn: async ({ pageParam, signal }) => {
+        queryFn: async ({ pageParam }) => {
             const response = await service.other.getTemples({
                 ...initialParams,
                 page: pageParam,
-                search: debouncedSearch,
-                signal,
+                search: debouncedSearch
+                
             });
 
             const result = response?.data;
