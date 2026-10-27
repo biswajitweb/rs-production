@@ -49,7 +49,7 @@
 .lower-area {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 30px;
-  color: var(--bs-body-color);
+  color: #fff;
   font-size: 18px;
 }
 
@@ -58,7 +58,7 @@
 }
 
 .contact-info {
-  color: var(--bs-body-color);
+  color: #fff;
 }
 
 .contact-info li {

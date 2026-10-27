@@ -148,6 +148,22 @@
 
 /* ------------------- */
 
+.header-search .input-wrap{
+  background-color: var(--themeGrayLight);
+  margin-bottom: 0;
+}
+.header-search .input-wrap{
+  height: 47px;
+  border-radius: 47px;
+}
+.header-search .input-wrap .btn-search{
+  min-height: 43px;
+  max-height: 43px;
+  min-width: 43px;
+  max-width: 43px;
+  right: 2px;
+}
+/* ------------------------ */
 .rs-rating-bar {
     display: flex;
     align-items: center;

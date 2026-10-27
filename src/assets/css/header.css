@@ -23,7 +23,7 @@
 }
 
 .rs-header-area .logo-wrap img {
-    height: 40px;
+    height: 43px;
 }
 
 .rs-header-area .logo-wrap .logo-text {
@@ -139,6 +139,7 @@
     padding: 10px 30px;
     border-radius: 30px;
     text-decoration: none;
+    height: 47px;
 }
 .rs-header-area.sticky-header {
     position: fixed;
