@@ -8,7 +8,7 @@ import DOMPurify from "dompurify";
 import { service } from '../../api/service';
 import { addToCart } from '../../features/cart/cartSlice';
 import { REDIRECT_DELAY } from '../../utils/staticImage';
-import { getDeviceId } from '../../utils/deviceFingerprint';
+
 
 
 
@@ -260,7 +260,7 @@ export default function ProductDetails() {
                                     />
 
                                     <PostStats 
-                                        likes={0}
+                                        likes={productDetails?.like}
                                         views={75}
                                         productId = {productDetails.id}
                                         onLike={ ()=>onHandleLike(productDetails.id) }

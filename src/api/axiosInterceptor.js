@@ -23,6 +23,16 @@ axiosInstance.interceptors.request.use(
                 config.headers.Authorization = `Bearer ${accessToken}`;
             }
         }
+        // Add deviceId as a query parameter for GET products requests only
+        if(config.method?.toLowerCase() === "get" && config.url?.includes("/products")) {
+            const deviceId = await getDeviceId();
+            if(deviceId) {
+                config.params = {
+                    ...config.params,
+                    device_id : deviceId
+                }
+            }
+        }
         return config;
     },
     (error) => Promise.reject(error)
