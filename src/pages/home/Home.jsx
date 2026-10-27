@@ -1,47 +1,48 @@
-import React, { lazy, useState } from 'react'
+import React, { lazy, useState, useEffect, useRef, Suspense } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { pagination } from '../../api/pagination';
 import { service } from '../../api/service';
-import useDebounce from '../../hook/useDebounce'
+import useDebounce from '../../hook/useDebounce';
 
-
-
-const HomeSlider = lazy(()=>
-    import('./HomeSlider')
-);
-const HomePageProductListing = lazy(()=>
-    import('./HomePageProductListing')
+const HomeSlider = lazy(() => import('./HomeSlider'));
+const HomePageProductListing = lazy(
+    () => import('./HomePageProductListing')
 );
 
 export default function Home() {
     const initialParams = pagination.HOME_PAGE;
-    const [search, setSearch] = useState("");
 
-    // Wait 500ms after user stops typing
+    const [search, setSearch] = useState('');
     const debouncedSearch = useDebounce(search, 500);
-    
-    
+
+    // Sentinel element for automatic pagination
+    const loadMoreRef = useRef(null);
+
     const {
         data,
-        error,
         isLoading,
         isFetchingNextPage,
         hasNextPage,
         fetchNextPage,
         isError,
+        error,
     } = useInfiniteQuery({
         queryKey: ['home-products', initialParams, debouncedSearch],
 
-        queryFn: async ({ pageParam = initialParams.page }) => {
+        initialPageParam: initialParams.page ?? 1,
+
+        queryFn: async ({ pageParam, signal }) => {
             const requestParams = {
                 ...initialParams,
                 page: pageParam,
-                search : search
+                search: debouncedSearch,
             };
 
-            const response =
-                await service.product.getAll(requestParams);
+            const response = await service.product.getAll(
+                requestParams,
+                { signal }
+            );
 
             const productData = response?.data;
 
@@ -49,65 +50,106 @@ export default function Home() {
                 products: Array.isArray(productData?.data)
                     ? productData.data
                     : [],
-
-                totalRecords: Number(
-                    productData?.meta?.total_records ?? 0
-                ),
-
                 totalPages: Number(
                     productData?.meta?.total_pages ?? 0
                 ),
-
-                currentPage: pageParam,
+                currentPage: Number(pageParam),
             };
         },
 
-        initialPageParam: initialParams.page,
-
         getNextPageParam: (lastPage) => {
-            const currentPage = lastPage.currentPage;
-            const totalPages = lastPage.totalPages;
-
-            if (currentPage >= totalPages) {
+            if (
+                lastPage.currentPage >= lastPage.totalPages ||
+                lastPage.products.length === 0
+            ) {
                 return undefined;
             }
 
-            return currentPage + 1;
+            return lastPage.currentPage + 1;
         },
+
+        staleTime: 60 * 1000,
     });
-    
-    /**
-     * Flatten all pages into one product array
-     */
+
     const products =
         data?.pages?.flatMap((page) => page.products) ?? [];
 
-    const total =
-        data?.pages?.[0]?.totalRecords ?? 0;
+    // Automatically fetch products when the sentinel enters view
+    useEffect(() => {
+        const target = loadMoreRef.current;
 
-    const handleLoadMore = () => {
-        if (!hasNextPage || isFetchingNextPage) {
+        if (
+            !target ||
+            !hasNextPage ||
+            isFetchingNextPage ||
+            isLoading ||
+            isError
+        ) {
             return;
         }
 
-        fetchNextPage();
-    };
+        // Graceful fallback for older browsers
+        if (!('IntersectionObserver' in window)) {
+            return;
+        }
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0]?.isIntersecting) {
+                    fetchNextPage();
+                }
+            },
+            {
+                root: null,
+                rootMargin: '300px 0px',
+                threshold: 0,
+            }
+        );
+
+        observer.observe(target);
+
+        return () => observer.disconnect();
+    }, [
+        hasNextPage,
+        isFetchingNextPage,
+        isLoading,
+        isError,
+        fetchNextPage,
+    ]);
 
     return (
         <>
-            <HomeSlider
-                search = {search}
-                setSearch = {setSearch}
-            />
-            <HomePageProductListing
-                isLoading = {isLoading}
-                products = {products}
-                isFetchingNextPage = {isFetchingNextPage}
-                hasNextPage = {hasNextPage}
-                fetchNextPage = {fetchNextPage}
-                isError = {isError}
-                handleLoadMore = {handleLoadMore}
-            />
+            <Suspense fallback={null}>
+                <HomeSlider
+                    search={search}
+                    setSearch={setSearch}
+                />
+            </Suspense>
+
+            <Suspense
+                fallback={
+                    null
+                }
+            >
+                <HomePageProductListing
+                    isLoading={isLoading}
+                    products={products}
+                    isFetchingNextPage={isFetchingNextPage}
+                    isError={isError}
+                    error={error}
+                />
+            </Suspense>
+
+            {/* Automatic pagination trigger; no Load More button */}
+            <div
+                ref={loadMoreRef}
+                className="text-center py-4"
+                aria-live="polite"
+            >
+                {isFetchingNextPage && (
+                    <span>Loading more products...</span>
+                )}
+            </div>
         </>
-    )
+    );
 }

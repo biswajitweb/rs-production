@@ -1,7 +1,7 @@
 export const pagination = {
     HOME_PAGE: {
         page: 1,
-        per_page: 12,
+        per_page: 8,
         search: "",
     },
     ORDER_BY_USER: {
