@@ -35,7 +35,10 @@ export const service = {
     getVariation: (id, attributes)=> 
         axiosInstance.get(`${API_PREFIX}${API_MODULE.PRODUCTS}/${id}/variation?${attributes}`
         
-    )
+    ),
+    updateLikeCount : async(postData)=>{
+        return await axiosInstance.post(`${API_PREFIX}like-count`, postData);
+    }
    },
 
    /**
