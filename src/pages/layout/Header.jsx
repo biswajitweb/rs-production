@@ -6,7 +6,9 @@ import { useSelector } from 'react-redux';
 import { decryptData } from '../../utils/encryption';
 
 
+
 const MyAccountDropDown = lazy(()=>import('../../components/MyAccountDropDown'));
+const HeaderSearch = lazy(()=> import('./HeaderSearch'));
 
 export default function Header() {
     const primaryMenu  = ROUTES.filter((item)=> item.is_show === "top-menu" );
@@ -77,7 +79,7 @@ export default function Header() {
                                                                 <NavLink
                                                                     to={item.path}
                                                                     className={({ isActive }) =>
-                                                                        `nav-link ${isActive ? 'text-danger' : ''}`
+                                                                        `nav-link ${isActive ? 'active' : ''}`
                                                                     }
                                                                 >
                                                                     {item.title}
@@ -94,6 +96,7 @@ export default function Header() {
                                 <div className="header-col-right">
                                     <div className="acount-wrap">
                                         <ul>
+                                           <HeaderSearch/>
                                             <li>
                                                 <Link className="btn-cart" to="/help">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-question-lg" viewBox="0 0 16 16">

@@ -11,7 +11,7 @@
     min-width: 0;
     margin: 0;
     padding: 0;
-    color: var(--themeBodyColor);
+    color: var(--bs-body-color);
     text-decoration: none;
     background-color: transparent !important;
     border: 0 solid transparent !important;
@@ -132,7 +132,7 @@
   align-items: center;
   gap: 5px;
   text-decoration: none;
-  color: var(--themeBodyColor);
+  color: var(--bs-body-color);
 }
 .rs-stats .rs-like span,
 .rs-stats .rs-view span{
@@ -154,7 +154,7 @@
   justify-content: center;
   background-color: var(--themeGrayLight);
   border-radius: 30px;
-  color: var(--themeBodyColor);
+  color: var(--bs-body-color);
   font-size: 18px;
   padding: 15px 30px;
   text-align: center;

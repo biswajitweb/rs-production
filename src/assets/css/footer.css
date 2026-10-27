@@ -88,7 +88,7 @@
 }
 
 .rs-footer-area ul li a {
-  color: #fff;
+  color: #FFF;
   text-decoration: none;
 }
 
@@ -179,12 +179,6 @@ html[data-bs-theme="dark"] {
     color: var(--trust-heading);
     background-color: var(--trust-section-bg);
     transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.rs-trust-container {
-    width: 100%;
-    max-width: 1320px;
-    margin: 0 auto;
 }
 
 /* Header */
@@ -340,7 +334,7 @@ html[data-bs-theme="dark"] {
 /* Mobile */
 @media (max-width: 575.98px) {
     .rs-trust-section {
-        padding: 45px 0;
+        padding: 45px 0 0 0;
     }
 
     .rs-trust-container {
@@ -391,7 +385,7 @@ html[data-bs-theme="dark"] {
     }
 
     .rs-trust-card p {
-        font-size: 12px;
+        font-size: 10px;
         line-height: 1.65;
     }
 }
@@ -503,3 +497,77 @@ html[data-bs-theme="dark"] .rs-trust-card:hover {
 
 
 /* ================================================= */
+
+/* Light Theme */
+.rs-award-strip {
+    --award-bg: #fff8f3;
+    --award-border: #f0e2d8;
+    --award-text: #444444;
+    --award-accent: #f16f21;
+
+    width: 100%;
+    overflow: hidden;
+    background: var(--award-bg);
+    border-top: 1px solid var(--award-border);
+    border-bottom: 1px solid var(--award-border);
+    padding: 12px 0;
+}
+
+.rs-award-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    white-space: nowrap;
+    color: var(--award-text);
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.rs-award-item i,
+.rs-award-dot {
+    color: var(--award-accent);
+}
+
+/* Dark Theme */
+[data-bs-theme="dark"] .rs-award-strip {
+    --award-bg: var(--bs-body-bg);
+    --award-border: #303030;
+    --award-text: #d6d6d6;
+    --award-accent: #ff8a45;
+}
+
+/* Scrolling Animation */
+.rs-award-track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    gap: 30px;
+    animation: rsAwardScroll 35s linear infinite;
+}
+
+.rs-award-dot {
+    width: 5px;
+    height: 5px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--award-accent);
+}
+
+@keyframes rsAwardScroll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.rs-award-strip:hover .rs-award-track {
+    animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .rs-award-track {
+        animation: none;
+    }
+}

@@ -10,6 +10,8 @@ import { addToCart } from '../../features/cart/cartSlice';
 import { REDIRECT_DELAY } from '../../utils/staticImage';
 
 
+
+
 const SimilarProducts = lazy(() => 
     import('./SimilarProducts')
 );
@@ -22,6 +24,10 @@ const Toast = lazy(()=>
 
 const SEO = lazy(()=>
     import('../../components/SEO')
+);
+
+const PostStats = lazy(()=>
+    import('./PostStats')
 );
 
 export default function ProductDetails() {
@@ -73,7 +79,8 @@ export default function ProductDetails() {
         queryFn: async () => {
             const response = await service.product.getById(
                 Number(id),
-                Number(variantId)
+                Number(variantId),
+                
             );
 
             return response.data?.data ?? {};
@@ -167,6 +174,10 @@ export default function ProductDetails() {
        
     };
 
+    const onHandleLike = async(productId) =>{
+       
+    }
+
     /**
      * Loading state
      */
@@ -248,25 +259,12 @@ export default function ProductDetails() {
                                         alt={productDetails?.name || 'Product'}
                                     />
 
-                                    <div className="rs-stats">
-
-                                        <a
-                                            href="#"
-                                            className="rs-like"
-                                            onClick={(event) =>
-                                                event.preventDefault()
-                                            }
-                                        >
-                                            <i className="bi bi-suit-heart" />
-                                            <span>1</span>
-                                        </a>
-
-                                        <div className="rs-view">
-                                            <i className="bi bi-eye" />
-                                            <span>75</span>
-                                        </div>
-
-                                    </div>
+                                    <PostStats 
+                                        likes={productDetails?.like}
+                                        views={75}
+                                        productId = {productDetails.id}
+                                        onLike={ ()=>onHandleLike(productDetails.id) }
+                                    />
                                 </div>
 
                                 {/* Product Details */}

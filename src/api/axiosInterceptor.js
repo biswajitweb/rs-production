@@ -2,6 +2,7 @@ import axios from "axios";
 import axiosInstance from "./axiosInstance";
 import { decryptData, encryptData } from "../utils/encryption";
 import { service } from "./service";
+import { getDeviceId } from "../utils/deviceFingerprint";
 
 // =========================
 // REFRESH TOKEN STATE
@@ -13,18 +14,25 @@ let refreshPromise = null;
 // =========================
 axiosInstance.interceptors.request.use(
     async (config) => {
+        config.headers = config.headers || {};
         const auth = sessionStorage.getItem("auth");
-
         if (auth) {
             const userData = await decryptData(auth);
             const accessToken = userData?.data?.access_token;
-
             if (accessToken) {
-                config.headers = config.headers || {};
                 config.headers.Authorization = `Bearer ${accessToken}`;
             }
         }
-
+        // Add deviceId as a query parameter for GET products requests only
+        if(config.method?.toLowerCase() === "get" && config.url?.includes("/products")) {
+            const deviceId = await getDeviceId();
+            if(deviceId) {
+                config.params = {
+                    ...config.params,
+                    device_id : deviceId
+                }
+            }
+        }
         return config;
     },
     (error) => Promise.reject(error)

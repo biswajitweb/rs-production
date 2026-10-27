@@ -100,6 +100,139 @@ export default function HomeSlider({
             </section>
 
     
+       
+
+
+<section className="rs-award-strip">
+    <div className="rs-award-track">
+
+       
+        <div className="rs-award-item">
+            <i className="bi bi-trophy"></i>
+            <span>5 Odisha State Film Awards</span>
+        </div>
+        <span className="rs-award-dot"></span>
+
+        <div className="rs-award-item">
+            <i className="bi bi-film"></i>
+            <span>Best Producer Award</span>
+        </div>
+        <span className="rs-award-dot"></span>
+
+        <div className="rs-award-item">
+            <i className="bi bi-award"></i>
+            <span>Special Jury Award</span>
+        </div>
+        <span className="rs-award-dot"></span>
+
+        <div className="rs-award-item">
+            <i className="bi bi-music-note-beamed"></i>
+            <span>Best Sound Recordist</span>
+        </div>
+        <span className="rs-award-dot"></span>
+
+        <div className="rs-award-item">
+            <i className="bi bi-camera-reels"></i>
+            <span>Best Editor Award</span>
+        </div>
+        <span className="rs-award-dot"></span>
+
+        <div className="rs-award-item">
+            <i className="bi bi-bookmark-star"></i>
+            <span>Best Story Award</span>
+        </div>
+        <span className="rs-award-dot"></span>
+
+        <div className="rs-award-item">
+            <i className="bi bi-person-badge"></i>
+            <span>Best Supporting Actor Award</span>
+        </div>
+        <span className="rs-award-dot"></span>
+
+        <div className="rs-award-item">
+            <i className="bi bi-star"></i>
+            <span>Odisha Cine Critics Association Award</span>
+        </div>
+        <span className="rs-award-dot"></span>
+
+        <div className="rs-award-item">
+            <i className="bi bi-award"></i>
+            <span>Rajiv Gandhi Sadbhavana Award · 2005</span>
+        </div>
+        <span className="rs-award-dot"></span>
+
+        <div className="rs-award-item">
+            <i className="bi bi-mortarboard"></i>
+            <span>Senior Fellowship Award · Ministry of Culture, Government of India</span>
+        </div>
+        <span className="rs-award-dot"></span>
+
+       
+        <div className="rs-award-item" aria-hidden="true">
+            <i className="bi bi-trophy"></i>
+            <span>5 Odisha State Film Awards</span>
+        </div>
+        <span className="rs-award-dot" aria-hidden="true"></span>
+
+        <div className="rs-award-item" aria-hidden="true">
+            <i className="bi bi-film"></i>
+            <span>Best Producer Award</span>
+        </div>
+        <span className="rs-award-dot" aria-hidden="true"></span>
+
+        <div className="rs-award-item" aria-hidden="true">
+            <i className="bi bi-award"></i>
+            <span>Special Jury Award</span>
+        </div>
+        <span className="rs-award-dot" aria-hidden="true"></span>
+
+        <div className="rs-award-item" aria-hidden="true">
+            <i className="bi bi-music-note-beamed"></i>
+            <span>Best Sound Recordist</span>
+        </div>
+        <span className="rs-award-dot" aria-hidden="true"></span>
+
+        <div className="rs-award-item" aria-hidden="true">
+            <i className="bi bi-camera-reels"></i>
+            <span>Best Editor Award</span>
+        </div>
+        <span className="rs-award-dot" aria-hidden="true"></span>
+
+        <div className="rs-award-item" aria-hidden="true">
+            <i className="bi bi-bookmark-star"></i>
+            <span>Best Story Award</span>
+        </div>
+        <span className="rs-award-dot" aria-hidden="true"></span>
+
+        <div className="rs-award-item" aria-hidden="true">
+            <i className="bi bi-person-badge"></i>
+            <span>Best Supporting Actor Award</span>
+        </div>
+        <span className="rs-award-dot" aria-hidden="true"></span>
+
+        <div className="rs-award-item" aria-hidden="true">
+            <i className="bi bi-star"></i>
+            <span>Odisha Cine Critics Association Award</span>
+        </div>
+        <span className="rs-award-dot" aria-hidden="true"></span>
+
+        <div className="rs-award-item" aria-hidden="true">
+            <i className="bi bi-award"></i>
+            <span>Rajiv Gandhi Sadbhavana Award · 2005</span>
+        </div>
+        <span className="rs-award-dot" aria-hidden="true"></span>
+
+        <div className="rs-award-item" aria-hidden="true">
+            <i className="bi bi-mortarboard"></i>
+            <span>Senior Fellowship Award · Ministry of Culture, Government of India</span>
+        </div>
+        <span className="rs-award-dot" aria-hidden="true"></span>
+
+    </div>
+</section>
+
+
+
             <CustomersView/>
 
       </>  

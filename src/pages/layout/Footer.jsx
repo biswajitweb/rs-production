@@ -17,6 +17,9 @@ export default function Footer() {
     return (
         <>
         <SecurePayment/>
+
+
+
         <footer 
             className="rs-footer-area"
             style={{

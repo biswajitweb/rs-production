@@ -6,7 +6,7 @@ export default function NotFound() {
     const navigate = useNavigate();
 
     return (
-        <div className="container-fluid min-vh-100 d-flex align-items-center justify-content-center bg-light">
+        <div className="container-fluid min-vh-100 d-flex align-items-center justify-content-center">
             <div className="text-center p-4">
                 <h1
                     className="display-1 fw-bold text-primary mb-0"
@@ -35,7 +35,7 @@ export default function NotFound() {
 
                     <button
                         type="button"
-                        className="btn btn-outline-secondary px-4 py-2"
+                        className="btn custom-btn btn-outline-secondary px-4 py-2"
                         onClick={() => navigate(-1)}
                     >
                         <i className="bi bi-arrow-left me-2"></i>

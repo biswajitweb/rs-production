@@ -37,6 +37,20 @@ export const ROUTES = [
         },
     },
     {
+        path: "/temple",
+        element: "Temple",
+        area: ROUTE_AREA.WEBSITE,
+        guest: true,
+        is_show: "top-menu",
+        title: "Temple",
+        seo: {
+            title: "Temples of Odisha | History, Architecture & Heritage",
+            description: "Explore the famous temples of Odisha, including Lingaraj Temple and Mukteswara Temple. Discover their history, ancient architecture, spiritual significance, and rich cultural heritage.",
+            canonical: "/temple",
+            robots: "index, follow",
+        },
+    },
+    {
         path: "/about-us",
         element: "About",
         area: ROUTE_AREA.WEBSITE,
