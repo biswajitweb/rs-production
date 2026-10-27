@@ -147,7 +147,7 @@ export default function Home() {
                 aria-live="polite"
             >
                 {isFetchingNextPage && (
-                    <span>Loading more products...</span>
+                    <span></span>
                 )}
             </div>
         </>
