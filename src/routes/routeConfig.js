@@ -41,7 +41,7 @@ export const ROUTES = [
         element: "Temple",
         area: ROUTE_AREA.WEBSITE,
         guest: true,
-        is_show: "top-menu",
+        is_show: "topmenu",
         title: "Temple",
         seo: {
             title: "Temples of Odisha | History, Architecture & Heritage",
