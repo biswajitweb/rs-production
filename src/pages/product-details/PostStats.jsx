@@ -13,7 +13,7 @@ export default function PostStats({
         <div className="rs-stats">
             <button
                 type="button"
-                className={`rs-like ${isLiked ? 'active' : ''}`}
+                className={`rs-like ${Number(likes) === 1 ? 'active' : ''}`}
                 onClick={()=>onLike(productId)}
                 aria-label={`${isLiked ? 'Unlike' : 'Like'} this post`}
                 aria-pressed={isLiked}

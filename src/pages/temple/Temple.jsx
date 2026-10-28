@@ -130,6 +130,7 @@ export default function Temple() {
     const isSearchPending = search.trim() !== debouncedSearch;
 
     return (
+        <>
         <section className="py-3">
             <div className="container">
 
@@ -390,5 +391,65 @@ export default function Temple() {
                     )}
             </div>
         </section>
+
+            <div className='container'>
+                <div className='row'>
+                    <div className='col-md-12'>
+                        <section className='rs-category-grid'>
+                            <a class="rs-category-card" href="#" data-discover="true">
+                                <div className='rs-category-image'><img alt="Birhor" loading="lazy" src="https://rabisankar.com/live-wp/wp-content/uploads/2026/10/235341564854444444.jpg" /></div>
+                                <div class="rs-category-text">
+                                    <figcaption>Birhor</figcaption>
+                                </div>
+                            </a>
+                            <a class="rs-category-card" href="#" data-discover="true">
+                                <div className='rs-category-image'><img alt="Birhor" loading="lazy" src="https://rabisankar.com/live-wp/wp-content/uploads/2026/10/352353225443532.jpg" /></div>
+                                <div class="rs-category-text">
+                                    <figcaption>Bonda</figcaption>
+                                </div>
+                            </a>
+                            <a class="rs-category-card" href="#" data-discover="true">
+                                <div className='rs-category-image'><img alt="Birhor" loading="lazy" src="https://rabisankar.com/live-wp/wp-content/uploads/2026/10/352352314841433.jpg" /></div>
+                                <div class="rs-category-text">
+                                    <figcaption>Chuktia Bhunjia</figcaption>
+                                </div>
+                            </a>
+                             <a class="rs-category-card" href="#" data-discover="true">
+                                <div className='rs-category-image'><img alt="Birhor" loading="lazy" src="https://rabisankar.com/live-wp/wp-content/uploads/2026/10/2352353525452.jpg" /></div>
+                                <div class="rs-category-text">
+                                    <figcaption>Didayi</figcaption>
+                                </div>
+                            </a>
+                             <a class="rs-category-card" href="#" data-discover="true">
+                                <div className='rs-category-image'><img alt="Birhor" loading="lazy" src="https://rabisankar.com/live-wp/wp-content/uploads/2026/10/235325232552353333.jpg" /></div>
+                                <div class="rs-category-text">
+                                    <figcaption>Dongaria</figcaption>
+                                </div>
+                            </a>
+                             <a class="rs-category-card" href="#" data-discover="true">
+                                <div className='rs-category-image'><img alt="Birhor" loading="lazy" src="https://rabisankar.com/live-wp/wp-content/uploads/2026/10/3463461841464364.jpg" /></div>
+                                <div class="rs-category-text">
+                                    <figcaption>Hill Kharia</figcaption>
+                                </div>
+                            </a>
+                            <a class="rs-category-card" href="#" data-discover="true">
+                                <div className='rs-category-image'><img alt="Birhor" loading="lazy" src="https://rabisankar.com/live-wp/wp-content/uploads/2026/10/4586484415435235.jpg" /></div>
+                                <div class="rs-category-text">
+                                    <figcaption>Juang</figcaption>
+                                </div>
+                            </a>
+                            <a class="rs-category-card" href="#" data-discover="true">
+                                <div className='rs-category-image'><img alt="Birhor" loading="lazy" src="https://rabisankar.com/live-wp/wp-content/uploads/2026/10/2353253252554132.jpg" /></div>
+                                <div class="rs-category-text">
+                                    <figcaption>Kutia</figcaption>
+                                </div>
+                            </a>
+                        </section>
+                    </div>
+                </div>
+            </div>
+                  
+
+</>
     );
 }

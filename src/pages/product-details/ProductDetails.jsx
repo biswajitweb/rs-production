@@ -1,13 +1,14 @@
-import React, { lazy, useEffect, useState } from 'react';
+import React, { lazy, useEffect, useOptimistic, useState, useTransition } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import DOMPurify from "dompurify";
 
 
 import { service } from '../../api/service';
 import { addToCart } from '../../features/cart/cartSlice';
 import { REDIRECT_DELAY } from '../../utils/staticImage';
+import { getDeviceId } from '../../utils/deviceFingerprint';
 
 
 
@@ -37,6 +38,7 @@ export default function ProductDetails() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
 
     const [quantity, setQuantity] = useState(1);
     const [totalPrice, setTotalPrice] = useState(0);
@@ -61,6 +63,13 @@ export default function ProductDetails() {
             show: false,
         }));
     };
+
+    const [serverLikes, setServerLikes] = useState(0);
+    const [isPending, startTransition] = useTransition();
+    const [optimisticLikes, setOptimisticLikes] = useOptimistic(
+        serverLikes,
+        (currentLikes, nextLikes)=> nextLikes
+    );
 
     
 
@@ -109,6 +118,14 @@ export default function ProductDetails() {
     useEffect(() => {
         setQuantity(1);
     }, [id, variantId]);
+
+    /**
+     * Set like count 
+    */
+
+    useEffect(()=>{
+        setServerLikes(Number(productDetails?.like) || 0);
+    }, [productDetails?.id, productDetails?.like]);
 
     /**
      * Change product / variant
@@ -174,7 +191,57 @@ export default function ProductDetails() {
        
     };
 
+    /**
+     * Like / unlike product.
+     *
+     * Optimistically updates the UI, updates React Query cache
+     * after API success, and refetches server data.
+    */
     const onHandleLike = async(productId) =>{
+        if(!productId) return;
+        startTransition(async()=>{
+            const previousLikes = serverLikes;
+            const nextLikes = previousLikes === 1 ? 0 : 1;
+            // Update the UI immediately.
+            setOptimisticLikes(nextLikes);
+            try {
+            
+                const deviceId = await getDeviceId();
+                let requestData = {
+                    id : productId,
+                    device_id : deviceId
+                };
+                await service.product.updateLikeCount(requestData);
+                
+                // Update the React Query cache.
+                queryClient.setQueryData(
+                    ['product', Number(id), Number(variantId)],
+                    (oldData) => {
+                        if (!oldData) return oldData;
+
+                        return {
+                            ...oldData,
+                            likes: nextLikes,
+                            like: nextLikes,
+                        };
+                    }
+                );
+                // Save the confirmed state after API success.
+                setServerLikes(nextLikes);
+                // Refresh the product data from the server.
+                await queryClient.invalidateQueries({
+                    queryKey: ['product', Number(id), Number(variantId)],
+                    exact: true,
+                });
+            } catch (error) {
+                if(error) {
+                    showToast(
+                        error.message,
+                        "error"
+                    );
+                }
+            }
+        })
        
     }
 
@@ -260,7 +327,7 @@ export default function ProductDetails() {
                                     />
 
                                     <PostStats 
-                                        likes={productDetails?.like}
+                                        likes={optimisticLikes}
                                         views={75}
                                         productId = {productDetails.id}
                                         onLike={ ()=>onHandleLike(productDetails.id) }
