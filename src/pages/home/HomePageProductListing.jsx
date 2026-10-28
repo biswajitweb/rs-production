@@ -69,7 +69,8 @@ export default function HomePageProductListing({
                                                 : item.id ?? index
                                         }
                                     >
-                                        <img
+                                        <div className='rs-image'>
+                                            <img
                                             src={item?.image?.src}
                                             alt={
                                                 item?.name ||
@@ -77,7 +78,7 @@ export default function HomePageProductListing({
                                             }
                                             loading="lazy"
                                         />
-
+                                        </div>
                                         <div className="action-area">
                                             <figcaption>
                                                 {item?.name}

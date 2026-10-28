@@ -7,12 +7,6 @@ const SecurePayment = lazy(()=>
     import('../../components/SecurePayment')
 );
 
-// Combine the default background with search images
-const images = STATIC_IMAGE.footerBanner;
-
-// Select a random background image on page refresh
-const randomImage = images[Math.floor(Math.random() * images.length)];
-
 export default function Footer() {
     return (
         <>
@@ -23,7 +17,7 @@ export default function Footer() {
         <footer 
             className="rs-footer-area"
             style={{
-                backgroundImage: `url("${randomImage}")`
+                backgroundImage: `url("${STATIC_IMAGE.FOOTER}")`
             }}
             >
             <div className="container">
