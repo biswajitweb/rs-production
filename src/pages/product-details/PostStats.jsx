@@ -26,7 +26,7 @@ export default function PostStats({
                 <span>{likes}</span>
             </button>
 
-            <div className="rs-view">
+            <div className="rs-view d-none">
                 <i className="bi bi-eye" aria-hidden="true" />
                 <span>{views}</span>
             </div>
