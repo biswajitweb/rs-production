@@ -78,19 +78,19 @@ export const ROUTES = [
             robots: "index, follow",
         },
     },
-    // {
-    //     path: "/product-details/:id/variants/:variantId",
-    //     element: "ProductDetails",
-    //     area: ROUTE_AREA.WEBSITE,
-    //     guest: true,
-    //     is_show: "product-details",
-    //     title: "Product Details",
-    //     seo: {
-    //         title: "Product Details",
-    //         description: "Explore product details and pricing.",
-    //         noIndex: true,
-    //     }
-    // },
+    {
+        path: "/product-details/:id/variants/:variantId",
+        element: "ProductDetails",
+        area: ROUTE_AREA.WEBSITE,
+        guest: true,
+        is_show: "product-details",
+        title: "Product Details",
+        seo: {
+            title: "",
+            description: "s",
+            noIndex: true,
+         }
+     },
     {
         path: "/cart",
         element: "Cart",
