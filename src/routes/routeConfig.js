@@ -58,8 +58,8 @@ export const ROUTES = [
         is_show: "top-menu",
         title: "About Us",
         seo: {
-            title: "About Us | Tribal Culture Photography",
-            description: "Learn about our photography collection documenting tribal culture, traditions, people and heritage in Odisha and India through original photographs.",
+            title: "About RS Productions | Tribal & Cultural Photography in Odisha",
+            description: "Discover RS Productions, documenting Odisha's tribal communities, traditional lifestyles, cultural heritage, festivals and people through original photography.",
             canonical: "/about-us",
             robots: "index, follow",
         },
@@ -72,25 +72,25 @@ export const ROUTES = [
         is_show: "top-menu",
         title: "Contact Us",
         seo: {
-            title: "Contact Us | Tribal Photography Sales",
-            description: "Contact us for tribal culture photography, photo purchases, commercial licensing, editorial use and enquiries about our original photography collection.",
+            title: "Contact RS Productions | Photography & Licensing Enquiries",
+            description: "Get in touch with RS Productions for tribal culture photography purchases, commercial licensing, editorial usage, image downloads and other photography enquiries.",
             canonical: "/contact-us",
             robots: "index, follow",
         },
     },
-    {
-        path: "/product-details/:id/variants/:variantId",
-        element: "ProductDetails",
-        area: ROUTE_AREA.WEBSITE,
-        guest: true,
-        is_show: "product-details",
-        title: "Product Details",
-        seo: {
-            title: "Product Details",
-            description: "Explore product details and pricing.",
-            noIndex: true,
-        }
-    },
+    // {
+    //     path: "/product-details/:id/variants/:variantId",
+    //     element: "ProductDetails",
+    //     area: ROUTE_AREA.WEBSITE,
+    //     guest: true,
+    //     is_show: "product-details",
+    //     title: "Product Details",
+    //     seo: {
+    //         title: "Product Details",
+    //         description: "Explore product details and pricing.",
+    //         noIndex: true,
+    //     }
+    // },
     {
         path: "/cart",
         element: "Cart",

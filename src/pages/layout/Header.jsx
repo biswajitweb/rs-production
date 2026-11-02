@@ -59,17 +59,46 @@ export default function Header() {
            <header
                 className={`rs-header-area ${isSticky ? "sticky-header-1" : ""}`}
             >
+
+
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
                             <div className="header-wrap">
                                 <div className="header-col-left">
-                                    <Link to="/" className="logo-wrap">
+                                    <nav class="navbar navbar-expand-lg">
+
+    <a class="navbar-brand" href="#">
+        <Link to="/" className="logo-wrap">
                                         <img src={STATIC_IMAGE.LOGO}/>
                                         <span className="logo-text">R S Productions</span>
                                     </Link>
-                                    <div className="nav-wrap">
-                                        <ul>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#headerMenu" aria-controls="headerMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="headerMenu">
+        <ul className='navbar-nav'>
+            <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Tribal
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Birhor</a></li>
+            <li><a class="dropdown-item" href="#">Bonda</a></li>
+            <li><a class="dropdown-item" href="#">Dongaria</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Temple
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Konark</a></li>
+            <li><a class="dropdown-item" href="#">Lingaraj</a></li>
+            <li><a class="dropdown-item" href="#">Jagannath Temple Puri</a></li>
+          </ul>
+        </li>
                                             {
                                                 (Array.isArray(primaryMenu) && primaryMenu.length > 0 ) &&
                                                 primaryMenu.map((item, index)=>{
@@ -91,7 +120,12 @@ export default function Header() {
                                             }
                                            
                                         </ul>
-                                    </div>
+
+    </div>
+    
+
+</nav>
+
                                 </div>
                                 <div className="header-col-right">
                                     <div className="acount-wrap">

@@ -299,15 +299,19 @@ export default function ProductDetails() {
     return (
         <>
             <SEO
-                title={productDetails?.name}
+                title={
+                    productDetails?.name
+                        ? `${productDetails.name} | RS Productions`
+                        : "Product Details | RS Productions"
+                }
                 description={
                     productDetails?.short_description ||
                     productDetails?.description ||
-                    "Explore product details and pricing."
+                    "Explore original photography and licensing options at RS Productions."
                 }
                 canonical={`/product-details/${id}/variants/${variantId}`}
                 image={productDetails?.image?.src}
-                noIndex={!productDetails}
+                noIndex={!productDetails?.name}
                 type="product"
             />
             <section className="rs-list-details mt-4">
