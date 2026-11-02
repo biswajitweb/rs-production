@@ -42,7 +42,11 @@
     overflow: hidden;
     border-radius: 8px !important;
 }
-.rs-header-area .navbar ul li a {
+.rs-header-area .dropdown-toggle::after {
+    opacity: .5;
+}
+.rs-header-area .navbar ul li a,
+.rs-header-area .navbar ul li .nav-link {
     font-size: 20px;
     text-decoration: none;
     padding-left: 20px;
@@ -60,6 +64,7 @@
         padding: 0 !important;
         border: 0 !important;
         box-shadow: none !important;
+        margin-left: 20px;
     }
 .navbar-collapse{
 position: absolute;
@@ -107,7 +112,9 @@ position: absolute;
 .rs-header-area .header-col-left {
     display: flex;
 }
-
+.rs-header-area .header-col-left .navbar {
+    padding: 0;
+}
 .rs-header-area .header-col-right {
     display: flex;
 }

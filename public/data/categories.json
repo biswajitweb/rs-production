@@ -1,21 +1,20 @@
 [
   {
-    "id": 71,
-    "name": "Temple",
-    "slug": "temple",
-    "hasChildren" : false
-  },
-  {
     "id": 72,
-    "name": "Tribe",
-    "slug": "tribe",
-    "hasChildren" : false
+    "name": "Tribes",
+    "slug": "tribes",
+    "hasChildren": false
   },
   {
-    "id": 99,
-    "name": "Dance",
-    "slug": "dance",
-    "hasChildren" : false
+    "id": 71,
+    "name": "Temples",
+    "slug": "temples",
+    "hasChildren": false
+  },
+  {
+    "id": 114,
+    "name": "Books",
+    "slug": "books",
+    "hasChildren": false
   }
-  
 ]
