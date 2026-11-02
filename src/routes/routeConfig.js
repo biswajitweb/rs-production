@@ -1,6 +1,7 @@
 
 import { ROUTE_AREA } from "../api/constants/common";
 import { ROLES } from "../utils/roles";
+import categories from '../../public/data/categories.json';
 
 /**
  * Application Routes
@@ -17,6 +18,24 @@ import { ROLES } from "../utils/roles";
  * - canonical
  * - noindex (optional)
  */
+
+const CATEGORY_ROUTES = categories.map((category) => ({
+    id : category.id,
+    hasChildren : category.hasChildren,
+    path: `/:parentSlug/:childSlug`,
+    element: "Category",
+    area: ROUTE_AREA.WEBSITE,
+    guest: true,
+    is_show: "top-menu",
+    title: category.name,
+    categoryId: category.id,
+    seo: {
+        title: `${category.name} Photography | Tribal Culture`,
+        description: `Explore ${category.name.toLowerCase()} photography, cultural heritage, traditions and original photographs from Odisha and India.`,
+        canonical: `/${category.slug}`,
+        robots: "index, follow",
+    },
+}));
 
 export const ROUTES = [
     // =========================
@@ -36,20 +55,7 @@ export const ROUTES = [
             robots: "index, follow",
         },
     },
-    {
-        path: "/temple",
-        element: "Temple",
-        area: ROUTE_AREA.WEBSITE,
-        guest: true,
-        is_show: "top-menu",
-        title: "Temple",
-        seo: {
-            title: "Temples of Odisha | History, Architecture & Heritage",
-            description: "Explore the famous temples of Odisha, including Lingaraj Temple and Mukteswara Temple. Discover their history, ancient architecture, spiritual significance, and rich cultural heritage.",
-            canonical: "/temple",
-            robots: "index, follow",
-        },
-    },
+    ...CATEGORY_ROUTES,
     {
         path: "/about-us",
         element: "About",
@@ -390,3 +396,5 @@ export const ROUTES = [
         },
     },
 ];
+
+

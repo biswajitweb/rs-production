@@ -6,17 +6,20 @@ import { getSiteInfo } from './features/site/siteSlice'
 import { useEffect } from 'react'
 import ScrollToTop from './components/ScrollToTop'
 import PageLoader from './components/PageLoader'
+import { getAllCategories } from './features/categories/categoriesSlice'
 
 function App() {
   const dispatch = useDispatch();
 
   const loadInitialData = async () => {
     await dispatch(getSiteInfo());
+    await dispatch(getAllCategories())
   };
 
   useEffect(() => {
     loadInitialData();
   }, []);
+  
 
   // Automatic day/night theme
   useEffect(() => {

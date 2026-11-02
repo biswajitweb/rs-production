@@ -26,6 +26,7 @@ export const PAGES = {
        LicenseAgreement : lazy(()=>import('../pages/others/LicenseAgreement')),
        RefundCancellation : lazy(()=>import('../pages/others/RefundCancellation')),
        ForgotPassword : lazy(()=>import('../pages/auth/ForgotPassword')),
-       ResetPassword : lazy(()=>import('../pages/auth/ResetPassword')) 
+       ResetPassword : lazy(()=>import('../pages/auth/ResetPassword')),
+       Category :  lazy(()=>import('../pages/category/Category'))
     } 
 };
