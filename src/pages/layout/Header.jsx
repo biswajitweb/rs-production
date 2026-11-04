@@ -166,6 +166,16 @@ export default function Header() {
                                                         {hasChildren ? (
 
                                                             <>
+                                                            
+                                                            <NavLink
+                                                                    to={item.parentSlug}
+                                                                    className={`parent-category-link ${
+                                                                        isOpen ? 'active' : ''
+                                                                    }`}
+                                                                   
+                                                                >
+                                                                    {item.title}
+                                                                </NavLink>
                                                                 <button
                                                                     type="button"
                                                                     className={`nav-link dropdown-toggle ${
@@ -182,7 +192,7 @@ export default function Header() {
                                                                         isOpen
                                                                     }
                                                                 >
-                                                                    {item.title}
+                                                                    
                                                                 </button>
 
                                                                 {isOpen && (

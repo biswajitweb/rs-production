@@ -22,13 +22,14 @@ import categories from '../../public/data/categories.json';
 const CATEGORY_ROUTES = categories.map((category) => ({
     id : category.id,
     hasChildren : category.hasChildren,
-    path: `/:parentSlug/:childSlug`,
+    path: `/:parentSlug/:childSlug?`,
     element: "Category",
     area: ROUTE_AREA.WEBSITE,
     guest: true,
     is_show: "top-menu",
     title: category.name,
     categoryId: category.id,
+    parentSlug : category.slug,
     seo: {
         title: `${category.name} Photography | Tribal Culture`,
         description: `Explore ${category.name.toLowerCase()} photography, cultural heritage, traditions and original photographs from Odisha and India.`,

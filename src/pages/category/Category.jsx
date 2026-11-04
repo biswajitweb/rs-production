@@ -6,9 +6,7 @@ import { Helmet } from 'react-helmet-async';
 import { pagination } from '../../api/pagination';
 import { service } from '../../api/service';
 
-const Spinner = lazy(() =>
-    import('../../components/Spinner')
-);
+const Spinner = lazy(() => import('../../components/Spinner'));
 
 export default function Category() {
 
@@ -17,7 +15,7 @@ export default function Category() {
     const categoryParam = {
         ...pagination.HOME_PAGE,
         category: parentSlug,
-        subcategory: childSlug
+        ...(childSlug ? { subcategory: childSlug } : {})
     };
 
     const {
@@ -26,10 +24,11 @@ export default function Category() {
         error,
         data: catProductData
     } = useQuery({
-        queryKey: ['product-cat', parentSlug, childSlug],
+        queryKey: ['product-cat', parentSlug, childSlug ?? ''],
 
         queryFn: async () => {
             const response = await service.product.getAll(categoryParam);
+
             const productData = response?.data;
 
             return {
@@ -42,20 +41,21 @@ export default function Category() {
             };
         },
 
-        enabled: !!parentSlug && !!childSlug,
+        // API runs when parentSlug exists, even without childSlug
+        enabled: !!parentSlug,
+
         gcTime: 10 * 60 * 1000,
         refetchOnWindowFocus: false
     });
 
     const products = catProductData?.products ?? [];
 
-    // Dynamic SEO
     const formatSlug = (slug = '') =>
         slug
             .replace(/-/g, ' ')
             .replace(/\b\w/g, char => char.toUpperCase());
 
-    const categoryName = formatSlug(childSlug);
+    const categoryName = formatSlug(childSlug || parentSlug);
     const parentName = formatSlug(parentSlug);
 
     const seoTitle = `${categoryName} Photography | Tribal Culture`;
@@ -64,12 +64,12 @@ export default function Category() {
         catProductData?.category?.description ||
         `Explore ${categoryName} in ${parentName} photography, cultural heritage, traditions and original photographs from Odisha and India.`;
 
-    const canonicalUrl =
-        `https://rabisankar.com/${parentSlug}/${childSlug}`;
+    const canonicalUrl = childSlug
+        ? `https://rabisankar.com/${parentSlug}/${childSlug}`
+        : `https://rabisankar.com/${parentSlug}`;
 
     return (
         <>
-            {/* Dynamic SEO */}
             <Helmet>
                 <title>{seoTitle}</title>
 
@@ -97,7 +97,6 @@ export default function Category() {
                                 className="col-12"
                                 style={{ minHeight: '300px' }}
                             >
-
                                 {isPending && (
                                     <Suspense fallback={null}>
                                         <Spinner
@@ -170,7 +169,6 @@ export default function Category() {
                                         </div>
                                     )
                                 )}
-
                             </div>
                         </div>
                     </div>
