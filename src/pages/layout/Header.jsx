@@ -1,6 +1,6 @@
 
 import React, { lazy, useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { STATIC_IMAGE } from '../../utils/staticImage';
@@ -17,6 +17,13 @@ const HeaderSearch = lazy(() => import('./HeaderSearch'));
 
 export default function Header() {
 
+    const location = useLocation();
+    const pathName = location?.pathname;
+    const matchRoute = ["/tribes", "/temples", "/books"];
+    const isShowSearchBar = matchRoute.some((item) =>
+        pathName === item || pathName.startsWith(`${item}/`)
+    );
+    
     const primaryMenu = ROUTES.filter(
         (item) => item.is_show === 'top-menu'
     );
@@ -254,7 +261,9 @@ export default function Header() {
                                     <ul>
 
                                         {/* SEARCH */}
-                                        <HeaderSearch />
+                                        <HeaderSearch
+                                            isShow={isShowSearchBar}
+                                        />
 
 
                                         {/* HELP */}
