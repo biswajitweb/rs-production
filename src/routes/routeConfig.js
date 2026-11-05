@@ -197,7 +197,7 @@ export const ROUTES = [
         },
     },
     {
-        path: "/order-success/:order_id/:user_id",
+        path: "/order-success/:id/user_id/:user_id", 
         element: "OrderSuccess",
         area: ROUTE_AREA.WEBSITE,
         guest: true,

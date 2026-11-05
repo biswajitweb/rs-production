@@ -1,4 +1,11 @@
-import React, { lazy, useEffect, useState } from "react";
+
+import React, {
+    lazy,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -6,25 +13,20 @@ import { calculateTax } from "../../utils/calculateTax";
 import { decryptData } from "../../utils/encryption";
 import { service } from "../../api/service";
 import { allAddressList } from "../../features/address/addressSlice";
-import { loadCashfreeSDK } from "../../utils/loadCashfree";
-import { createCashfreePayment } from "../../api/cashfreeService";
+import { loadRazorpayScript } from "../../utils/razorpay";
 
 const Spinner = lazy(() => import("../../components/Spinner"));
-
 const Toast = lazy(() => import("../../components/Toast"));
 
 export default function Checkout() {
+
     const { authToken } = useSelector((state) => state.user);
 
-    const {
-        totalQuantity,
-        totalAmount,
-        itmes,
-    } = useSelector((state) => state.cart);
-
-    const { address } = useSelector(
-        (state) => state.address
+    const { totalQuantity, totalAmount, itmes } = useSelector(
+        (state) => state.cart
     );
+
+    const { address } = useSelector((state) => state.address);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -34,15 +36,16 @@ export default function Checkout() {
     const [userInfo, setUserInfo] = useState({});
     const [userId, setUserId] = useState(0);
 
+    const [razorpayLoaded, setRazorpayLoaded] = useState(false);
+    const [paymentLoading, setPaymentLoading] = useState(true);
+    const [paymentVerifying, setPaymentVerifying] = useState(false);
+
     const [orderLoader, setOrderLoader] = useState(false);
-    const [addressLoading, setAddressLoading] =
-        useState(true);
+    const [addressLoading, setAddressLoading] = useState(true);
 
-    const [cashfreeReady, setCashfreeReady] =
-        useState(false);
-
-    const [cashfreeLoading, setCashfreeLoading] =
-        useState(true);
+    // Prevent duplicate order/payment verification
+    const orderLockRef = useRef(false);
+    const verificationLockRef = useRef(false);
 
     const [toast, setToast] = useState({
         show: false,
@@ -51,12 +54,9 @@ export default function Checkout() {
     });
 
     /*
-     * Show toast
+     * Show Toast
      */
-    const showToast = (
-        message,
-        type = "success"
-    ) => {
+    const showToast = (message, type = "success") => {
         setToast({
             show: true,
             message,
@@ -65,7 +65,7 @@ export default function Checkout() {
     };
 
     /*
-     * Close toast
+     * Close Toast
      */
     const closeToast = () => {
         setToast((prev) => ({
@@ -75,57 +75,70 @@ export default function Checkout() {
     };
 
     /*
-     * Load Cashfree SDK
+     * Load Razorpay SDK
      */
     useEffect(() => {
+
         let isMounted = true;
 
-        const initializeCashfree = async () => {
+        const initRazorpay = async () => {
+
             try {
-                setCashfreeLoading(true);
 
-                await loadCashfreeSDK();
+                setPaymentLoading(true);
 
-                if (
-                    isMounted &&
-                    typeof window.Cashfree ===
-                        "function"
-                ) {
-                    setCashfreeReady(true);
-                }
-            } catch (error) {
-                console.error(
-                    "Cashfree SDK loading error:",
-                    error
-                );
+                const loaded = await loadRazorpayScript();
 
-                if (isMounted) {
-                    setCashfreeReady(false);
+                if (!isMounted) return;
 
+                const isAvailable =
+                    loaded &&
+                    typeof window.Razorpay === "function";
+
+                setRazorpayLoaded(isAvailable);
+
+                if (!isAvailable) {
                     showToast(
-                        "Unable to load payment gateway. Please refresh and try again.",
+                        "Unable to load Razorpay. Please refresh and try again.",
                         "error"
                     );
                 }
-            } finally {
+
+            } catch (error) {
+
+                console.error("Razorpay SDK error:", error);
+
                 if (isMounted) {
-                    setCashfreeLoading(false);
+
+                    setRazorpayLoaded(false);
+
+                    showToast(
+                        "Unable to load payment gateway. Please try again.",
+                        "error"
+                    );
+                }
+
+            } finally {
+
+                if (isMounted) {
+                    setPaymentLoading(false);
                 }
             }
         };
 
-        initializeCashfree();
+        initRazorpay();
 
         return () => {
             isMounted = false;
         };
+
     }, []);
 
     /*
-     * Redirect if user is not logged in
-     * or cart is empty
+     * Redirect if Not Logged In or Cart Empty
      */
     useEffect(() => {
+
         if (
             !authToken ||
             !Array.isArray(itmes) ||
@@ -135,45 +148,45 @@ export default function Checkout() {
                 replace: true,
             });
         }
+
     }, [authToken, itmes, navigate]);
 
     /*
-     * Decrypt logged-in user
+     * Decrypt Logged-in User
      */
     useEffect(() => {
+
         let isMounted = true;
 
         const decryptAuth = async () => {
-            if (!authToken) {
-                return;
-            }
+
+            if (!authToken) return;
 
             try {
-                const userDecrypt =
-                    await decryptData(authToken);
 
-                const userData =
-                    userDecrypt?.data;
+                const userDecrypt = await decryptData(authToken);
 
-                if (!userData) {
+                const userData = userDecrypt?.data;
+
+                if (!userData?.id) {
                     throw new Error(
                         "Unable to read user information."
                     );
                 }
 
                 if (isMounted) {
+
                     setUserInfo(userData);
-                    setUserId(
-                        Number(userData.id) || 0
-                    );
+
+                    setUserId(Number(userData.id) || 0);
                 }
+
             } catch (error) {
-                console.error(
-                    "Decrypt user error:",
-                    error
-                );
+
+                console.error("Decrypt user error:", error);
 
                 if (isMounted) {
+
                     setUserInfo({});
                     setUserId(0);
                 }
@@ -185,43 +198,52 @@ export default function Checkout() {
         return () => {
             isMounted = false;
         };
+
     }, [authToken]);
 
     /*
-     * Get user addresses
+     * Get User Addresses
      */
     useEffect(() => {
-        if (!userId || userId <= 0) {
-            return;
-        }
+
+        if (!userId || userId <= 0) return;
+
+        let isMounted = true;
 
         const getAddressBooks = async () => {
+
             try {
+
                 setAddressLoading(true);
 
-                await dispatch(
-                    allAddressList(userId)
-                );
+                await dispatch(allAddressList(userId));
+
             } catch (error) {
-                console.error(
-                    "Get address error:",
-                    error
-                );
+
+                console.error("Get address error:", error);
+
             } finally {
-                setAddressLoading(false);
+
+                if (isMounted) {
+                    setAddressLoading(false);
+                }
             }
         };
 
         getAddressBooks();
+
+        return () => {
+            isMounted = false;
+        };
+
     }, [userId, dispatch]);
 
     /*
-     * Get default address
+     * Get Default Address
      */
     const getDefaultAddress = () => {
-        if (!Array.isArray(address)) {
-            return null;
-        }
+
+        if (!Array.isArray(address)) return null;
 
         return (
             address.find(
@@ -234,41 +256,114 @@ export default function Checkout() {
     };
 
     /*
-     * Place order
+     * Verify Razorpay Payment
+     */
+    const verifyRazorpayPayment = async (
+        paymentResponse,
+        orderId
+    ) => {
+
+        if (verificationLockRef.current) return;
+
+        verificationLockRef.current = true;
+
+        setPaymentVerifying(true);
+        setOrderLoader(true);
+
+        try {
+
+            const response = await service.order.verifyPayment({
+
+                order_id: orderId,
+
+                razorpay_order_id:
+                    paymentResponse.razorpay_order_id,
+
+                razorpay_payment_id:
+                    paymentResponse.razorpay_payment_id,
+
+                razorpay_signature:
+                    paymentResponse.razorpay_signature,
+
+                user_id: Number(userInfo.id),
+
+            });
+
+            const result =
+                response?.data?.data || response?.data;
+
+            if (!result?.success) {
+                throw new Error(
+                    result?.message ||
+                    "Payment verification failed."
+                );
+            }
+
+            showToast(
+                "Payment verified successfully. Redirecting to your order confirmation...",
+                "success"
+            );
+
+            navigate(
+                `/order-success/${orderId}/user_id/${Number(userInfo.id)}`,
+                {
+                    replace: true,
+                }
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Payment verification error:",
+                error
+            );
+
+            setPaymentVerifying(false);
+            setOrderLoader(false);
+
+            verificationLockRef.current = false;
+
+            showToast(
+                error?.response?.data?.message ||
+                error?.response?.data?.data?.message ||
+                "We couldn't verify your payment. If money was deducted, please contact support before making another payment.",
+                "error"
+            );
+        }
+    };
+
+    /*
+     * Place Order
      */
     const onPlaceOrder = async () => {
-        /*
-         * Prevent duplicate clicks
-         */
-        if (orderLoader) {
-            return;
-        }
+
+        if (orderLockRef.current) return;
 
         /*
-         * Check authentication
+         * Authentication Validation
          */
         if (!authToken || !userInfo?.id) {
+
             showToast(
                 "Please login before placing your order.",
                 "error"
             );
 
             navigate("/login");
+
             return;
         }
 
         /*
-         * Check cart
+         * Cart Validation
          */
         if (
             !Array.isArray(itmes) ||
             itmes.length === 0 ||
-            totalQuantity <= 0
+            Number(totalQuantity) <= 0
         ) {
-            showToast(
-                "Your cart is empty.",
-                "error"
-            );
+
+            showToast("Your cart is empty.", "error");
 
             navigate("/", {
                 replace: true,
@@ -278,15 +373,15 @@ export default function Checkout() {
         }
 
         /*
-         * Check Cashfree SDK
+         * Razorpay SDK Validation
          */
         if (
-            !cashfreeReady ||
-            typeof window.Cashfree !==
-                "function"
+            !razorpayLoaded ||
+            typeof window.Razorpay !== "function"
         ) {
+
             showToast(
-                "Payment gateway is still loading. Please try again.",
+                "Razorpay is not available. Please refresh and try again.",
                 "error"
             );
 
@@ -294,12 +389,12 @@ export default function Checkout() {
         }
 
         /*
-         * Get default address
+         * Default Address Validation
          */
-        const defaultAddress =
-            getDefaultAddress();
+        const defaultAddress = getDefaultAddress();
 
         if (!defaultAddress) {
+
             showToast(
                 "Please add and select a default delivery address.",
                 "error"
@@ -309,14 +404,10 @@ export default function Checkout() {
         }
 
         /*
-         * Prepare line items
+         * Prepare Line Items
          */
         const lineItems = itmes.map(
-            ({
-                productId,
-                quantity,
-                product_code,
-            }) => ({
+            ({ productId, quantity, product_code }) => ({
                 product_id: productId,
                 quantity: Number(quantity),
                 product_code,
@@ -324,7 +415,7 @@ export default function Checkout() {
         );
 
         /*
-         * Remove address-only fields
+         * Filter Address
          */
         const {
             label,
@@ -334,17 +425,17 @@ export default function Checkout() {
         } = defaultAddress;
 
         /*
-         * WooCommerce order payload
+         * WooCommerce Order Payload
          */
         const orderData = {
-            customer_id: userInfo.id,
 
-            /*
-             * Use Cashfree instead of COD
-             */
-            payment_method: "cashfree",
+            customer_id: Number(userInfo.id),
 
-            payment_method_title: "Cashfree",
+            payment_method: "razorpay",
+
+            payment_method_title: "Razorpay",
+
+            set_paid: false,
 
             tax_rate: 18,
 
@@ -355,110 +446,200 @@ export default function Checkout() {
             line_items: lineItems,
 
             customer_note: "",
+
         };
 
         try {
+
+            orderLockRef.current = true;
+
             setOrderLoader(true);
 
             /*
-             * ==========================================
-             * STEP 1
-             * Create WooCommerce order
-             * ==========================================
+             * STEP 1: Create WooCommerce Order
              */
             const response =
-                await service.order.create(
-                    orderData
-                );
+                await service.order.create(orderData);
 
             const orderResponse =
-                response?.data;
+                response?.data?.data || response?.data;
 
-            const orderDataResponse =
-                orderResponse?.data;
-
-            const orderId =
-                Number(orderDataResponse?.id) || 0;
+            const orderId = Number(orderResponse?.id) || 0;
 
             if (orderId <= 0) {
                 throw new Error(
-                    "Order could not be created."
+                    "WooCommerce order could not be created."
                 );
             }
 
             /*
-             * ==========================================
-             * STEP 2
-             * Create Cashfree payment session
-             * ==========================================
+             * STEP 2: Create Razorpay Order
              */
-            const paymentData = {
-                user_id: Number(userInfo.id),
-                order_id: orderId,
-            };
-            
-
             const paymentResult =
-                await createCashfreePayment(
-                    paymentData
-                );
+                await service.order.createRazorpayOrder({
 
-            if (
-                !paymentResult?.payment_session_id
-            ) {
-                throw new Error(
-                    "Cashfree payment session was not returned."
-                );
-            }
+                    order_id: orderId,
 
-            /*
-             * ==========================================
-             * STEP 3
-             * Verify Cashfree SDK
-             * ==========================================
-             */
-            if (
-                typeof window.Cashfree !==
-                "function"
-            ) {
-                throw new Error(
-                    "Cashfree SDK is not loaded."
-                );
-            }
+                    user_id: Number(userInfo.id),
 
-            /*
-             * ==========================================
-             * STEP 4
-             * Initialize Cashfree
-             * ==========================================
-             */
-            const cashfree =
-                window.Cashfree({
-                    mode:
-                        paymentResult.mode ||
-                        "sandbox",
                 });
 
-            /*
-             * ==========================================
-             * STEP 5
-             * Open Cashfree Checkout
-             * ==========================================
-             *
-             * IMPORTANT:
-             *
-             * redirectTarget "_self" means Cashfree
-             * redirects the current browser window.
-             *
-             * Do NOT show a toast after checkout().
-             */
-            await cashfree.checkout({
-                paymentSessionId:
-                    paymentResult.payment_session_id,
+            const paymentData =
+                paymentResult?.data?.data ||
+                paymentResult?.data;
 
-                redirectTarget: "_self",
-            });
+            /*
+             * STEP 3: Validate Razorpay Configuration
+             */
+            const razorpayKey = paymentData?.key_id;
+
+            const razorpayOrderId =
+                paymentData?.razorpay_order_id;
+
+            const razorpayAmount =
+                Number(paymentData?.amount);
+
+            const razorpayCurrency =
+                paymentData?.currency || "INR";
+
+            if (!razorpayKey) {
+                throw new Error(
+                    "Razorpay Key ID is missing from WordPress API response."
+                );
+            }
+
+            if (!razorpayKey.startsWith("rzp_")) {
+                throw new Error(
+                    "Invalid Razorpay Key ID."
+                );
+            }
+
+            if (!razorpayOrderId) {
+                throw new Error(
+                    "Razorpay Order ID is missing."
+                );
+            }
+
+            if (
+                !Number.isFinite(razorpayAmount) ||
+                razorpayAmount <= 0
+            ) {
+                throw new Error(
+                    "Invalid Razorpay payment amount."
+                );
+            }
+
+            /*
+             * STEP 4: Razorpay Checkout Options
+             */
+            const options = {
+
+                key: razorpayKey,
+
+                amount: razorpayAmount,
+
+                currency: razorpayCurrency,
+
+                name: "Your Store",
+
+                description: `Order #${orderId}`,
+
+                order_id: razorpayOrderId,
+
+                prefill: {
+
+                    name: `${filterAddress.first_name || ""} ${filterAddress.last_name || ""}`,
+
+                    email:
+                        filterAddress.email ||
+                        userInfo.email ||
+                        "",
+
+                    contact: filterAddress.phone || "",
+
+                },
+
+                notes: {
+                    woocommerce_order_id: String(orderId),
+                },
+
+                theme: {
+                    color: "#0d6efd",
+                },
+
+                /*
+                 * Payment Success
+                 */
+                handler: async (paymentResponse) => {
+
+                    await verifyRazorpayPayment(
+                        paymentResponse,
+                        orderId
+                    );
+                },
+
+                /*
+                 * Payment Modal Dismiss
+                 */
+                modal: {
+
+                    ondismiss: function () {
+
+                        if (verificationLockRef.current) return;
+
+                        setOrderLoader(false);
+
+                        orderLockRef.current = false;
+
+                        showToast(
+                            "Payment cancelled. You can try again.",
+                            "warning"
+                        );
+                    },
+
+                },
+
+            };
+
+            /*
+             * STEP 5: Initialize Razorpay
+             */
+            const razorpay =
+                new window.Razorpay(options);
+
+            /*
+             * Payment Failed
+             */
+            razorpay.on(
+                "payment.failed",
+                function (response) {
+
+                    if (verificationLockRef.current) return;
+
+                    console.error(
+                        "Razorpay payment failed:",
+                        response.error
+                    );
+
+                    setOrderLoader(false);
+
+                    orderLockRef.current = false;
+
+                    showToast(
+                        response.error?.description ||
+                        "Payment failed. Please try again.",
+                        "error"
+                    );
+                }
+            );
+
+            /*
+             * STEP 6: Open Razorpay Checkout
+             */
+            razorpay.open();
+
         } catch (error) {
+
             console.error(
                 "Place order error:",
                 error
@@ -466,52 +647,49 @@ export default function Checkout() {
 
             const apiMessage =
                 error?.response?.data?.message ||
-                error?.response?.data?.data
-                    ?.message ||
+                error?.response?.data?.data?.message ||
                 error?.message ||
                 "Unable to place order. Please try again.";
 
-            showToast(
-                apiMessage,
-                "error"
-            );
-        } finally {
+            showToast(apiMessage, "error");
+
             setOrderLoader(false);
+
+            orderLockRef.current = false;
         }
     };
 
     /*
-     * Address status
+     * Address Status
      */
     const hasAddress =
-        Array.isArray(address) &&
-        address.length > 0;
+        Array.isArray(address) && address.length > 0;
+
+    const defaultAddress = getDefaultAddress();
+
+    const hasDefaultAddress = Boolean(defaultAddress);
 
     /*
-     * Default address
-     */
-    const defaultAddress =
-        getDefaultAddress();
-
-    const hasDefaultAddress =
-        Boolean(defaultAddress);
-
-    /*
-     * Disable place order button
+     * Disable Place Order Button
      */
     const disablePlaceOrder =
         orderLoader ||
+        paymentVerifying ||
         addressLoading ||
         !hasAddress ||
         !hasDefaultAddress ||
-        !cashfreeReady ||
-        cashfreeLoading;
+        !razorpayLoaded ||
+        paymentLoading;
 
     return (
         <>
+
             <section className="checkout-page">
+
                 <div className="container">
+
                     <div className="row">
+
                         <div className="col-12">
 
                             <h1 className="page-heading">
@@ -520,9 +698,7 @@ export default function Checkout() {
 
                             <div className="row g-4">
 
-                                {/* =========================
-                                    DELIVERY ADDRESS
-                                ========================== */}
+                                {/* DELIVERY ADDRESS */}
 
                                 <div className="col-md-6">
 
@@ -542,451 +718,347 @@ export default function Checkout() {
 
                                     </div>
 
-                                    <div className="row">
+                                    {addressLoading ? (
 
-                                        {addressLoading ? (
-                                            <div className="text-center w-100 py-5">
+                                        <div className="text-center py-5">
 
-                                                <Spinner
-                                                    centered={
-                                                        true
-                                                    }
-                                                    color="primary"
-                                                    label="Loading addresses..."
-                                                />
+                                            <Spinner
+                                                centered={true}
+                                                color="primary"
+                                                label="Loading addresses..."
+                                            />
+
+                                        </div>
+
+                                    ) : !hasAddress ? (
+
+                                        <div className="card border-0 shadow-sm rounded-4 text-center p-4">
+
+                                            <i className="bi bi-geo-alt text-primary fs-1 mb-3"></i>
+
+                                            <h5>
+                                                No Delivery Address Found
+                                            </h5>
+
+                                            <p className="text-muted">
+                                                Add your delivery address to continue.
+                                            </p>
+
+                                            <Link
+                                                to="/my-account/addresses"
+                                                className="btn btn-primary rounded-pill"
+                                            >
+                                                Add Your First Address
+                                            </Link>
+
+                                        </div>
+
+                                    ) : !hasDefaultAddress ? (
+
+                                        <div className="alert alert-warning">
+                                            Please select a default delivery address.
+                                        </div>
+
+                                    ) : (
+
+                                        <div className="border border-success bg-success-subtle rounded-3 p-3">
+
+                                            <div className="d-flex justify-content-between mb-3">
+
+                                                <h6 className="fw-semibold">
+                                                    {defaultAddress.label || "Address"}
+                                                </h6>
+
+                                                <span className="badge bg-success">
+                                                    Default
+                                                </span>
 
                                             </div>
-                                        ) : !hasAddress ? (
-                                            <div className="col-12">
 
-                                                <div className="card border-0 shadow-sm rounded-4 text-center p-4">
+                                            <div className="fw-semibold mb-2">
+                                                {defaultAddress.first_name}{" "}
+                                                {defaultAddress.last_name}
+                                            </div>
 
-                                                    <div className="mb-3">
+                                            <div className="small text-secondary mb-2">
 
-                                                        <div
-                                                            className="d-inline-flex align-items-center justify-content-center rounded-circle bg-light"
-                                                            style={{
-                                                                width: "80px",
-                                                                height: "80px",
-                                                            }}
-                                                        >
-                                                            <i
-                                                                className="bi bi-geo-alt text-primary"
-                                                                style={{
-                                                                    fontSize:
-                                                                        "2.5rem",
-                                                                }}
-                                                            />
-                                                        </div>
+                                                {defaultAddress.address_1}
 
-                                                    </div>
+                                                <br />
 
-                                                    <h5 className="fw-semibold mb-2">
-                                                        No Delivery
-                                                        Address Found
-                                                    </h5>
+                                                {defaultAddress.city},{" "}
+                                                {defaultAddress.state}
 
-                                                    <p className="text-muted mb-4">
-                                                        You haven't added
-                                                        a delivery address
-                                                        yet. Add your
-                                                        address to make
-                                                        checkout faster
-                                                        and easier.
-                                                    </p>
+                                                <br />
 
-                                                    <Link
-                                                        to="/my-account/addresses"
-                                                        className="btn btn-primary rounded-pill px-4 py-2"
-                                                    >
-                                                        <i className="bi bi-plus-circle me-2"></i>
-                                                        Add Your First
-                                                        Address
-                                                    </Link>
+                                                {defaultAddress.country === "IN"
+                                                    ? "India"
+                                                    : defaultAddress.country}{" "}
+                                                - {defaultAddress.postcode}
+
+                                            </div>
+
+                                            <div className="small text-secondary">
+
+                                                <i className="bi bi-telephone me-2"></i>
+
+                                                {defaultAddress.phone}
+
+                                            </div>
+
+                                            <Link
+                                                to="/my-account/addresses"
+                                                className="btn btn-outline-success btn-sm rounded-pill mt-3"
+                                            >
+                                                <i className="bi bi-pencil me-1"></i>
+                                                Manage Addresses
+                                            </Link>
+
+                                        </div>
+
+                                    )}
+
+                                </div>
+
+                                {/* YOUR ORDER */}
+
+                                {Array.isArray(itmes) && itmes.length > 0 && (
+
+                                    <div className="col-md-6">
+
+                                        <h3 className="mb-4">
+                                            Your order
+                                        </h3>
+
+                                        <div className="card border-0 shadow-sm">
+
+                                            <div className="card-body">
+
+                                                <div className="table-responsive">
+
+                                                    <table className="table align-middle">
+
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Product</th>
+                                                                <th className="text-end">
+                                                                    Subtotal
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody>
+
+                                                            {itmes.map((item, index) => (
+
+                                                                <tr
+                                                                    key={`${item.productId}-${item.variantId}-${index}`}
+                                                                >
+
+                                                                    <td>
+
+                                                                        <Link
+                                                                            className="text-decoration-none text-primary"
+                                                                            to={`/product-details/${item.productId}/variants/${item.variantId}`}
+                                                                        >
+                                                                            {item.name} × {item.quantity}
+                                                                        </Link>
+
+                                                                    </td>
+
+                                                                    <td className="text-end">
+                                                                        ₹{" "}
+                                                                        {(
+                                                                            Number(item.price) *
+                                                                            Number(item.quantity)
+                                                                        ).toFixed(2)}
+                                                                    </td>
+
+                                                                </tr>
+
+                                                            ))}
+
+                                                            <tr>
+                                                                <td>Subtotal</td>
+                                                                <td className="text-end">
+                                                                    ₹{Number(totalAmount).toFixed(2)}
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td>Tax (18%)</td>
+                                                                <td className="text-end">
+                                                                    ₹{(
+                                                                        Number(taxWithAmount.total) -
+                                                                        Number(totalAmount)
+                                                                    ).toFixed(2)}
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td>
+                                                                    <strong>Total</strong>
+                                                                </td>
+
+                                                                <td className="text-end">
+                                                                    <strong>
+                                                                        ₹{Number(taxWithAmount.total).toFixed(2)}
+                                                                    </strong>
+                                                                </td>
+                                                            </tr>
+
+                                                        </tbody>
+
+                                                    </table>
 
                                                 </div>
 
-                                            </div>
-                                        ) : !hasDefaultAddress ? (
-                                            <div className="col-12">
+                                                {/* RAZORPAY LOADING */}
 
-                                                <div className="alert alert-warning rounded-3">
+                                                {paymentLoading && (
 
-                                                    <i className="bi bi-exclamation-triangle me-2"></i>
+                                                    <div className="alert alert-light border small">
 
-                                                    Please select a
-                                                    default delivery
-                                                    address before
-                                                    placing your order.
+                                                        <Spinner
+                                                            size="sm"
+                                                            color="primary"
+                                                        />
 
-                                                </div>
-
-                                            </div>
-                                        ) : (
-                                            <div className="col-12">
-
-                                                <div className="border border-success bg-success-subtle rounded-3 p-3">
-
-                                                    <div className="d-flex align-items-start justify-content-between gap-2 mb-3">
-
-                                                        <div className="d-flex align-items-center gap-2">
-
-                                                            <div
-                                                                className="rounded-3 d-flex align-items-center justify-content-center flex-shrink-0 bg-white text-success"
-                                                                style={{
-                                                                    width: "42px",
-                                                                    height: "42px",
-                                                                }}
-                                                            >
-                                                                <i
-                                                                    className={`bi ${
-                                                                        defaultAddress.label ===
-                                                                        "Office"
-                                                                            ? "bi-building"
-                                                                            : "bi-house-door"
-                                                                    } fs-5`}
-                                                                />
-                                                            </div>
-
-                                                            <div>
-
-                                                                <h6 className="mb-1 fw-semibold">
-                                                                    {defaultAddress.label ||
-                                                                        "Address"}
-                                                                </h6>
-
-                                                                <div className="small text-muted">
-                                                                    {defaultAddress.label ===
-                                                                    "Office"
-                                                                        ? "Work address"
-                                                                        : "Personal address"}
-                                                                </div>
-
-                                                            </div>
-
-                                                        </div>
-
-                                                        <span className="badge rounded-pill bg-success text-white px-2 py-2 flex-shrink-0">
-
-                                                            <i className="bi bi-check2 me-1" />
-
-                                                            Default
-
+                                                        <span className="ms-2">
+                                                            Loading Razorpay payment gateway...
                                                         </span>
 
                                                     </div>
 
-                                                    <div className="mb-3">
+                                                )}
 
-                                                        <div className="fw-semibold text-dark mb-2">
+                                                {/* RAZORPAY ERROR */}
 
-                                                            {
-                                                                defaultAddress.first_name
-                                                            }{" "}
-                                                            {
-                                                                defaultAddress.last_name
-                                                            }
+                                                {!paymentLoading && !razorpayLoaded && (
 
-                                                        </div>
+                                                    <div className="alert alert-danger small">
 
-                                                        <div className="d-flex align-items-start gap-2 mb-2">
+                                                        <i className="bi bi-exclamation-circle me-2"></i>
 
-                                                            <i className="bi bi-geo-alt text-muted mt-1" />
-
-                                                            <div className="small text-secondary text-break">
-
-                                                                <div>
-                                                                    {
-                                                                        defaultAddress.address_1
-                                                                    }
-                                                                </div>
-
-                                                                <div>
-                                                                    {
-                                                                        defaultAddress.city
-                                                                    }
-                                                                    ,{" "}
-                                                                    {
-                                                                        defaultAddress.state
-                                                                    }
-                                                                </div>
-
-                                                                <div>
-                                                                    {defaultAddress.country ===
-                                                                    "IN"
-                                                                        ? "India"
-                                                                        : defaultAddress.country}{" "}
-                                                                    -{" "}
-                                                                    {
-                                                                        defaultAddress.postcode
-                                                                    }
-                                                                </div>
-
-                                                            </div>
-
-                                                        </div>
-
-                                                        <div className="d-flex align-items-center gap-2 small text-secondary">
-
-                                                            <i className="bi bi-telephone text-muted" />
-
-                                                            <span>
-                                                                {
-                                                                    defaultAddress.phone
-                                                                }
-                                                            </span>
-
-                                                        </div>
+                                                        Payment gateway could not be loaded.
+                                                        Please refresh the page.
 
                                                     </div>
 
-                                                    <div className="mt-3">
+                                                )}
 
-                                                        <Link
-                                                            to="/my-account/addresses"
-                                                            className="btn btn-outline-success btn-sm rounded-pill px-3"
-                                                        >
-                                                            <i className="bi bi-pencil me-1"></i>
-                                                            Manage Addresses
-                                                        </Link>
+                                                {/* PLACE ORDER */}
 
-                                                    </div>
+                                                <button
+                                                    type="button"
+                                                    className="btn custom-btn btn-primary w-100"
+                                                    onClick={onPlaceOrder}
+                                                    disabled={disablePlaceOrder}
+                                                >
 
-                                                </div>
-
-                                            </div>
-                                        )}
-
-                                    </div>
-
-                                </div>
-
-                                {/* =========================
-                                    YOUR ORDER
-                                ========================== */}
-
-                                {Array.isArray(itmes) &&
-                                    itmes.length > 0 && (
-                                        <div className="col-md-6">
-
-                                            <h3 className="mb-4">
-                                                Your order
-                                            </h3>
-
-                                            <div className="card border-0 shadow-sm">
-
-                                                <div className="card-body">
-
-                                                    <div className="table-responsive">
-
-                                                        <table className="table align-middle">
-
-                                                            <thead>
-                                                                <tr>
-
-                                                                    <th>
-                                                                        Product
-                                                                    </th>
-
-                                                                    <th className="text-end">
-                                                                        Subtotal
-                                                                    </th>
-
-                                                                </tr>
-                                                            </thead>
-
-                                                            <tbody>
-
-                                                                {itmes.map(
-                                                                    (
-                                                                        item,
-                                                                        index
-                                                                    ) => (
-                                                                        <tr
-                                                                            key={`${item.productId}-${item.variantId}-${index}`}
-                                                                        >
-
-                                                                            <td>
-
-                                                                                <Link
-                                                                                    className="text-decoration-none text-primary"
-                                                                                    to={`/product-details/${item.productId}/variants/${item.variantId}`}
-                                                                                >
-                                                                                    {
-                                                                                        item.name
-                                                                                    }{" "}
-                                                                                    ×{" "}
-                                                                                    {
-                                                                                        item.quantity
-                                                                                    }
-                                                                                </Link>
-
-                                                                            </td>
-
-                                                                            <td className="text-end">
-
-                                                                                &#8377;{" "}
-
-                                                                                {(
-                                                                                    Number(
-                                                                                        item.price
-                                                                                    ) *
-                                                                                    Number(
-                                                                                        item.quantity
-                                                                                    )
-                                                                                ).toFixed(
-                                                                                    2
-                                                                                )}
-
-                                                                            </td>
-
-                                                                        </tr>
-                                                                    )
-                                                                )}
-
-                                                                {/* Subtotal */}
-
-                                                                <tr>
-
-                                                                    <td>
-                                                                        Subtotal
-                                                                    </td>
-
-                                                                    <td className="text-end">
-
-                                                                        &#8377;{" "}
-
-                                                                        {Number(
-                                                                            totalAmount
-                                                                        ).toFixed(
-                                                                            2
-                                                                        )}
-
-                                                                    </td>
-
-                                                                </tr>
-
-                                                                {/* Tax */}
-
-                                                                <tr>
-
-                                                                    <td>
-                                                                        Tax
-                                                                    </td>
-
-                                                                    <td className="text-end">
-                                                                        18%
-                                                                    </td>
-
-                                                                </tr>
-
-                                                                {/* Total */}
-
-                                                                <tr>
-
-                                                                    <td>
-                                                                        <strong>
-                                                                            Total
-                                                                        </strong>
-                                                                    </td>
-
-                                                                    <td className="text-end">
-
-                                                                        <strong>
-
-                                                                            &#8377;{" "}
-
-                                                                            {Number(
-                                                                                taxWithAmount.total
-                                                                            ).toFixed(
-                                                                                2
-                                                                            )}
-
-                                                                        </strong>
-
-                                                                    </td>
-
-                                                                </tr>
-
-                                                            </tbody>
-
-                                                        </table>
-
-                                                    </div>
-
-                                                    {/* Cashfree loading */}
-
-                                                    {cashfreeLoading && (
-                                                        <div className="alert alert-light border small mb-3">
-
-                                                            <Spinner
-                                                                size="sm"
-                                                                color="primary"
-                                                            />
-
-                                                            <span className="ms-2">
-                                                                Loading payment
-                                                                gateway...
-                                                            </span>
-
-                                                        </div>
+                                                    {orderLoader && (
+                                                        <Spinner
+                                                            size="sm"
+                                                            color="white"
+                                                        />
                                                     )}
 
-                                                    {/* Cashfree error */}
+                                                    {orderLoader
+                                                        ? " Processing Payment..."
+                                                        : paymentLoading
+                                                        ? " Loading Payment..."
+                                                        : " Pay Now"}
 
-                                                    {!cashfreeLoading &&
-                                                        !cashfreeReady && (
-                                                            <div className="alert alert-danger small mb-3">
-
-                                                                <i className="bi bi-exclamation-circle me-2"></i>
-
-                                                                Payment gateway
-                                                                could not be
-                                                                loaded. Please
-                                                                refresh the page
-                                                                and try again.
-
-                                                            </div>
-                                                        )}
-
-                                                    <button
-                                                        type="button"
-                                                        className="btn custom-btn btn-primary w-100"
-                                                        onClick={
-                                                            onPlaceOrder
-                                                        }
-                                                        disabled={
-                                                            disablePlaceOrder
-                                                        }
-                                                    >
-
-                                                        {orderLoader && (
-                                                            <Spinner
-                                                                size="sm"
-                                                                color="white"
-                                                            />
-                                                        )}
-
-                                                        {orderLoader
-                                                            ? " Placing Order..."
-                                                            : cashfreeLoading
-                                                            ? " Loading Payment..."
-                                                            : " Place Order"}
-
-                                                    </button>
-
-                                                </div>
+                                                </button>
 
                                             </div>
 
                                         </div>
-                                    )}
+
+                                    </div>
+
+                                )}
 
                             </div>
+
                         </div>
+
                     </div>
+
                 </div>
+
             </section>
+
+            {/* FULL PAGE PAYMENT VERIFICATION OVERLAY */}
+
+            {paymentVerifying && (
+
+                <div
+                    className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
+                    style={{
+                        zIndex: 99999,
+                        backgroundColor: "rgba(255, 255, 255, 0.97)",
+                    }}
+                >
+
+                    <div
+                        className="text-center p-4"
+                        style={{
+                            maxWidth: "450px",
+                            width: "100%",
+                        }}
+                    >
+
+                        <div className="mb-4">
+
+                            <div
+                                className="spinner-border text-primary"
+                                style={{
+                                    width: "3.5rem",
+                                    height: "3.5rem",
+                                }}
+                                role="status"
+                            >
+                                <span className="visually-hidden">
+                                    Verifying payment...
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <h4 className="fw-bold mb-3">
+                            Verifying Your Payment
+                        </h4>
+
+                        <p className="text-muted mb-4">
+                            Please wait while we securely verify your payment.
+                            This may take a few moments.
+                        </p>
+
+                        <div className="alert alert-warning small text-start">
+
+                            <i className="bi bi-shield-lock me-2"></i>
+
+                            Please do not refresh, close, or navigate away
+                            from this page.
+
+                        </div>
+
+                        <div className="text-secondary small">
+
+                            <i className="bi bi-shield-check me-1"></i>
+
+                            Your payment is being securely verified.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            )}
+
+            {/* TOAST */}
 
             <Toast
                 show={toast.show}
@@ -995,6 +1067,7 @@ export default function Checkout() {
                 duration={3000}
                 onClose={closeToast}
             />
+
         </>
     );
 }

@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { clearCart } from '../../features/cart/cartSlice';
 import { formatDate } from '../../utils/formatDate';
-import { verifyCashfreePayment } from '../../api/cashfreeService';
 import { service } from '../../api/service';
 
 const Toast = lazy(()=>
@@ -16,8 +15,9 @@ const Spinner = lazy(() =>
 
 
 export default function OrderSuccess() {
-    const { order_id, user_id } = useParams();
-
+   
+    const { id : order_id, user_id } = useParams();
+    
     const [status, setStatus] = useState('verifying');
     const [message, setMessage] = useState('');
     const [loader, setLoader] = useState(true);
@@ -67,12 +67,15 @@ export default function OrderSuccess() {
                     order_id,
                 };
 
-                const response = await verifyCashfreePayment(requestData);
+                
+
+                const response = await service.order.verifyOrder(requestData);
+                
 
                 if (cancelled) return;
 
-                setPaymentData(response);
-                setStatus(response?.payment_status || 'failed');
+                setPaymentData(response?.data);
+                setStatus(response?.data?.payment_status || 'failed');
 
                 /*
                  * Clear cart only when payment is successful.
