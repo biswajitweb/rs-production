@@ -173,7 +173,7 @@ export default function Header() {
                                                         {hasChildren ? (
 
                                                             <>
-                                                            
+                                                            <div className='btn-together'>
                                                             <NavLink
                                                                     to={item.parentSlug}
                                                                     className={`parent-category-link ${
@@ -185,7 +185,7 @@ export default function Header() {
                                                                 </NavLink>
                                                                 <button
                                                                     type="button"
-                                                                    className={`nav-link dropdown-toggle ${
+                                                                    className={`nav-link dropdown-toggle p-0 ${
                                                                         isOpen
                                                                             ? 'show'
                                                                             : ''
@@ -201,7 +201,7 @@ export default function Header() {
                                                                 >
                                                                     
                                                                 </button>
-
+                                                                </div>
                                                                 {isOpen && (
 
                                                                     <ul className="dropdown-menu show">

@@ -76,6 +76,50 @@ position: absolute;
 
 
 /* ----------------------------------------- */
+.rs-header-area .navbar-nav{
+    align-items: center;
+}
+@media (max-width: 1024px) {
+    .rs-header-area .navbar-nav{
+    align-items: flex-start;
+}
+}
+.rs-header-area .navbar-nav .btn-together{
+    display: flex;
+    align-items: center;
+}
+.rs-header-area .navbar-nav .btn-together .nav-link{
+    padding: 0 !important;
+    margin-top: 5px;
+}
+
+
+/* Bootstrap 5 hamburger icon */
+.navbar-toggler-icon {
+    transition: all 0.3s ease;
+}
+
+/* Menu open - change hamburger to X */
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+    background-image: none !important;
+    position: relative;
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
+    content: "×";
+    position: absolute;
+    inset: -5px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    line-height: 1;
+    color: currentColor;
+}
+.dropdown-item.active, .dropdown-item:active {
+    color: #fff;
+    background-color: var(--themePrimaryColor);
+}
 
 .rs-header-area .navbar .dropdown-menu {
     border: 0;
