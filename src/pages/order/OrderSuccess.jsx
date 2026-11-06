@@ -81,8 +81,8 @@ export default function OrderSuccess() {
                  * Clear cart only when payment is successful.
                  */
                 if (
-                    response?.payment_status?.toLowerCase() === 'success' ||
-                    response?.payment_status?.toLowerCase() === 'paid'
+                    response?.data?.payment_status?.toLowerCase() === 'success' ||
+                    response?.data?.payment_status?.toLowerCase() === 'paid'
                 ) {
                     dispatch(clearCart());
                 }

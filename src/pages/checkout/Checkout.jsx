@@ -14,6 +14,8 @@ import { decryptData } from "../../utils/encryption";
 import { service } from "../../api/service";
 import { allAddressList } from "../../features/address/addressSlice";
 import { loadRazorpayScript } from "../../utils/razorpay";
+import { getRazorpayTheme } from "../../utils/getRazorpayTheme";
+
 
 const Spinner = lazy(() => import("../../components/Spinner"));
 const Toast = lazy(() => import("../../components/Toast"));
@@ -30,6 +32,9 @@ export default function Checkout() {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const {info} = useSelector(state => state.site);
+    
+    
 
     const taxWithAmount = calculateTax(totalAmount);
 
@@ -304,6 +309,9 @@ export default function Checkout() {
                 "success"
             );
 
+            /** Clear carts */
+            
+
             navigate(
                 `/order-success/${orderId}/user_id/${Number(userInfo.id)}`,
                 {
@@ -540,9 +548,11 @@ export default function Checkout() {
 
                 currency: razorpayCurrency,
 
-                name: "Your Store",
+                name: "R S Productions",
 
                 description: `Order #${orderId}`,
+                
+                image: `https://rabisankar.com/site-logo/logo-icon.png`,
 
                 order_id: razorpayOrderId,
 
@@ -563,9 +573,7 @@ export default function Checkout() {
                     woocommerce_order_id: String(orderId),
                 },
 
-                theme: {
-                    color: "#0d6efd",
-                },
+                theme: getRazorpayTheme(),
 
                 /*
                  * Payment Success
