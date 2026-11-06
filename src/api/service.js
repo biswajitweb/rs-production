@@ -78,6 +78,9 @@ export const service = {
         },
         resetPassword  : async(params)=>{
             return await axiosInstance.post(`${API_PREFIX}customer/reset-password`, params);
+        },
+        getDashboard : async(userId)=>{
+            return await axiosInstance.get(`${API_PREFIX}my-account/dashboard?user_id=${userId}`);
         }
     },
     
