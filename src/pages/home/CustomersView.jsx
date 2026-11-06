@@ -42,8 +42,7 @@ export default function CustomersView() {
     return (
         <div className="rs-rating-bar">
             <div className="rs-rating-label">
-                <span>Our customers say</span>
-                <strong>Excellent</strong>
+                <strong>Loved by Our Customers Excellent</strong>
             </div>
 
             <span className="rs-rating-divider" />

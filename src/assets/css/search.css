@@ -170,11 +170,7 @@
     justify-content: center;
     flex-wrap: wrap;
     gap: 16px;
-    width: 100%;
-    padding: 14px 20px;
-    font-family: inherit;
     font-size: 18px;
-    margin-bottom: 30px;
 }
 
 .rs-rating-label {
