@@ -87,7 +87,7 @@ export default function Footer() {
                             <div className="rs-footer-widget term-wrap">
                                 <ul>
                                     <li><Link to="/about">About</Link></li>
-                                    <li><Link to="/contact-us">Contact Us</Link></li>
+                                    <li><Link to="/contact">Contact Us</Link></li>
                                     <li><Link to="/help">Help</Link></li>
                                     <li><Link to="/privacy-policy">Privacy Policy</Link></li>
                                     <li><Link to="/terms-conditions">Terms & Conditions</Link></li>

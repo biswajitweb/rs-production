@@ -44,7 +44,7 @@ class ErrorBoundary extends React.Component {
                         <Link to="/" class="custom-btn btn-primary">
                             Go to Homepage
                         </Link>
-                        <Link to="/contact-us" class="custom-btn btn-secondary">
+                        <Link to="/contact" class="custom-btn btn-secondary">
                             Go to Contact
                         </Link>
                     </div>

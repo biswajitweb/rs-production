@@ -248,7 +248,7 @@ export default function HomeSlider({
                         <picture className='rs-category-img'><img src={STATIC_IMAGE.BOOK_CATEGORY} alt="Book Category" /></picture>
                         <div className='rs-category-text'>Books & Stories <i class="bi bi-arrow-right"></i></div>
                     </a>
-                        <a href='/contact-us' className='rs-category-link'>
+                        <a href='/contact' className='rs-category-link'>
                         <picture className='rs-category-img'><img src={STATIC_IMAGE.CUSTOM_CATEGORY} alt="Custom Category" /></picture>
                         <div className='rs-category-text'>Custom Photography <i class="bi bi-arrow-right"></i></div>
                     </a>
