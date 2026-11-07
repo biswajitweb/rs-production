@@ -232,34 +232,6 @@ export default function HomeSlider({
 </section>
 
  <section className='rs-category-area'>
-<<<<<<< Updated upstream
-            <div className='container'>
-                <div className='row'>
-                    <div className='col-md-12'>
-                        <div className='upper-area'>
-                            {/* <div className='category-heading'>Always AI free</div> */}
-                            <CustomersView/>
-                        </div>
-                        <div className='rs-category-home-grid'>
-                            <a href='/tribes' className='rs-category-link'>
-                                <picture className='rs-category-img'><img src='https://images.pexels.com/photos/39433422/pexels-photo-39433422/free-photo-of-indigenous-man-in-traditional-attire-brazil.jpeg?auto=compress&w=600' /></picture>
-                                <div className='rs-category-text'>Tribal Heritage</div>
-                            </a>
-                             <a href='/templates' className='rs-category-link'>
-                                <picture className='rs-category-img'><img src='https://images.pexels.com/photos/36392913/pexels-photo-36392913/free-photo-of-konark-sun-temple-with-visitors-in-odisha.jpeg?auto=compress&w=600' /></picture>
-                                <div className='rs-category-text'>Sacred Places</div>
-                            </a>
-                             <a href='/books' className='rs-category-link'>
-                                <picture className='rs-category-img'><img src='https://images.pexels.com/photos/32368063/pexels-photo-32368063/free-photo-of-young-adult-reading-a-book-outdoors-in-khulna.jpeg?auto=compress&w=600' /></picture>
-                                <div className='rs-category-text'>Books & Stories</div>
-                            </a>
-                             <a href='/contact-us' className='rs-category-link'>
-                                <picture className='rs-category-img'><img src='https://images.pexels.com/photos/25776446/pexels-photo-25776446/free-photo-of-photographer-taking-pictures-under-pier-at-sunset.jpeg?auto=compress&w=600' /></picture>
-                                <div className='rs-category-text'>Custom Photography</div>
-                            </a>
-                        </div>
-                    </div>
-=======
     <div className='container'>
         <div className='row'>
             <div className='col-md-12'>
@@ -284,7 +256,6 @@ export default function HomeSlider({
                         <picture className='rs-category-img'><img src='https://images.ctfassets.net/hrltx12pl8hq/ss2daMHu3XewLBroGgbtp/6cf4fbe1fc297c20ee6cd2bb303e12a1/shutterstock_2390735237.jpg?fit=fill&w=640&h=360' /></picture>
                         <div className='rs-category-text'>Custom Photography</div>
                     </a>
->>>>>>> Stashed changes
                 </div>
             </div>
         </div>
