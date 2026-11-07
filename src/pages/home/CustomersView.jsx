@@ -42,10 +42,8 @@ export default function CustomersView() {
     return (
         <div className="rs-rating-bar">
             <div className="rs-rating-label">
-                <strong>Loved by Our Customers Excellent</strong>
+                <strong>Loved by Our Customers</strong>
             </div>
-
-            <span className="rs-rating-divider" />
 
             <div
                 className="rs-rating-stars"
@@ -60,8 +58,8 @@ export default function CustomersView() {
             </div>
 
             <p className="rs-rating-text">
-                {rating} out of 5 stars based on{' '}
-                <strong>{reviewCount}</strong> reviews
+                {rating}/5 Based on{' '}
+                <span>{reviewCount}</span> reviews
             </p>
         </div>
     );

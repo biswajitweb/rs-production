@@ -181,15 +181,12 @@
 }
 
 .rs-rating-label strong {
-    font-size: 22px;
-    font-weight: 700;
+    font-size: 20px;
+    font-weight: 500;
 }
-
-.rs-rating-divider {
-    display: block;
-    width: 1px;
-    height: 22px;
-    background: #d5d9de;
+.rs-rating-bar .excellent{
+  font-size: 20px;
+    font-weight: 500;
 }
 
 .rs-rating-stars {
@@ -242,15 +239,11 @@
     white-space: normal;
 }
 
-.rs-rating-text strong {
-    font-weight: 700;
-}
-
 /* Mobile responsive */
 @media (max-width: 600px) {
     .rs-rating-bar {
         gap: 10px;
-        padding: 14px 12px;
+        padding: 0;
     }
 
     .rs-rating-label strong {

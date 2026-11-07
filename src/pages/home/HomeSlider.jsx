@@ -239,21 +239,21 @@ export default function HomeSlider({
                             {/* <div className='category-heading'>Always AI free</div> */}
                             <CustomersView/>
                         </div>
-                        <div className='rs-category-grid'>
+                        <div className='rs-category-home-grid'>
                             <a href='/tribes' className='rs-category-link'>
-                                <picture className='rs-category-img'><img src='https://images.ctfassets.net/hrltx12pl8hq/2ppk3Ug2z6oFMZY5z8WXnx/75af41f13939954c93de0ff8c1972612/shutterstock_1922207966.jpg?fit=fill&w=640&h=360' /></picture>
+                                <picture className='rs-category-img'><img src='https://images.pexels.com/photos/39433422/pexels-photo-39433422/free-photo-of-indigenous-man-in-traditional-attire-brazil.jpeg?auto=compress&w=600' /></picture>
                                 <div className='rs-category-text'>Tribal Heritage</div>
                             </a>
                              <a href='/templates' className='rs-category-link'>
-                                <picture className='rs-category-img'><img src='https://images.ctfassets.net/hrltx12pl8hq/1qoVFqqABKxtFRMkUh0v6l/6a9bbdc723ac373f4e44400de87997b2/shutterstock_1734177410__1_.jpg?fit=fill&w=640&h=360' /></picture>
+                                <picture className='rs-category-img'><img src='https://images.pexels.com/photos/36392913/pexels-photo-36392913/free-photo-of-konark-sun-temple-with-visitors-in-odisha.jpeg?auto=compress&w=600' /></picture>
                                 <div className='rs-category-text'>Sacred Places</div>
                             </a>
                              <a href='/books' className='rs-category-link'>
-                                <picture className='rs-category-img'><img src='https://images.ctfassets.net/hrltx12pl8hq/go6z2gBaTMDvTrtoOipOw/3b9d21ff7003ca392a2daeb569d629fc/shutterstock_1802211250.jpg?fit=fill&w=640&h=360' /></picture>
+                                <picture className='rs-category-img'><img src='https://images.pexels.com/photos/32368063/pexels-photo-32368063/free-photo-of-young-adult-reading-a-book-outdoors-in-khulna.jpeg?auto=compress&w=600' /></picture>
                                 <div className='rs-category-text'>Books & Stories</div>
                             </a>
                              <a href='/contact-us' className='rs-category-link'>
-                                <picture className='rs-category-img'><img src='https://images.ctfassets.net/hrltx12pl8hq/ss2daMHu3XewLBroGgbtp/6cf4fbe1fc297c20ee6cd2bb303e12a1/shutterstock_2390735237.jpg?fit=fill&w=640&h=360' /></picture>
+                                <picture className='rs-category-img'><img src='https://images.pexels.com/photos/25776446/pexels-photo-25776446/free-photo-of-photographer-taking-pictures-under-pier-at-sunset.jpeg?auto=compress&w=600' /></picture>
                                 <div className='rs-category-text'>Custom Photography</div>
                             </a>
                         </div>
