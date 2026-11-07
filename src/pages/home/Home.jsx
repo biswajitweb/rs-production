@@ -4,6 +4,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { pagination } from '../../api/pagination';
 import { service } from '../../api/service';
 import useDebounce from '../../hook/useDebounce';
+import { useSelector } from 'react-redux';
 
 const HomeSlider = lazy(() => import('./HomeSlider'));
 const HomePageProductListing = lazy(
@@ -11,14 +12,21 @@ const HomePageProductListing = lazy(
 );
 
 export default function Home() {
-    const initialParams = pagination.HOME_PAGE;
+    const initialParams =  pagination.HOME_PAGE;
 
     const [search, setSearch] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState({
+        category: "",
+        subcategory: ""
+    });
+    const [activeCategory , setActiveCategory] = useState('');
     const debouncedSearch = useDebounce(search, 500);
 
     // Sentinel element for automatic pagination
     const loadMoreRef = useRef(null);
 
+    const {categories} = useSelector(state => state.categories);
+    
     const {
         data,
         isLoading,
@@ -28,48 +36,55 @@ export default function Home() {
         isError,
         error,
     } = useInfiniteQuery({
-        queryKey: ['home-products', initialParams, debouncedSearch],
+        queryKey: [
+                    'home-products', 
+                    initialParams, 
+                    debouncedSearch, 
+                    selectedCategory.category,
+                    selectedCategory.subcategory
+                ],
+                initialPageParam: initialParams.page ?? 1,
 
-        initialPageParam: initialParams.page ?? 1,
+            queryFn: async ({ pageParam, signal }) => {
+                const requestParams = {
+                    ...initialParams,
+                    page: pageParam,
+                    search: debouncedSearch,
+                    category: selectedCategory.category,
+                    subcategory: selectedCategory.subcategory
+                };
 
-        queryFn: async ({ pageParam, signal }) => {
-            const requestParams = {
-                ...initialParams,
-                page: pageParam,
-                search: debouncedSearch,
-            };
+                const response = await service.product.getAll(
+                    requestParams,
+                    { signal }
+                );
 
-            const response = await service.product.getAll(
-                requestParams,
-                { signal }
-            );
+                const productData = response?.data;
 
-            const productData = response?.data;
+                return {
+                    products: Array.isArray(productData?.data)
+                        ? productData.data
+                        : [],
+                    totalPages: Number(
+                        productData?.meta?.total_pages ?? 0
+                    ),
+                    currentPage: Number(pageParam),
+                };
+            },
 
-            return {
-                products: Array.isArray(productData?.data)
-                    ? productData.data
-                    : [],
-                totalPages: Number(
-                    productData?.meta?.total_pages ?? 0
-                ),
-                currentPage: Number(pageParam),
-            };
-        },
+            getNextPageParam: (lastPage) => {
+                if (
+                    lastPage.currentPage >= lastPage.totalPages ||
+                    lastPage.products.length === 0
+                ) {
+                    return undefined;
+                }
 
-        getNextPageParam: (lastPage) => {
-            if (
-                lastPage.currentPage >= lastPage.totalPages ||
-                lastPage.products.length === 0
-            ) {
-                return undefined;
-            }
+                return lastPage.currentPage + 1;
+            },
 
-            return lastPage.currentPage + 1;
-        },
-
-        staleTime: 60 * 1000,
-    });
+            staleTime: 60 * 1000,
+        });
 
     const products =
         data?.pages?.flatMap((page) => page.products) ?? [];
@@ -117,6 +132,15 @@ export default function Home() {
         fetchNextPage,
     ]);
 
+    const onHandleCategory = (parent, child)=>{
+        setSelectedCategory({
+            category: parent || "",
+            subcategory: child || ""
+        });
+        setSearch('');
+        setActiveCategory(child);
+    }
+
     return (
         <>
             <Suspense fallback={null}>
@@ -137,6 +161,9 @@ export default function Home() {
                     isFetchingNextPage={isFetchingNextPage}
                     isError={isError}
                     error={error}
+                    categories = { categories || [] }
+                    onHandleCategory= {onHandleCategory}
+                    activeCategory = {activeCategory}
                 />
             </Suspense>
 

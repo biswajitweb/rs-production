@@ -26,7 +26,7 @@ const CATEGORY_ROUTES = categories.map((category) => ({
     element: "Category",
     area: ROUTE_AREA.WEBSITE,
     guest: true,
-    is_show: "top-menu",
+    is_show: "top-menu-fasle",
     title: category.name,
     categoryId: category.id,
     parentSlug : category.slug,

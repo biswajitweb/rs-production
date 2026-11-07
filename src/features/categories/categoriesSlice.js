@@ -14,22 +14,24 @@ export const getAllCategories =  createAsyncThunk( "/categories", async(_, {reje
         const response = await axiosInstance.get(`${API_PREFIX}product-categories`);
         const catReponse = response.data;
         let categoriesArray = catReponse?.data || [];
+        
         let buildCategoryTree = []; 
         if(Array.isArray(categoriesArray) && categoriesArray.length > 0) {
-            buildCategoryTree = categoriesArray
-                .filter(category => category.parent === 0)
-                .filter(category => category.name !== "Uncategorized")
-                .map(cat => {
-                    const children = categoriesArray.filter(
-                        child => Number(child.parent) === Number(cat.id)
+                const parentCategories = categoriesArray.filter(
+                    (category) => category.parent === 0
+                );
+                buildCategoryTree = categoriesArray
+                .filter((category) => category.parent !== 0)
+                .map((category)=>{
+                    const parent = parentCategories.find(
+                        (item) => item.id === category.parent
                     );
-
                     return {
-                        ...cat,
-                        hasChildren: children.length > 0,
-                        children
-                    };
-                });
+                        ...category,
+                        parent_slug: parent?.slug || null,
+                    }
+                }).sort((a, b) => a.id - b.id);
+
             }
         return buildCategoryTree || [];
     } catch (error) {
