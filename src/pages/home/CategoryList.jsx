@@ -68,14 +68,14 @@ export default function CategoryList({
                         </div>
 
                         {/* View More + Clear Filter */}
-                        <div className="text-center mt-3">
+                        <div className="rs-sub-category-more-menu">
                             <div className="d-inline-flex align-items-center">
 
                                 {remainingCategories.length > 0 && (
                                     <div className="dropdown">
                                         <button
                                             type="button"
-                                            className="btn btn-link dropdown-toggle"
+                                            className="btn btn-link btn-more dropdown-toggle"
                                             onClick={() =>
                                                 setShowDropdown(!showDropdown)
                                             }
@@ -116,12 +116,12 @@ export default function CategoryList({
                                 {activeCategory && (
                                     <button
                                         type="button"
-                                        className="btn btn-link text-danger p-1 ms-2"
+                                        className="btn btn-link btn-close"
                                         onClick={handleClearFilter}
                                         title="Clear Filter"
                                         aria-label="Clear Filter"
                                     >
-                                        <svg
+                                        {/* <svg
                                             width="18"
                                             height="18"
                                             viewBox="0 0 24 24"
@@ -133,7 +133,7 @@ export default function CategoryList({
                                         >
                                             <path d="M18 6L6 18" />
                                             <path d="M6 6l12 12" />
-                                        </svg>
+                                        </svg> */}
                                     </button>
                                 )}
 

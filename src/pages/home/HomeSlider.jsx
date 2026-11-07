@@ -237,23 +237,28 @@ export default function HomeSlider({
             <div className='col-md-12'>
                 <div className='upper-area'>
                     {/* <div className='category-heading'>Always AI free</div> */}
-                    <CustomersView/>
+                    {/* <CustomersView/> */}
                 </div>
+                 
+
+
+
+
                 <div className='rs-category-grid'>
                     <a href='/tribes' className='rs-category-link'>
-                        <picture className='rs-category-img'><img src='https://images.ctfassets.net/hrltx12pl8hq/2ppk3Ug2z6oFMZY5z8WXnx/75af41f13939954c93de0ff8c1972612/shutterstock_1922207966.jpg?fit=fill&w=640&h=360' /></picture>
+                        <picture className='rs-category-img'><img src={STATIC_IMAGE.TRIBE_CATEGORY} alt="Tribe Category" /></picture>
                         <div className='rs-category-text'>Tribal Heritage</div>
                     </a>
                         <a href='/templates' className='rs-category-link'>
-                        <picture className='rs-category-img'><img src='https://images.ctfassets.net/hrltx12pl8hq/1qoVFqqABKxtFRMkUh0v6l/6a9bbdc723ac373f4e44400de87997b2/shutterstock_1734177410__1_.jpg?fit=fill&w=640&h=360' /></picture>
+                        <picture className='rs-category-img'><img src={STATIC_IMAGE.TEMPLE_CATEGORY} alt="Temple Category" /></picture>
                         <div className='rs-category-text'>Sacred Places</div>
                     </a>
                         <a href='/books' className='rs-category-link'>
-                        <picture className='rs-category-img'><img src='https://images.ctfassets.net/hrltx12pl8hq/go6z2gBaTMDvTrtoOipOw/3b9d21ff7003ca392a2daeb569d629fc/shutterstock_1802211250.jpg?fit=fill&w=640&h=360' /></picture>
+                        <picture className='rs-category-img'><img src={STATIC_IMAGE.BOOK_CATEGORY} alt="Book Category" /></picture>
                         <div className='rs-category-text'>Books & Stories</div>
                     </a>
                         <a href='/contact-us' className='rs-category-link'>
-                        <picture className='rs-category-img'><img src='https://images.ctfassets.net/hrltx12pl8hq/ss2daMHu3XewLBroGgbtp/6cf4fbe1fc297c20ee6cd2bb303e12a1/shutterstock_2390735237.jpg?fit=fill&w=640&h=360' /></picture>
+                        <picture className='rs-category-img'><img src={STATIC_IMAGE.CUSTOM_CATEGORY} alt="Custom Category" /></picture>
                         <div className='rs-category-text'>Custom Photography</div>
                     </a>
                 </div>

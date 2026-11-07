@@ -348,6 +348,7 @@ table{
   gap: 7px;
   text-decoration: none;
   white-space: nowrap;
+  background-color: transparent;
 }
 .rs-sub-category-link .search-icon{
   width: 14px;
@@ -436,3 +437,20 @@ table{
 }
 }
 /* END ------------------------------------------------ */
+.rs-sub-category-more-menu{
+  position: relative;
+}
+.rs-sub-category-more-menu .btn-more{
+  color: var(--bs-body-color);
+  text-decoration: none;
+  border: 1px solid var(--bs-border-color);
+  border-radius: 30px;
+  min-width: 160px;
+}
+.rs-sub-category-more-menu .btn-close{
+  position: absolute;
+  top: 30%;
+  right: 10px;
+  padding: 0;
+  font-size: 15px;
+}

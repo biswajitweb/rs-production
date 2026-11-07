@@ -2,6 +2,9 @@ import React, { lazy } from 'react'
 import {STATIC_IMAGE} from '../../utils/staticImage'
 import { Link } from 'react-router-dom';
 
+const CustomersView = lazy(()=>
+    import('../home/CustomersView')
+);
 
 const SecurePayment = lazy(()=>
     import('../../components/SecurePayment')
@@ -13,7 +16,9 @@ export default function Footer() {
         <SecurePayment/>
 
 
-
+        <section className='customer-view-area'>
+            <CustomersView/>
+        </section>
         <footer 
             className="rs-footer-area"
             style={{
