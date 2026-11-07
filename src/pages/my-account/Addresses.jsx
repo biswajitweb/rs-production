@@ -31,6 +31,10 @@ const Spinner = lazy(() =>
     import("../../components/Spinner")
 );
 
+const Toast = lazy(()=>
+    import('../../components/Toast')
+);
+
 const defaultAddress = {
     label: "Home",
     first_name: "",
@@ -123,6 +127,27 @@ export default function Addresses() {
 
     const countryCode = "IN";
 
+    const [toast, setToast] = useState({
+            show: false,
+            message: "",
+            type: "success",
+    });
+
+    const showToast = (message, type = "success") => {
+        setToast({
+            show: true,
+            message,
+            type,
+        });
+    };
+
+    const closeToast = () => {
+        setToast((prev) => ({
+            ...prev,
+            show: false,
+        }));
+    };
+
     /*
      * Decrypt logged-in user
      */
@@ -176,9 +201,9 @@ export default function Addresses() {
             try {
                 await dispatch(allAddressList(userId));
             } catch (error) {
-                console.error(
-                    "Error fetching addresses:",
-                    error?.message
+                showToast(
+                    `Error fetching addresses ${error?.message}`,
+                    "error"
                 );
             } finally {
                 if (!cancelled) {
@@ -222,11 +247,10 @@ export default function Addresses() {
                     setStates(stateOptions);
                 }
             } catch (error) {
-                console.error(
-                    "Error fetching states:",
-                    error?.message
+                showToast(
+                    `Error fetching states ${error?.message}`,
+                    "error"
                 );
-
                 if (!cancelled) {
                     setStates([]);
                 }
@@ -441,6 +465,10 @@ export default function Addresses() {
                 setTouched({ ...initialTouched });
                 setErrors({});
                 setErrorMessage("");
+                showToast(
+                    "Addresses saved successfully!",
+                    "success"
+                );
             } else {
                 setErrorMessage(
                     addressResponse?.message ||
@@ -453,10 +481,11 @@ export default function Addresses() {
                 error
             );
 
-            setErrorMessage(
+            showToast(
                 error?.response?.data?.message ||
                 error?.message ||
-                "Something went wrong. Please try again."
+                "Something went wrong. Please try again.",
+                "error"
             );
         } finally {
             setLoader(false);
@@ -478,12 +507,19 @@ export default function Addresses() {
                     await new Promise((resolve) => setTimeout(resolve, 1500));
 
                     await dispatch(allAddressList(userId));
+                    showToast(
+                        "Set default addresses successfully!",
+                        "success"
+                    );
                   
                 }
             }
         } catch (error) {
             if(error) {
-                console.log(error.message);
+                showToast(
+                    error.message,
+                    "error"
+                );
             }
         } finally {
             setDefaultAddressLoadingId(false);
@@ -968,6 +1004,14 @@ export default function Addresses() {
                     </div>
                 </div>
             </CommonModal>
+
+            <Toast
+                show={toast.show}
+                message={toast.message}
+                type={toast.type}
+                duration={3000}
+                onClose={closeToast}
+            />
         </>
     );
 }

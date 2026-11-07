@@ -19,7 +19,7 @@ export const cartSlice = createSlice({
             } else {
                 state.itmes.push({
                     ...product,
-                    quantity: 1
+                    quantity: product.quantity
                 });
             }
 

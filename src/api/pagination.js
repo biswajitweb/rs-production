@@ -1,12 +1,18 @@
 export const pagination = {
     HOME_PAGE: {
         page: 1,
-        per_page: 12,
+        per_page: 8,
         search: "",
     },
     ORDER_BY_USER: {
         page: 1,
         per_page: 10,
         search: "",
+    },
+    POST_PAGE : {
+        page: 1,
+        per_page: 12,
+        search: "",
+        post_type : "temple"
     }
 }

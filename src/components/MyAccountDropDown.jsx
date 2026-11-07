@@ -87,7 +87,7 @@ const MyAccountDropDown = ({ user }) => {
                         Welcome
                     </small>
 
-                    <span className="fw-semibold text-dark account-name">
+                    <span className="fw-semibold account-name">
                         {displayName}
                     </span>
                 </span>
@@ -124,7 +124,7 @@ const MyAccountDropDown = ({ user }) => {
                                 </div>
 
                                 {email && (
-                                    <small className="text-muted text-truncate d-block">
+                                    <small className="text-dark text-truncate d-block">
                                         {email}
                                     </small>
                                 )}

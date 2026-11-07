@@ -1,27 +1,46 @@
-
 import React from "react";
 import { Helmet } from "react-helmet-async";
 
 const SITE_NAME = "R S Productions";
-const SITE_URL = "https://rabisankar.com/staging/";
+const SITE_URL = "https://rabisankar.com";
+
+const DEFAULT_DESCRIPTION =
+    "Explore our products and services.";
 
 const SEO = ({
     title,
-    description = "Explore our products and services.",
+    description = DEFAULT_DESCRIPTION,
     canonical,
     image,
     noIndex = false,
+    robots,
+    type = "website",
 }) => {
+    // Dynamic page title
     const pageTitle = title
         ? `${title} | ${SITE_NAME}`
         : SITE_NAME;
 
+    // Dynamic canonical URL
     const canonicalUrl = canonical
-        ? `${SITE_URL}${canonical}`
+        ? new URL(canonical, SITE_URL).href
         : undefined;
+
+    // Normalize image URL
+    const imageUrl = image
+        ? new URL(image, SITE_URL).href
+        : undefined;
+
+    // Robots
+    const robotsContent =
+        robots ||
+        (noIndex
+            ? "noindex, nofollow"
+            : "index, follow");
 
     return (
         <Helmet>
+            {/* Basic SEO */}
             <title>{pageTitle}</title>
 
             <meta
@@ -31,13 +50,10 @@ const SEO = ({
 
             <meta
                 name="robots"
-                content={
-                    noIndex
-                        ? "noindex, nofollow"
-                        : "index, follow"
-                }
+                content={robotsContent}
             />
 
+            {/* Canonical */}
             {canonicalUrl && (
                 <link
                     rel="canonical"
@@ -45,21 +61,49 @@ const SEO = ({
                 />
             )}
 
-            <meta property="og:type" content="website" />
-            <meta property="og:site_name" content={SITE_NAME} />
-            <meta property="og:title" content={pageTitle} />
-            <meta property="og:description"  content={description} />
+            {/* Open Graph */}
+            <meta
+                property="og:type"
+                content={type}
+            />
 
-            {image && (
+            <meta
+                property="og:site_name"
+                content={SITE_NAME}
+            />
+
+            <meta
+                property="og:title"
+                content={pageTitle}
+            />
+
+            <meta
+                property="og:description"
+                content={description}
+            />
+
+            {canonicalUrl && (
                 <meta
-                    property="og:image"
-                    content={image}
+                    property="og:url"
+                    content={canonicalUrl}
                 />
             )}
 
+            {imageUrl && (
+                <meta
+                    property="og:image"
+                    content={imageUrl}
+                />
+            )}
+
+            {/* Twitter */}
             <meta
                 name="twitter:card"
-                content={image ? "summary_large_image" : "summary"}
+                content={
+                    imageUrl
+                        ? "summary_large_image"
+                        : "summary"
+                }
             />
 
             <meta
@@ -72,10 +116,10 @@ const SEO = ({
                 content={description}
             />
 
-            {image && (
+            {imageUrl && (
                 <meta
                     name="twitter:image"
-                    content={image}
+                    content={imageUrl}
                 />
             )}
         </Helmet>

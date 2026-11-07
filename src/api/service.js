@@ -35,7 +35,10 @@ export const service = {
     getVariation: (id, attributes)=> 
         axiosInstance.get(`${API_PREFIX}${API_MODULE.PRODUCTS}/${id}/variation?${attributes}`
         
-    )
+    ),
+    updateLikeCount : async(postData)=>{
+        return await axiosInstance.post(`${API_PREFIX}like-count`, postData);
+    }
    },
 
    /**
@@ -66,6 +69,15 @@ export const service = {
         },
         states : async(countryCode) =>{
             return await axiosInstance.get(`${API_PREFIX}states/${countryCode}`);
+        },
+        contact : async(params)=>{
+            return await axiosInstance.post(`${API_PREFIX}/contact`, params);
+        },
+        forgotPassword  : async(params)=>{
+            return await axiosInstance.post(`${API_PREFIX}customer/forgot-password`, params);
+        },
+        resetPassword  : async(params)=>{
+            return await axiosInstance.post(`${API_PREFIX}customer/reset-password`, params);
         }
     },
     
@@ -83,7 +95,13 @@ export const service = {
         },
         single : (orderId)=>{
             return axiosInstance.get(`${API_PREFIX}orders/${orderId}`);
-        }
+        },
+        generate_token : (params = {})=>{
+            return axiosInstance.post(`${API_PREFIX}order/generate-token`, params);
+        },
+        download_image : (token)=>{
+            return axiosInstance.get(`${API_PREFIX}order/download-image?token=${token}`);
+        } 
     },
     /**
      * Address book 
@@ -110,5 +128,23 @@ export const service = {
         default : async(params = {})=>{
             return await axiosInstance.put(`${API_PREFIX}addresses/default`, params);
         }
-    }
+    },
+    /**
+     * Contact us
+    */
+    contact : {
+        sendMessage : async(params = {})=>{
+            return await axiosInstance.post(`${API_PREFIX}send-message`, params);
+        }
+    },
+    /**
+     * Other end point 
+    */
+    other : {
+        getTemples : async(params = {})=>{
+            return await axiosInstance.get(`${API_PREFIX}posts`, {
+                params : params
+            });
+        }
+   }
 };

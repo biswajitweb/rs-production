@@ -30,9 +30,24 @@ export const ROUTES = [
         is_show: "top-menu",
         title: "Home",
         seo: {
-            title: "Tribal Culture Photography for Sale | Buy Photos",
+            title: "Tribal Culture Photography for Sale",
             description: "Discover tribal culture photography for sale, featuring original photos of tribal communities, traditions, festivals and heritage in Odisha and India.",
             canonical: "/",
+            robots: "index, follow",
+        },
+    },
+    {
+        path: "/temple",
+        element: "Temple",
+        area: ROUTE_AREA.WEBSITE,
+        guest: true,
+        is_show: "topmenu",
+        title: "Temple",
+        seo: {
+            title: "Temples of Odisha | History, Architecture & Heritage",
+            description: "Explore the famous temples of Odisha, including Lingaraj Temple and Mukteswara Temple. Discover their history, ancient architecture, spiritual significance, and rich cultural heritage.",
+            canonical: "/temple",
+            robots: "index, follow",
         },
     },
     {
@@ -46,6 +61,7 @@ export const ROUTES = [
             title: "About Us | Tribal Culture Photography",
             description: "Learn about our photography collection documenting tribal culture, traditions, people and heritage in Odisha and India through original photographs.",
             canonical: "/about-us",
+            robots: "index, follow",
         },
     },
     {
@@ -59,6 +75,7 @@ export const ROUTES = [
             title: "Contact Us | Tribal Photography Sales",
             description: "Contact us for tribal culture photography, photo purchases, commercial licensing, editorial use and enquiries about our original photography collection.",
             canonical: "/contact-us",
+            robots: "index, follow",
         },
     },
     {
@@ -69,11 +86,10 @@ export const ROUTES = [
         is_show: "product-details",
         title: "Product Details",
         seo: {
-            title: "add dynamic from product title",
-            description: "add dynamic from product details",
-            canonical: "/product-details/:id/variants/:variantId",
-            noindex: true,
-        },
+            title: "Product Details",
+            description: "Explore product details and pricing.",
+            noIndex: true,
+        }
     },
     {
         path: "/cart",
@@ -100,7 +116,7 @@ export const ROUTES = [
             title: "Login | Your Photography Account",
             description: "Log in to manage your photo purchases, view orders, access available downloads and save your favourite tribal culture photographs.",
             canonical: "/sign-in",
-            noindex: true,
+            robots: "index, follow",
         },
     },
     {
@@ -114,7 +130,35 @@ export const ROUTES = [
             title: "Sign Up | Buy Tribal Culture Photos",
             description: "Create an account to buy tribal culture photos, manage your purchases, access downloads and save photographs for your future projects.",
             canonical: "/sign-up",
-            noindex: true,
+            robots: "index, follow",
+        },
+    },
+    {
+        path: "/forgot-password",
+        element: "ForgotPassword",
+        area: ROUTE_AREA.WEBSITE,
+        guest: true,
+        is_show: "forgot-password",
+        title: "Create Account",
+        seo: {
+            title: "Forgot Password | Buy Tribal Culture Photos",
+            description: "Reset your password to regain access to your account and continue exploring, purchasing and downloading tribal culture photographs.",
+            canonical: "/forgot-password",
+            robots: "index, follow",
+        },
+    },
+    {
+        path: "/reset-password",
+        element: "ResetPassword",
+        area: ROUTE_AREA.WEBSITE,
+        guest: true,
+        is_show: "reset-password",
+        title: "Reset Password",
+        seo: {
+            title: "Reset Password | Buy Tribal Culture Photos",
+            description: "Reset your password to regain access to your account and continue exploring, purchasing and downloading tribal culture photographs.",
+            canonical: "/reset-password",
+            robots: "index, follow",
         },
     },
     {
@@ -126,9 +170,9 @@ export const ROUTES = [
         title: "Terms and Conditions",
         seo: {
             title: "Terms and Conditions | Tribal Culture",
-            description:
-                "Read the terms and conditions governing the use of the Tribal Culture website, services, and shopping facilities.",
+            description: "Read the terms and conditions governing the use of the Tribal Culture website, services, and shopping facilities.",
             canonical: "/terms-conditions",
+            noindex: true,
         },
     },
     {
@@ -146,7 +190,7 @@ export const ROUTES = [
         },
     },
     {
-        path: "/order-success",
+        path: "/order-success/:order_id/:user_id",
         element: "OrderSuccess",
         area: ROUTE_AREA.WEBSITE,
         guest: true,
@@ -203,7 +247,7 @@ export const ROUTES = [
         element: "Orders",
         area: ROUTE_AREA.WEBSITE,
         is_show: "my-account",
-        title: "My Orders / Purchases",
+        title: "My Orders",
         protected: true,
         roles: [ROLES.CUSTOMER],
         icon: "bi bi-bag-check",
@@ -312,6 +356,7 @@ export const ROUTES = [
             description:
                 "Read the Tribal Culture privacy policy to understand how personal information is collected, used, and protected.",
             canonical: "/privacy-policy",
+            noindex: true,
         },
     },
     {
@@ -326,6 +371,7 @@ export const ROUTES = [
             description:
                 "Review the license agreement and applicable terms governing the use of Tribal Culture website content and services.",
             canonical: "/license-agreement",
+            noindex: true,
         },
     },
     {
@@ -340,6 +386,7 @@ export const ROUTES = [
             description:
                 "Review the refund, return, and cancellation terms applicable to purchases made through Tribal Culture.",
             canonical: "/refund-cancellation-policy",
+            noindex: true,
         },
     },
 ];

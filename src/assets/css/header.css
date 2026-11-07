@@ -1,5 +1,5 @@
 .rs-header-area {
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--bs-border-color);
 }
 
 .rs-header-area .header-wrap {
@@ -13,7 +13,7 @@
     display: flex;
     margin-right: 70px;
     text-decoration: none;
-    color: var(--themeBodyColor);
+    color: var(--bs-body-color);
 }
 
 @media (max-width: 1024px) {
@@ -23,7 +23,7 @@
 }
 
 .rs-header-area .logo-wrap img {
-    height: 40px;
+    height: 43px;
 }
 
 .rs-header-area .logo-wrap .logo-text {
@@ -61,9 +61,11 @@
     text-decoration: none;
     padding-left: 20px;
     padding-right: 20px;
-    color: var(--themeBodyColor);
+    color: var(--bs-body-color);
 }
-
+.rs-header-area .nav-wrap ul li a.active {
+    color: var(--themePrimaryColor);
+}
 .rs-header-area .nav-wrap ul li a:hover {
     color: var(--themePrimaryColor);
 }
@@ -94,7 +96,7 @@
 }
 
 .rs-header-area .btn-cart {
-    color: var(--themeBodyColor);
+    color: var(--bs-body-color);
     background-color: var(--themeGrayLight);
     border-radius: 30px;
     text-decoration: none;
@@ -137,4 +139,15 @@
     padding: 10px 30px;
     border-radius: 30px;
     text-decoration: none;
+    height: 47px;
+}
+.rs-header-area.sticky-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 2147483647 !important;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }

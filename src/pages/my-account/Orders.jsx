@@ -15,6 +15,10 @@ const Spinner = lazy(()=>
     import('../../components/Spinner')
 );
 
+const Toast = lazy(()=>
+    import('../../components/Toast')
+);
+
 
 export default function Orders() {
 
@@ -22,6 +26,8 @@ export default function Orders() {
 
     const [userInfo, setUserInfo] = useState(null);
     const [orderList, setOrderList] = useState([]);
+
+    const [downloadLoader, setDownloadLoader] = useState(false);
 
     const navigate = useNavigate();
 
@@ -41,6 +47,28 @@ export default function Orders() {
     const [orderDetails, setOrderDetails] = useState({});
 
     const [offcanvasId, setoffcanvasId] = useState('offcanvasRight');
+
+
+    const [toast, setToast] = useState({
+        show: false,
+        message: "",
+        type: "success",
+    });
+    
+    const showToast = (message, type = "success") => {
+        setToast({
+            show: true,
+            message,
+            type,
+        });
+    };
+
+    const closeToast = () => {
+        setToast((prev) => ({
+            ...prev,
+            show: false,
+        }));
+    };
 
     /**
      * Decrypt logged-in user
@@ -200,6 +228,38 @@ export default function Orders() {
         );
     };
 
+    const downloadOrderFile = async(orderId, transactionId)=>{
+        try {
+            
+            if(orderId && userInfo.id && transactionId) {
+                setDownloadLoader(true);
+                let tokenData = {
+                    user_id : userInfo.id,
+                    order_id : orderId
+                }
+                const response = await service.order.generate_token(tokenData);
+                const tokenResponse =  response.data;
+                if(tokenResponse.success === true || tokenResponse.token) {
+                    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+                    const downloadWindow = window.open('about:blank', '_blank');
+                    const downloadUrl = new URL(`${API_BASE_URL}/custom-store/v1/order/download-image`);
+                    downloadUrl.searchParams.set('token', tokenResponse.token);
+                    downloadWindow.location.replace(downloadUrl.toString());
+                }
+                
+            }
+        } catch (error) {
+            if(error) {
+                showToast(
+                    error.message,
+                    "error"
+                );
+            }
+        } finally {
+            setDownloadLoader(false);
+        }
+    }
+
 
     return (
         <>
@@ -290,7 +350,7 @@ export default function Orders() {
 
                                         <td>
                                          
-                                                ₹{item.total}
+                                                ₹{item.total} 
                                             
                                         </td>
 
@@ -305,18 +365,29 @@ export default function Orders() {
                                         </td>
 
                                         <td className="text-center">
-
-                                            <button
-                                                type="button"
-                                                className="btn btn-sm btn-outline-primary"
-                                                data-bs-toggle="offcanvas"
-                                                data-bs-target={`#${offcanvasId}`}
-                                                aria-controls={offcanvasId}
-                                                onClick={()=>onHandleOrderView(item.id)}
-                                            >
-                                                View
-                                            </button>
-
+                                            <div 
+                                                className="d-flex justify-content-center gap-2">
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-sm btn-outline-primary"
+                                                    data-bs-toggle="offcanvas"
+                                                    data-bs-target={`#${offcanvasId}`}
+                                                    aria-controls={offcanvasId}
+                                                    onClick={() => onHandleOrderView(item.id)}
+                                                    disabled={downloadLoader}
+                                                >
+                                                    <i className="bi bi-eye me-1"></i>
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-sm btn-outline-danger"
+                                                    disabled={!item.transaction_id || downloadLoader}
+                                                    onClick={()=>downloadOrderFile(item.id, item?.transaction_id)}
+                                                    
+                                                >
+                                                     <i className="bi bi-download me-1"></i>
+                                                </button>
+                                            </div>
                                         </td>
 
                                     </tr>
@@ -337,7 +408,7 @@ export default function Orders() {
                         <div className="d-flex justify-content-between align-items-center mt-4">
 
                             <div className="text-muted">
-                                Total Orders: <strong>{totalPages}</strong>
+                                Total Orders Pages: <strong>{totalPages}</strong>
                             </div>
 
                             <nav>
@@ -471,7 +542,7 @@ export default function Orders() {
 
                         {/* Customer Information */}
                         <div className="card border-0 shadow-sm mb-4">
-                            <div className="card-header bg-white">
+                            <div className="card-header">
                                 <h6 className="mb-0">
                                     Customer Information
                                 </h6>
@@ -522,7 +593,7 @@ export default function Orders() {
                             <div className="col-md-6">
                                 <div className="card border-0 shadow-sm h-100">
 
-                                    <div className="card-header bg-white">
+                                    <div className="card-header">
                                         <h6 className="mb-0">
                                             Billing Address
                                         </h6>
@@ -581,7 +652,7 @@ export default function Orders() {
                             <div className="col-md-6">
                                 <div className="card border-0 shadow-sm h-100">
 
-                                    <div className="card-header bg-white">
+                                    <div className="card-header">
                                         <h6 className="mb-0">
                                             Shipping Address
                                         </h6>
@@ -629,7 +700,7 @@ export default function Orders() {
                         {/* Order Items */}
                         <div className="card border-0 shadow-sm mb-4">
 
-                            <div className="card-header bg-white">
+                            <div className="card-header">
                                 <h6 className="mb-0">
                                     Order Items
                                 </h6>
@@ -701,7 +772,7 @@ export default function Orders() {
                                                     <td>
                                                         ₹
                                                         {Number(
-                                                            item.product?.price || 0
+                                                            item?.price || 0
                                                         ).toFixed(2)}
                                                     </td>
 
@@ -741,7 +812,7 @@ export default function Orders() {
 
                                 <div className="card border-0 shadow-sm">
 
-                                    <div className="card-header bg-white">
+                                    <div className="card-header">
                                         <h6 className="mb-0">
                                             Order Summary
                                         </h6>
@@ -768,7 +839,7 @@ export default function Orders() {
 
                                         <div className="d-flex justify-content-between mb-2">
                                             <span>
-                                                Tax
+                                                Tax Amount
                                             </span>
 
                                             <span>
@@ -778,6 +849,19 @@ export default function Orders() {
                                                 ).toFixed(2)}
                                             </span>
                                         </div>
+                                        {
+                                            orderDetails.transaction_id && 
+                                                <div className="d-flex justify-content-between mb-2">
+                                                    <span>
+                                                        Tax Rat
+                                                    </span>
+
+                                                    <span>
+                                                        {orderDetails.tax_rat}%
+                                                    </span>
+                                                </div>
+                                        }
+                                        
 
                                         <hr />
 
@@ -804,7 +888,7 @@ export default function Orders() {
                         {/* Payment Information */}
                         <div className="card border-0 shadow-sm mb-4">
 
-                            <div className="card-header bg-white">
+                            <div className="card-header">
                                 <h6 className="mb-0">
                                     Payment Information
                                 </h6>
@@ -814,7 +898,7 @@ export default function Orders() {
 
                                 <div className="row">
 
-                                    <div className="col-md-4">
+                                    <div className={`col-md-${orderDetails.transaction_id ? "3" : "4" }`}>
                                         <small className="text-muted d-block">
                                             Payment Method
                                         </small>
@@ -824,7 +908,22 @@ export default function Orders() {
                                         </strong>
                                     </div>
 
-                                    <div className="col-md-4">
+                                    {
+                                        orderDetails.transaction_id && (
+                                            <div className={`col-md-${orderDetails.transaction_id ? "3" : "4" }`}>
+                                                <small className="text-muted d-block">
+                                                    Transaction Id
+                                                </small>
+
+                                                <strong>
+                                                    {orderDetails.transaction_id}
+                                                </strong>
+                                            </div>
+                                        )
+                                    }
+                                    
+
+                                    <div className={`col-md-${orderDetails.transaction_id ? "3" : "4" }`}>
                                         <small className="text-muted d-block">
                                             Currency
                                         </small>
@@ -834,13 +933,13 @@ export default function Orders() {
                                         </strong>
                                     </div>
 
-                                    <div className="col-md-4">
+                                    <div className={`col-md-${orderDetails.transaction_id ? "3" : "4" }`}>
                                         <small className="text-muted d-block">
                                             Payment Status
                                         </small>
 
                                         <span className="badge bg-warning text-dark text-capitalize">
-                                            {orderDetails.status}
+                                            { orderDetails.transaction_id ? "Paid" : orderDetails.status}
                                         </span>
                                     </div>
 
@@ -860,6 +959,14 @@ export default function Orders() {
                     </div>
                 )}
             </Offcanvas>
+
+            <Toast
+                show={toast.show}
+                message={toast.message}
+                type={toast.type}
+                duration={3000}
+                onClose={closeToast}
+            />
         </>
         
     );
