@@ -22,6 +22,7 @@ export const getAllCategories =  createAsyncThunk( "/categories", async(_, {reje
                 );
                 buildCategoryTree = categoriesArray
                 .filter((category) => category.parent !== 0)
+                .filter((category) => category.count > 0 )
                 .map((category)=>{
                     const parent = parentCategories.find(
                         (item) => item.id === category.parent
