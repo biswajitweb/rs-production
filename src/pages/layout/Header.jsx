@@ -266,7 +266,7 @@ export default function Header() {
 
                                         {/* SEARCH */}
                                         <HeaderSearch
-                                            isShow={isShowSearchBar}
+                                            isShow={false}
                                         />
 
                                         {/* HELP */}
