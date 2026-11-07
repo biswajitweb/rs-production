@@ -10,12 +10,12 @@ const Spinner = lazy(() => import('../../components/Spinner'));
 
 export default function Category() {
 
-    const { parentSlug, childSlug } = useParams();
+    const { parentSlug } = useParams();
 
     const categoryParam = {
         ...pagination.HOME_PAGE,
-        category: parentSlug,
-        ...(childSlug ? { subcategory: childSlug } : {})
+        category: parentSlug
+       
     };
 
     const {
@@ -24,7 +24,7 @@ export default function Category() {
         error,
         data: catProductData
     } = useQuery({
-        queryKey: ['product-cat', parentSlug, childSlug ?? ''],
+        queryKey: ['product-cat', parentSlug],
 
         queryFn: async () => {
             const response = await service.product.getAll(categoryParam);
@@ -55,23 +55,21 @@ export default function Category() {
             .replace(/-/g, ' ')
             .replace(/\b\w/g, char => char.toUpperCase());
 
-    const categoryName = formatSlug(childSlug || parentSlug);
+   
     const parentName = formatSlug(parentSlug);
 
-    const seoTitle = `${categoryName} Photography | Tribal Culture`;
+  
 
     const seoDescription =
         catProductData?.category?.description ||
-        `Explore ${categoryName} in ${parentName} photography, cultural heritage, traditions and original photographs from Odisha and India.`;
+        `Explore  in ${parentName} photography, cultural heritage, traditions and original photographs from Odisha and India.`;
 
-    const canonicalUrl = childSlug
-        ? `https://rabisankar.com/${parentSlug}/${childSlug}`
-        : `https://rabisankar.com/${parentSlug}`;
+    const canonicalUrl = `https://rabisankar.com/${parentSlug}`;
 
     return (
         <>
             <Helmet>
-                <title>{seoTitle}</title>
+                <title>{parentName}</title>
 
                 <meta
                     name="description"

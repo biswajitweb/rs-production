@@ -34,6 +34,9 @@ export default function AppRoutes() {
             route.is_show === "my-account"
     );
 
+    
+    
+
     return (
         <ErrorBoundary>
             <Routes>

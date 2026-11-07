@@ -21,12 +21,10 @@ import categories from '../../public/data/categories.json';
 
 const CATEGORY_ROUTES = categories.map((category) => ({
     id : category.id,
-    hasChildren : category.hasChildren,
-    path: `/:parentSlug/:childSlug?`,
+    path: `/:parentSlug`,
     element: "Category",
     area: ROUTE_AREA.WEBSITE,
     guest: true,
-    is_show: "top-menu-fasle",
     title: category.name,
     categoryId: category.id,
     parentSlug : category.slug,
@@ -37,6 +35,9 @@ const CATEGORY_ROUTES = categories.map((category) => ({
         robots: "index, follow",
     },
 }));
+
+
+
 
 export const ROUTES = [
     // =========================
@@ -56,7 +57,22 @@ export const ROUTES = [
             robots: "index, follow",
         },
     },
-    ...CATEGORY_ROUTES,
+    {
+        path: "/:parentSlug",
+        child_page : "rs-store",
+        area: ROUTE_AREA.WEBSITE,
+        element : "Category",
+        guest: true,
+        is_show: "top-menu",
+        title: "RS Store",
+        children : CATEGORY_ROUTES,
+        seo: {
+            title: "About RS Productions | Tribal & Cultural Photography in Odisha",
+            description: "Discover RS Productions, documenting Odisha's tribal communities, traditional lifestyles, cultural heritage, festivals and people through original photography.",
+            canonical: "/about",
+            robots: "index, follow",
+        },
+    },
     {
         path: "/about",
         element: "About",
