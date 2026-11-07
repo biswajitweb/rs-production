@@ -203,103 +203,46 @@ export default function Header() {
 
                                         <ul className="navbar-nav">
 
-                                            {primaryMenu.map((item) => {
+                                            {primaryMenu.flatMap((item) => {
 
-                                                // Check children
-                                                const hasChildren =
-                                                    Array.isArray(item.children) &&
-                                                    item.children.length > 0;
+                                                // If parent has children, show children directly
+                                                if (Array.isArray(item.children) && item.children.length > 0) {
 
-                                                // Get actual child URLs
-                                                const childPaths = hasChildren
-                                                    ? item.children.map(getChildPath)
-                                                    : [];
+                                                    return item.children.map((child) => {
 
-                                                // Parent active state
-                                                const isParentActive =
-                                                    !item.path?.includes('/:') &&
-                                                    isRouteActive(item.path);
+                                                        const childPath = getChildPath(child);
+                                                        const isActive = isRouteActive(childPath);
 
-                                                // Child active state
-                                                const isChildActive =
-                                                    childPaths.some((childPath) =>
-                                                        isRouteActive(childPath)
-                                                    );
+                                                        return (
+                                                            <li key={child.id} className="nav-item">
 
-                                                // Combined active state
-                                                const isMenuActive =
-                                                    isParentActive || isChildActive;
+                                                                <NavLink
+                                                                    to={childPath}
+                                                                    className={`nav-link ${isActive ? 'active' : ''}`}
+                                                                >
+                                                                    {child.title}
+                                                                </NavLink>
 
-                                                // Parent destination
-                                                const parentPath = hasChildren
-                                                    ? childPaths[0]
-                                                    : item.path;
+                                                            </li>
+                                                        );
+                                                    });
+                                                }
 
-                                                return (
+                                                // Otherwise show the main menu
+                                                const isActive = isRouteActive(item.path);
 
-                                                    <li
-                                                        key={item.id}
-                                                        className={`nav-item ${
-                                                            hasChildren ? 'dropdown' : ''
-                                                        }`}
-                                                    >
+                                                return [
+                                                    <li key={item.id} className="nav-item">
 
-                                                        {/* PARENT MENU */}
                                                         <NavLink
-                                                            to={parentPath}
-                                                            className={`nav-link ${
-                                                                isMenuActive ? 'active' : ''
-                                                            } ${
-                                                                hasChildren ? 'dropdown-toggle' : ''
-                                                            }`}
-                                                            {...(hasChildren && {
-                                                                'data-bs-toggle': 'dropdown',
-                                                                'aria-expanded': isMenuActive
-                                                            })}
+                                                            to={item.path}
+                                                            className={`nav-link ${isActive ? 'active' : ''}`}
                                                         >
                                                             {item.title}
                                                         </NavLink>
 
-                                                        {/* CHILD DROPDOWN */}
-                                                        {hasChildren && (
-
-                                                            <ul className="dropdown-menu">
-
-                                                                {item.children.map((child) => {
-
-                                                                    const childPath =
-                                                                        getChildPath(child);
-
-                                                                    const isActiveChild =
-                                                                        isRouteActive(childPath);
-
-                                                                    return (
-
-                                                                        <li key={child.id}>
-
-                                                                            <NavLink
-                                                                                to={childPath}
-                                                                                className={`dropdown-item ${
-                                                                                    isActiveChild ? 'active' : ''
-                                                                                }`}
-                                                                                style={{color : "#fff"}}
-                                                                            >
-                                                                                {child.title}
-                                                                            </NavLink>
-
-                                                                        </li>
-
-                                                                    );
-
-                                                                })}
-
-                                                            </ul>
-
-                                                        )}
-
                                                     </li>
-
-                                                );
+                                                ];
 
                                             })}
 
