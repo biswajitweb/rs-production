@@ -164,6 +164,9 @@
   right: 2px;
 }
 /* ------------------------ */
+.customer-view-area{
+  margin: 50px 0;
+}
 .rs-rating-bar {
     display: flex;
     align-items: center;

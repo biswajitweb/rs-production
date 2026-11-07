@@ -5,17 +5,20 @@
   <url>
     <loc>https://rabisankar.com/</loc>
   </url>
-
-  <url>
-    <loc>https://rabisankar.com/about-us</loc>
+ <url>
+    <loc>https://rabisankar.com/tribes</loc>
   </url>
-
-  <url>
-    <loc>https://rabisankar.com/contact-us</loc>
+   <url>
+    <loc>https://rabisankar.com/temples</loc>
   </url>
-
+   <url>
+    <loc>https://rabisankar.com/books</loc>
+  </url>
   <url>
-    <loc>https://rabisankar.com/help</loc>
+    <loc>https://rabisankar.com/about</loc>
+  </url>
+  <url>
+    <loc>https://rabisankar.com/contact</loc>
   </url>
 
 </urlset>

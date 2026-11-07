@@ -258,7 +258,7 @@ export default function OrderSuccess() {
                             </Link>
 
                             <Link
-                                to="/contact-us"
+                                to="/contact"
                                 className="btn-outline-custom"
                             >
                                 Contact Support
@@ -432,7 +432,7 @@ export default function OrderSuccess() {
                     <p className="support-text">
                         Need help with your order?
                         <Link
-                            to="/contact-us"
+                            to="/contact"
                             className="ms-1"
                         >
                             Contact Support

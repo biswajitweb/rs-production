@@ -7,8 +7,6 @@ import { STATIC_IMAGE } from '../../utils/staticImage';
 import { ROUTES } from '../../routes/routeConfig';
 import { decryptData } from '../../utils/encryption';
 
-import ChildrenCategory from './ChildrenCategory';
-
 const MyAccountDropDown = lazy(() =>
     import('../../components/MyAccountDropDown')
 );
@@ -18,12 +16,20 @@ const HeaderSearch = lazy(() => import('./HeaderSearch'));
 export default function Header() {
 
     const location = useLocation();
-    const pathName = location?.pathname;
-    const matchRoute = ["/tribes", "/temples", "/books"];
+    const pathName = location.pathname;
+
+    // =====================================
+    // SEARCH BAR VISIBLE ROUTES
+    // =====================================
+    const matchRoute = ['/tribes', '/temples', '/books'];
+
     const isShowSearchBar = matchRoute.some((item) =>
         pathName === item || pathName.startsWith(`${item}/`)
     );
-    
+
+    // =====================================
+    // PRIMARY NAVIGATION MENU
+    // =====================================
     const primaryMenu = ROUTES.filter(
         (item) => item.is_show === 'top-menu'
     );
@@ -32,19 +38,54 @@ export default function Header() {
         (state) => state.cart
     );
 
-    const { categories = [] } = useSelector(
-        (state) => state.categories
-    );
-
     const { authToken } = useSelector(
         (state) => state.user
     );
 
     const [userInfo, setUserInfo] = useState({});
     const [isSticky, setIsSticky] = useState(false);
-    const [openMenu, setOpenMenu] = useState(null);
 
-    // Sticky Header
+    // =====================================
+    // NORMALIZE URL
+    // =====================================
+    const normalizePath = (path = '') => {
+        return path.replace(/\/+$/, '') || '/';
+    };
+
+    // =====================================
+    // CHECK ACTIVE ROUTE
+    // =====================================
+    const isRouteActive = (routePath) => {
+
+        if (!routePath) return false;
+
+        // Ignore dynamic route patterns
+        if (routePath.includes('/:')) return false;
+
+        const currentPath = normalizePath(pathName);
+        const targetPath = normalizePath(routePath);
+
+        return (
+            currentPath === targetPath ||
+            currentPath.startsWith(`${targetPath}/`)
+        );
+    };
+
+    // =====================================
+    // GET ACTUAL CHILD CATEGORY URL
+    // =====================================
+    const getChildPath = (child) => {
+
+        if (child.parentSlug) {
+            return `/${child.parentSlug}`;
+        }
+
+        return child.path || '/';
+    };
+
+    // =====================================
+    // STICKY HEADER
+    // =====================================
     useEffect(() => {
 
         const handleScroll = () => {
@@ -63,8 +104,12 @@ export default function Header() {
 
     }, []);
 
-    // Decrypt User Authentication
+    // =====================================
+    // DECRYPT USER AUTHENTICATION
+    // =====================================
     useEffect(() => {
+
+        let isMounted = true;
 
         const decryptAuth = async () => {
 
@@ -74,28 +119,33 @@ export default function Header() {
             }
 
             try {
+
                 const userDecrypt = await decryptData(authToken);
-                setUserInfo(userDecrypt?.data || {});
+
+                if (isMounted) {
+                    setUserInfo(userDecrypt?.data || {});
+                }
+
             } catch (error) {
+
                 console.error('Decrypt error:', error);
-                setUserInfo({});
+
+                if (isMounted) {
+                    setUserInfo({});
+                }
             }
         };
 
         decryptAuth();
 
+        return () => {
+            isMounted = false;
+        };
+
     }, [authToken]);
 
-    // Toggle Dropdown
-    const handleDropdown = (id) => {
-
-        setOpenMenu((prev) =>
-            Number(prev) === Number(id) ? null : id
-        );
-
-    };
-
     return (
+
         <header
             className={`rs-header-area ${
                 isSticky ? 'sticky-header-1' : ''
@@ -110,7 +160,10 @@ export default function Header() {
 
                         <div className="header-wrap">
 
-                            {/* LEFT HEADER */}
+                            {/* =====================================
+                                LEFT HEADER
+                            ===================================== */}
+
                             <div className="header-col-left">
 
                                 <nav className="navbar navbar-expand-lg">
@@ -150,97 +203,46 @@ export default function Header() {
 
                                         <ul className="navbar-nav">
 
-                                            {primaryMenu.map((item) => {
+                                            {primaryMenu.flatMap((item) => {
 
-                                                const hasChildren =
-                                                    Number(item.id) > 0;
+                                                // If parent has children, show children directly
+                                                if (Array.isArray(item.children) && item.children.length > 0) {
 
-                                                const isOpen =
-                                                    Number(openMenu) ===
-                                                    Number(item.id);
+                                                    return item.children.map((child) => {
 
-                                                return (
+                                                        const childPath = getChildPath(child);
+                                                        const isActive = isRouteActive(childPath);
 
-                                                    <li
-                                                        key={item.id}
-                                                        className={`nav-item ${
-                                                            hasChildren
-                                                                ? 'dropdown'
-                                                                : ''
-                                                        }`}
-                                                    >
+                                                        return (
+                                                            <li key={child.id} className="nav-item">
 
-                                                        {hasChildren ? (
-
-                                                            <>
-                                                            <div className='btn-together'>
-                                                            <NavLink
-                                                                    to={item.parentSlug}
-                                                                    className={`parent-category-link ${
-                                                                        isOpen ? 'active' : ''
-                                                                    }`}
-                                                                   
+                                                                <NavLink
+                                                                    to={childPath}
+                                                                    className={`nav-link ${isActive ? 'active' : ''}`}
                                                                 >
-                                                                    {item.title}
+                                                                    {child.title}
                                                                 </NavLink>
-                                                                <button
-                                                                    type="button"
-                                                                    className={`nav-link dropdown-toggle p-0 ${
-                                                                        isOpen
-                                                                            ? 'show'
-                                                                            : ''
-                                                                    }`}
-                                                                    onClick={() =>
-                                                                        handleDropdown(
-                                                                            item.id
-                                                                        )
-                                                                    }
-                                                                    aria-expanded={
-                                                                        isOpen
-                                                                    }
-                                                                >
-                                                                    
-                                                                </button>
-                                                                </div>
-                                                                {isOpen && (
 
-                                                                    <ul className="dropdown-menu show">
+                                                            </li>
+                                                        );
+                                                    });
+                                                }
 
-                                                                        <ChildrenCategory
-                                                                            parentId={item.id}
-                                                                            categories={categories}
-                                                                            onClose={() => setOpenMenu(null)}
-                                                                        />
+                                                // Otherwise show the main menu
+                                                const isActive = isRouteActive(item.path);
 
-                                                                    </ul>
+                                                return [
+                                                    <li key={item.id} className="nav-item">
 
-                                                                )}
-
-                                                            </>
-
-                                                        ) : (
-
-                                                            <NavLink
-                                                                to={item.path}
-                                                                className={({ isActive }) =>
-                                                                    `nav-link ${
-                                                                        isActive
-                                                                            ? 'active'
-                                                                            : ''
-                                                                    }`
-                                                                }
-                                                                onClick={() =>
-                                                                    setOpenMenu(null)
-                                                                }
-                                                            >
-                                                                {item.title}
-                                                            </NavLink>
-
-                                                        )}
+                                                        <NavLink
+                                                            to={item.path}
+                                                            className={`nav-link ${isActive ? 'active' : ''}`}
+                                                        >
+                                                            {item.title}
+                                                        </NavLink>
 
                                                     </li>
-
-                                                );
+                                                ];
 
                                             })}
 
@@ -252,8 +254,10 @@ export default function Header() {
 
                             </div>
 
+                            {/* =====================================
+                                RIGHT HEADER
+                            ===================================== */}
 
-                            {/* RIGHT HEADER */}
                             <div className="header-col-right">
 
                                 <div className="acount-wrap">
@@ -262,16 +266,17 @@ export default function Header() {
 
                                         {/* SEARCH */}
                                         <HeaderSearch
-                                            isShow={isShowSearchBar}
+                                            isShow={false}
                                         />
-
 
                                         {/* HELP */}
                                         <li>
+
                                             <Link
                                                 className="btn-cart"
                                                 to="/help"
                                             >
+
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     width="16"
@@ -282,15 +287,17 @@ export default function Header() {
                                                 >
                                                     <path
                                                         fillRule="evenodd"
-                                                        d="M4.475 5.458c-.284 0-.514-.237-.47-.517C4.28 3.24 5.576 2 7.825 2c2.25 0 3.767 1.36 3.767 3.215 0 1.344-.665 2.288-1.79 2.973-1.1.659-1.414 1.118-1.414 2.01v.03a.5.5 0 0 1-.5.5h-.77a.5.5 0 0 1-.5-.495l-.003-.2c-.043-1.221.477-2.001 1.645-2.712 1.03-.632 1.397-1.135 1.397-2.028 0-.979-.758-1.698-1.926-1.698-1.009 0-1.71.529-1.938 1.402-.066.254-.278.461-.54.461h-.777ZM7.496 14c.622 0 1.095-.474 1.095-1.09 0-.618-.473-1.092-1.095-1.092-.606 0-1.087.474-1.087 1.091S6.89 14 7.496 14"
+                                                        d="M4.475 5.458c-.284 0-.514-.237-.47-.517C4.28 3.24 5.576 2 7.825 2c2.25 0 3.767 1.36 3.767 3.215 0 1.344-.665 2.288-1.79 2.973-1.1.659-1.414 1.118-1.414 2.01v.03a.5.5 0 0 1-.5.5h-.77a.5.5 0 0 1-.5-.495l-.003-.2c-.043-1.221.477-2.001 1.645-2.712 1.03-.632 1.397-1.135 1.397-2.028 0-.979-.758-1.698-1.926-1.698-1.009 0-1.71.529-1.938 1.402-.066.254-.278.461-.54.461h-.777ZM7.496 14c.622 0 1.095-.474 1.095-1.09-.006-.618-.473-1.092-1.095-1.092-.606 0-1.087.474-1.087 1.091S6.89 14 7.496 14"
                                                     />
                                                 </svg>
-                                            </Link>
-                                        </li>
 
+                                            </Link>
+
+                                        </li>
 
                                         {/* CART */}
                                         <li>
+
                                             <Link
                                                 className="btn-cart"
                                                 to="/cart"
@@ -314,8 +321,8 @@ export default function Header() {
                                                 </svg>
 
                                             </Link>
-                                        </li>
 
+                                        </li>
 
                                         {/* USER ACCOUNT */}
                                         <li>
@@ -354,5 +361,6 @@ export default function Header() {
             </div>
 
         </header>
+
     );
 }

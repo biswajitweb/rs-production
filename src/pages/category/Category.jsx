@@ -1,21 +1,25 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 
 import { pagination } from '../../api/pagination';
 import { service } from '../../api/service';
+import useDebounce from '../../hook/useDebounce';
 
 const Spinner = lazy(() => import('../../components/Spinner'));
 
 export default function Category() {
 
-    const { parentSlug, childSlug } = useParams();
+    const { parentSlug } = useParams();
+    const [search, setSearch] = useState('');
+    const debounceSearch = useDebounce(search, 500);
 
     const categoryParam = {
         ...pagination.HOME_PAGE,
         category: parentSlug,
-        ...(childSlug ? { subcategory: childSlug } : {})
+        search : debounceSearch
+       
     };
 
     const {
@@ -24,7 +28,7 @@ export default function Category() {
         error,
         data: catProductData
     } = useQuery({
-        queryKey: ['product-cat', parentSlug, childSlug ?? ''],
+        queryKey: ['product-cat', parentSlug, debounceSearch],
 
         queryFn: async () => {
             const response = await service.product.getAll(categoryParam);
@@ -55,23 +59,21 @@ export default function Category() {
             .replace(/-/g, ' ')
             .replace(/\b\w/g, char => char.toUpperCase());
 
-    const categoryName = formatSlug(childSlug || parentSlug);
+   
     const parentName = formatSlug(parentSlug);
 
-    const seoTitle = `${categoryName} Photography | Tribal Culture`;
+  
 
     const seoDescription =
         catProductData?.category?.description ||
-        `Explore ${categoryName} in ${parentName} photography, cultural heritage, traditions and original photographs from Odisha and India.`;
+        `Explore  in ${parentName} photography, cultural heritage, traditions and original photographs from Odisha and India.`;
 
-    const canonicalUrl = childSlug
-        ? `https://rabisankar.com/${parentSlug}/${childSlug}`
-        : `https://rabisankar.com/${parentSlug}`;
+    const canonicalUrl = `https://rabisankar.com/${parentSlug}`;
 
     return (
         <>
             <Helmet>
-                <title>{seoTitle}</title>
+                <title>{parentName}</title>
 
                 <meta
                     name="description"
@@ -90,9 +92,66 @@ export default function Category() {
             </Helmet>
 
             <div className="sections mt-4">
+                
                 <section className="rs-listing-area">
                     <div className="container">
                         <div className="row">
+                            <div className="col-12 d-flex justify-content-end mb-3">
+                                <div
+                                    className="input-wrap d-flex align-items-center"
+                                    style={{
+                                        width: '350px',
+                                        position: 'relative'
+                                    }}
+                                >
+                                    <input
+                                        type="text"
+                                        placeholder={`Search ${parentName} photos...`}
+                                        autoComplete="off"
+                                        value={search}
+                                        name="search"
+                                        onChange={(e) => setSearch(e.target.value)}
+                                        style={{ paddingRight: '65px' }}
+                                    />
+
+                                    {/* Clear Search */}
+                                    {search.trim() && (
+                                        <button
+                                            type="button"
+                                            className="btn-clear-search"
+                                            onClick={() => setSearch('')}
+                                            aria-label="Clear search"
+                                            title="Clear search"
+                                            style={{
+                                                position: 'absolute',
+                                                right: '70px',
+                                                border: 'none',
+                                                background: 'transparent',
+                                                cursor: 'pointer',
+                                                padding: '5px',
+                                                color: '#6c757d',
+                                                zIndex : "999",
+                                               
+                                            }}
+                                        >
+                                            <i className="bi bi-x-circle-fill"></i>
+                                        </button>
+                                    )}
+
+                                    {/* Search Button */}
+                                    <button
+                                        type="button"
+                                        className="btn-search"
+                                        aria-label="Search photos"
+                                    >
+                                        <i className="bi bi-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            
+
+
                             <div
                                 className="col-12"
                                 style={{ minHeight: '300px' }}

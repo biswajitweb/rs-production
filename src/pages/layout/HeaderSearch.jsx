@@ -16,7 +16,8 @@ export default function HeaderSearch({
                                 autocomplete="off" 
                                 type="text" 
                                 value="" 
-                            name="search" />
+                                name="search" 
+                            />
                             <button 
                                 type="button" 
                                 className="btn-search" 
