@@ -78,6 +78,9 @@ export const service = {
         },
         resetPassword  : async(params)=>{
             return await axiosInstance.post(`${API_PREFIX}customer/reset-password`, params);
+        },
+        getDashboard : async(userId)=>{
+            return await axiosInstance.get(`${API_PREFIX}my-account/dashboard?user_id=${userId}`);
         }
     },
     
@@ -101,6 +104,17 @@ export const service = {
         },
         download_image : (token)=>{
             return axiosInstance.get(`${API_PREFIX}order/download-image?token=${token}`);
+        },
+        createRazorpayOrder : (data)=>{
+            return axiosInstance.post(`${API_PREFIX}orders/razorpay/create-order`, data);
+        },
+        verifyPayment : (data)=>{
+            return axiosInstance.post(`${API_PREFIX}orders/razorpay/verify-payment`, data);
+        },
+        verifyOrder : (params = {})=>{
+            return axiosInstance.get(`${API_PREFIX}orders/razorpay/verify-order`, {
+                params : params
+            } );
         } 
     },
     /**

@@ -2,8 +2,13 @@ import React, { lazy } from 'react';
 import { Link } from 'react-router-dom';
 import NoProductsFound from './NoProductsFound';
 
+
 const Spinner = lazy(()=>
     import('../../components/Spinner')
+);
+
+const CategoryList = lazy(()=>
+    import('./CategoryList')
 );
 
 export default function HomePageProductListing({
@@ -13,11 +18,20 @@ export default function HomePageProductListing({
     hasNextPage,
     fetchNextPage,
     isError,
-    handleLoadMore
+    handleLoadMore,
+    categories,
+    onHandleCategory,
+    activeCategory
 }) {
     
 
     return (
+        <>
+        <CategoryList 
+            categories={categories}
+            onHandleCategory = {onHandleCategory}
+            activeCategory ={activeCategory}
+        />
         <section className="rs-listing-area">
             <div className="container">
                 <div className="row">
@@ -143,5 +157,6 @@ export default function HomePageProductListing({
                 </div>
             </div>
         </section>
+        </>
     );
 }

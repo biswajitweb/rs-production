@@ -100,7 +100,7 @@ export default function HomeSlider({
             </section>
 
     
-       
+      
 
 
 <section className="rs-award-strip">
@@ -231,9 +231,33 @@ export default function HomeSlider({
     </div>
 </section>
 
+ <section className='rs-category-area'>
+    <div className='container'>
+        <div className='row'>
+            <div className='col-md-12'>
+                <div className='rs-category-home-grid'>
+                    <Link to='/tribes' className='rs-category-link'>
+                        <picture className='rs-category-img'><img src={STATIC_IMAGE.TRIBE_CATEGORY} alt="Tribe Category" /></picture>
+                        <div className='rs-category-text'>Tribal Heritage <i class="bi bi-arrow-right"></i></div>
+                    </Link>
+                    <Link to='/temples' className='rs-category-link'>
+                        <picture className='rs-category-img'><img src={STATIC_IMAGE.TEMPLE_CATEGORY} alt="Temple Category" /></picture>
+                        <div className='rs-category-text'>Sacred Places <i class="bi bi-arrow-right"></i></div>
+                    </Link>
+                    <Link to='/books' className='rs-category-link'>
+                        <picture className='rs-category-img'><img src={STATIC_IMAGE.BOOK_CATEGORY} alt="Book Category" /></picture>
+                        <div className='rs-category-text'>Books & Stories <i class="bi bi-arrow-right"></i></div>
+                    </Link>
+                    <Link to='/contact' className='rs-category-link'>
+                        <picture className='rs-category-img'><img src={STATIC_IMAGE.CUSTOM_CATEGORY} alt="Custom Category" /></picture>
+                        <div className='rs-category-text'>Custom Photography <i class="bi bi-arrow-right"></i></div>
+                    </Link>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-
-            <CustomersView/>
 
       </>  
     )

@@ -2,6 +2,9 @@ import React, { lazy } from 'react'
 import {STATIC_IMAGE} from '../../utils/staticImage'
 import { Link } from 'react-router-dom';
 
+const CustomersView = lazy(()=>
+    import('../home/CustomersView')
+);
 
 const SecurePayment = lazy(()=>
     import('../../components/SecurePayment')
@@ -13,7 +16,9 @@ export default function Footer() {
         <SecurePayment/>
 
 
-
+        <section className='customer-view-area'>
+            <CustomersView/>
+        </section>
         <footer 
             className="rs-footer-area"
             style={{
@@ -48,19 +53,20 @@ export default function Footer() {
                             </div>
                             <div className="rs-footer-widget tribal-wrap">
                                 <ul>
-                                    <li><a href="#">Birhor</a></li>
-                                    <li><a href="#">Bonda</a></li>
-                                    <li><a href="#">Chuktia Bhunjia</a></li>
-                                    <li><a href="#">Didayi</a></li>
-                                    <li><a href="#">Dongaria</a></li>
-                                    <li><a href="#">Hill Kharia</a></li>
-                                    <li><a href="#">Juang</a></li>
-                                    <li><a href="#">Kutia</a></li>
-                                    <li><a href="#">Lanjia</a></li>
-                                    <li><a href="#">Lodha</a></li>
-                                    <li><a href="#">Mankridia</a></li>
-                                    <li><a href="#">Paudi Bhuyan</a></li>
-                                    <li><a href="#">Saura</a></li>
+                                    <li><a href="/birhor-tribe">Birhor Tribe</a></li>
+                                    <li><a href="/bonda-tribe">Bonda Tribe</a></li>
+                                    <li><a href="/dangaria-kandha-tribe">Chuktia Bhunjia Tribe</a></li>
+                                    <li><a href="/didayi-tribe">Didayi Tribe</a></li>
+                                    <li><a href="/dangaria-kandha-tribe">Dongaria Kandha Tribe</a></li>
+                                    <li><a href="/hill-kharia-tribe">Hill Kharia Tribe</a></li>
+                                    <li><a href="/juang-tribe">Juang Tribe</a></li>
+                                    <li><a href="/koya-tribe">Koya Tribe</a></li>
+                                    <li><a href="/kutia-kondha-tribe">Kutia Kondha Tribe</a></li>
+                                    <li><a href="/lanjia-saora-tribe">Lanjia Saora Tribe</a></li>
+                                    <li><a href="/lodha-tribe">Lodha Tribe</a></li>
+                                    <li><a href="/mankridia-tribe">Mankridia Tribe</a></li>
+                                    <li><a href="/paudi-bhuiyan-tribe">Paudi Bhuyan Tribe</a></li>
+                                    <li><a href="/saura-tribe">Saura Tribe</a></li>
                                 </ul>
                             </div>
                             <div className="rs-footer-widget temple-wrap">
@@ -80,8 +86,8 @@ export default function Footer() {
                             </div>
                             <div className="rs-footer-widget term-wrap">
                                 <ul>
-                                    <li><Link to="/about-us">About Us</Link></li>
-                                    <li><Link to="/contact-us">Contact Us</Link></li>
+                                    <li><Link to="/about">About</Link></li>
+                                    <li><Link to="/contact">Contact Us</Link></li>
                                     <li><Link to="/help">Help</Link></li>
                                     <li><Link to="/privacy-policy">Privacy Policy</Link></li>
                                     <li><Link to="/terms-conditions">Terms & Conditions</Link></li>

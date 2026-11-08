@@ -1,6 +1,7 @@
 
 import { ROUTE_AREA } from "../api/constants/common";
 import { ROLES } from "../utils/roles";
+import categories from '../../public/data/categories.json';
 
 /**
  * Application Routes
@@ -17,6 +18,26 @@ import { ROLES } from "../utils/roles";
  * - canonical
  * - noindex (optional)
  */
+
+const CATEGORY_ROUTES = categories.map((category) => ({
+    id : category.id,
+    path: `/:parentSlug`,
+    element: "Category",
+    area: ROUTE_AREA.WEBSITE,
+    guest: true,
+    title: category.name,
+    categoryId: category.id,
+    parentSlug : category.slug,
+    seo: {
+        title: `${category.name} Photography | Tribal Culture`,
+        description: `Explore ${category.name.toLowerCase()} photography, cultural heritage, traditions and original photographs from Odisha and India.`,
+        canonical: `/${category.slug}`,
+        robots: "index, follow",
+    },
+}));
+
+
+
 
 export const ROUTES = [
     // =========================
@@ -37,44 +58,46 @@ export const ROUTES = [
         },
     },
     {
-        path: "/temple",
-        element: "Temple",
+        path: "/:parentSlug",
+        child_page : "rs-store",
         area: ROUTE_AREA.WEBSITE,
+        element : "Category",
         guest: true,
-        is_show: "topmenu",
-        title: "Temple",
+        is_show: "top-menu",
+        title: "Explore",
+        children : CATEGORY_ROUTES,
         seo: {
-            title: "Temples of Odisha | History, Architecture & Heritage",
-            description: "Explore the famous temples of Odisha, including Lingaraj Temple and Mukteswara Temple. Discover their history, ancient architecture, spiritual significance, and rich cultural heritage.",
-            canonical: "/temple",
+            title: "RS Productions | Tribal & Cultural Photography in Odisha",
+            description: "Discover RS Productions, documenting Odisha's tribal communities, traditional lifestyles, cultural heritage, festivals and people through original photography.",
+            canonical: "/explore",
             robots: "index, follow",
         },
     },
     {
-        path: "/about-us",
+        path: "/about",
         element: "About",
         area: ROUTE_AREA.WEBSITE,
         guest: true,
         is_show: "top-menu",
-        title: "About Us",
+        title: "About",
         seo: {
-            title: "About Us | Tribal Culture Photography",
-            description: "Learn about our photography collection documenting tribal culture, traditions, people and heritage in Odisha and India through original photographs.",
-            canonical: "/about-us",
+            title: "About RS Productions | Tribal & Cultural Photography in Odisha",
+            description: "Discover RS Productions, documenting Odisha's tribal communities, traditional lifestyles, cultural heritage, festivals and people through original photography.",
+            canonical: "/about",
             robots: "index, follow",
         },
     },
     {
-        path: "/contact-us",
+        path: "/contact",
         element: "ContactUs",
         area: ROUTE_AREA.WEBSITE,
         guest: true,
         is_show: "top-menu",
-        title: "Contact Us",
+        title: "Contact",
         seo: {
-            title: "Contact Us | Tribal Photography Sales",
-            description: "Contact us for tribal culture photography, photo purchases, commercial licensing, editorial use and enquiries about our original photography collection.",
-            canonical: "/contact-us",
+            title: "Contact RS Productions | Photography & Licensing Enquiries",
+            description: "Get in touch with RS Productions for tribal culture photography purchases, commercial licensing, editorial usage, image downloads and other photography enquiries.",
+            canonical: "/contact",
             robots: "index, follow",
         },
     },
@@ -86,11 +109,11 @@ export const ROUTES = [
         is_show: "product-details",
         title: "Product Details",
         seo: {
-            title: "Product Details",
-            description: "Explore product details and pricing.",
+            title: "",
+            description: "s",
             noIndex: true,
-        }
-    },
+         }
+     },
     {
         path: "/cart",
         element: "Cart",
@@ -190,7 +213,7 @@ export const ROUTES = [
         },
     },
     {
-        path: "/order-success/:order_id/:user_id",
+        path: "/order-success/:id/user_id/:user_id", 
         element: "OrderSuccess",
         area: ROUTE_AREA.WEBSITE,
         guest: true,
@@ -390,3 +413,5 @@ export const ROUTES = [
         },
     },
 ];
+
+

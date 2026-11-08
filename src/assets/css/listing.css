@@ -318,7 +318,7 @@
 /* Tablet: 3 columns */
 @media (max-width: 991.98px) {
     .rs-category-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 24px;
     }
 
@@ -330,7 +330,7 @@
 /* Mobile: 2 columns */
 @media (max-width: 575.98px) {
     .rs-category-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(1, minmax(0, 1fr));
         gap: 20px 14px;
     }
 
