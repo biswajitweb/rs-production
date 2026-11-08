@@ -1,3 +1,4 @@
+
 import React, {
     lazy,
     Suspense,
@@ -24,7 +25,7 @@ export default function Category() {
     // States
     const [search, setSearch] = useState('');
     const [subcategory, setSubcategory] = useState('');
-    const [activeCategory, setActiveCategory] = useState('');
+    const [showDropdown, setShowDropdown] = useState(false);
 
     // Debounce search
     const debounceSearch = useDebounce(search, 500);
@@ -38,6 +39,7 @@ export default function Category() {
     useEffect(() => {
         setSubcategory('');
         setSearch('');
+        setShowDropdown(false);
     }, [parentSlug]);
 
     // Memoized API parameters
@@ -130,15 +132,16 @@ export default function Category() {
             prev === catSlug ? '' : catSlug
         );
 
-        setActiveCategory(catSlug);
-
+        setShowDropdown(false);
     };
 
     // Clear filters
     const clearFilters = () => {
+
         setSubcategory('');
         setSearch('');
-        setActiveCategory('');
+        setShowDropdown(false);
+
     };
 
     // Filter subcategories
@@ -153,6 +156,12 @@ export default function Category() {
         );
 
     }, [categories, parentSlug]);
+
+    // Visible categories
+    const visibleCategories = subcategories.slice(0, 5);
+
+    // Remaining categories
+    const remainingCategories = subcategories.slice(5);
 
     return (
 
@@ -190,31 +199,188 @@ export default function Category() {
 
                             {/* Category Upper Area */}
                             <div className="category-upper-area">
-                                <div className='rs-left'>
-                                         {/* Subcategory Buttons */}
-                                <div className="rs-sub-category-grid">
 
-                                    {subcategories.map(cat => (
+                                <div className="rs-left">
 
+                                    {/* Visible Subcategories */}
+                                    <div className="rs-sub-category-grid">
+
+                                        {visibleCategories.map(cat => (
+
+                                            <button
+                                                key={cat.id || cat.slug}
+                                                type="button"
+                                                className={`rs-sub-category-link ${
+                                                    subcategory === cat.slug
+                                                        ? 'active'
+                                                        : ''
+                                                }`}
+                                                onClick={() =>
+                                                    onHandleCategoryClick(cat.slug)
+                                                }
+                                                aria-pressed={
+                                                    subcategory === cat.slug
+                                                }
+                                            >
+
+                                                <svg
+                                                    className="search-icon"
+                                                    focusable="false"
+                                                    aria-hidden="true"
+                                                    viewBox="0 0 32 32"
+                                                    fill="currentColor"
+                                                >
+
+                                                    <path d="M29.333 27.453l-7.587-7.587c1.399-1.787 2.243-4.067 2.243-6.544 0-5.891-4.776-10.667-10.667-10.667S2.655 7.431 2.655 13.322s4.776 10.667 10.667 10.667c2.477 0 4.757-.844 6.567-2.261l7.563 7.604zm-24-14.12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8-8-3.582-8-8z" />
+
+                                                </svg>
+
+                                                <span
+                                                    className="link-text"
+                                                    style={{
+                                                        color: subcategory === cat.slug
+                                                            ? '#f16f21'
+                                                            : ''
+                                                    }}
+                                                >
+                                                    {cat.name}
+                                                </span>
+
+                                            </button>
+
+                                        ))}
+
+                                    </div>
+
+                                    {/* More Dropdown */}
+                                    {remainingCategories.length > 0 && (
+
+                                        <div className="rs-sub-category-more-menu">
+
+                                            <div className="d-inline-flex align-items-center">
+
+                                                <div className="dropdown">
+
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-link btn-more"
+                                                        onClick={() =>
+                                                            setShowDropdown(prev => !prev)
+                                                        }
+                                                        aria-expanded={showDropdown}
+                                                    >
+
+                                                        <i className="bi bi-three-dots me-1"></i>
+
+                                                        <span>More</span>
+
+                                                    </button>
+
+                                                    {showDropdown && (
+
+                                                        <div className="dropdown-menu show">
+
+                                                            {remainingCategories.map(cat => (
+
+                                                                <button
+                                                                    type="button"
+                                                                    key={cat.id || cat.slug}
+                                                                    className="dropdown-item"
+                                                                    onClick={() =>
+                                                                        onHandleCategoryClick(cat.slug)
+                                                                    }
+                                                                >
+
+                                                                    <span
+                                                                        className="link-text"
+                                                                        style={{
+                                                                            color: subcategory === cat.slug
+                                                                                ? '#f16f21'
+                                                                                : ''
+                                                                        }}
+                                                                    >
+                                                                        {cat.name}
+                                                                    </span>
+
+                                                                </button>
+
+                                                            ))}
+
+                                                        </div>
+
+                                                    )}
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    )}
+
+                                    {/* Clear Filter */}
+                                    {(subcategory || search.trim()) && (
+
+                                        <div className="active-filter-area">
+
+                                            <button
+                                                type="button"
+                                                className="btn btn-link clear-filter-btn"
+                                                onClick={clearFilters}
+                                            >
+
+                                                <i className="bi bi-x"></i>
+
+                                                <span>Clear</span>
+
+                                            </button>
+
+                                        </div>
+
+                                    )}
+
+                                </div>
+
+                                {/* Search Area */}
+                                <div className="rs-right">
+
+                                    <div className="input-wrap d-flex align-items-center category-page-search">
+
+                                        <input
+                                            type="text"
+                                            placeholder={`Search ${parentName} photos...`}
+                                            autoComplete="off"
+                                            value={search}
+                                            name="search"
+                                            onChange={e =>
+                                                setSearch(e.target.value)
+                                            }
+                                        />
+
+                                        {/* Clear Search */}
+                                        {search.trim() && (
+
+                                            <button
+                                                type="button"
+                                                className="btn-clear-search"
+                                                onClick={() =>
+                                                    setSearch('')
+                                                }
+                                                aria-label="Clear search"
+                                                title="Clear search"
+                                            >
+
+                                                <i className="bi bi-x"></i>
+
+                                            </button>
+
+                                        )}
+
+                                        {/* Search Button */}
                                         <button
-                                            key={cat.id || cat.slug}
                                             type="button"
-
-                                            className={`rs-sub-category-link ${
-                                                subcategory === cat.slug
-                                                    ? 'active'
-                                                    : ''
-                                            }`}
-
-                                            onClick={() =>
-                                                onHandleCategoryClick(
-                                                    cat.slug
-                                                )
-                                            }
-
-                                            aria-pressed={
-                                                subcategory === cat.slug
-                                            }
+                                            className="btn-search"
+                                            aria-label="Search photos"
                                         >
 
                                             <svg
@@ -228,116 +394,12 @@ export default function Category() {
                                                 <path d="M29.333 27.453l-7.587-7.587c1.399-1.787 2.243-4.067 2.243-6.544 0-5.891-4.776-10.667-10.667-10.667S2.655 7.431 2.655 13.322s4.776 10.667 10.667 10.667c2.477 0 4.757-.844 6.567-2.261l7.563 7.604zm-24-14.12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8-8-3.582-8-8z" />
 
                                             </svg>
-                                               
-                                            <span 
-                                                className={`link-text `}
-                                                style={{
-                                                    color: activeCategory === cat.slug
-                                                        ? "#f16f21"
-                                                        : ""
-                                                }}
-                                                >
-                                                {cat.name}
-                                            </span>
 
-                                        </button>
-
-                                    ))}
-
-                                </div>
-                                
-                                    <div class="rs-sub-category-more-menu">
-                                        <div class="d-inline-flex align-items-center">
-                                            <div class="dropdown">
-                                                <button type="button" class="btn btn-link btn-more" aria-expanded="false"><i class="bi bi-three-dots me-1"></i><span>More</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                 {/* Active Filters */}
-                                {(subcategory || search.trim()) && (
-
-                                    <div className="active-filter-area">
-                                        <button
-                                            type="button"
-                                            className="btn btn-link clear-filter-btn"
-                                            onClick={clearFilters}
-                                        >
-                                            <i class="bi bi-x"></i> <span>Clear</span>
                                         </button>
 
                                     </div>
 
-                                )}
-
                                 </div>
-                                <div className='rs-right'>
-                                         {/* Search Box */}
-                                <div className="input-wrap d-flex align-items-center category-page-search">
-
-                                    <input
-                                        type="text"
-                                        placeholder={`Search ${parentName} photos...`}
-                                        autoComplete="off"
-                                        value={search}
-                                        name="search"
-
-                                        onChange={e =>
-                                            setSearch(e.target.value)
-                                        }
-                                    />
-
-                                    {/* Clear Search */}
-                                    {search.trim() && (
-
-                                        <button
-                                            type="button"
-                                            className="btn-clear-search"
-
-                                            onClick={() =>
-                                                setSearch('')
-                                            }
-
-                                            aria-label="Clear search"
-                                            title="Clear search"
-                                        >
-
-                                            <i className="bi bi-x"></i>
-
-                                        </button>
-
-                                    )}
-
-                                    {/* Search Button */}
-                                    <button
-                                        type="button"
-                                        className="btn-search"
-                                        aria-label="Search photos"
-                                    >
-
-                                        <svg
-                                            className="search-icon"
-                                            focusable="false"
-                                            aria-hidden="true"
-                                            viewBox="0 0 32 32"
-                                            fill="currentColor"
-                                        >
-
-                                            <path d="M29.333 27.453l-7.587-7.587c1.399-1.787 2.243-4.067 2.243-6.544 0-5.891-4.776-10.667-10.667-10.667S2.655 7.431 2.655 13.322s4.776 10.667 10.667 10.667c2.477 0 4.757-.844 6.567-2.261l7.563 7.604zm-24-14.12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8-8-3.582-8-8z" />
-
-                                        </svg>
-
-                                    </button>
-
-                                </div>
-                                </div>
-
-                               
-
-                               
-
-                               
 
                             </div>
 
@@ -392,7 +454,6 @@ export default function Category() {
                                                 <Link
                                                     to={`/product-details/${item.id}/variants/${item.variant_id}`}
                                                     className="rs-card"
-
                                                     key={
                                                         item.variant_id
                                                             ? `${item.id}-${item.variant_id}`
@@ -453,7 +514,7 @@ export default function Category() {
                                                 No products are available in this category.
                                             </p>
 
-                                            {(subcategory || search) && (
+                                            {(subcategory || search.trim()) && (
 
                                                 <button
                                                     type="button"
@@ -484,4 +545,5 @@ export default function Category() {
         </>
 
     );
+
 }
