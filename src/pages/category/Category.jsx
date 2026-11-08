@@ -190,8 +190,8 @@ export default function Category() {
 
                             {/* Category Upper Area */}
                             <div className="category-upper-area">
-
-                                {/* Subcategory Buttons */}
+                                <div className='rs-left'>
+                                         {/* Subcategory Buttons */}
                                 <div className="rs-sub-category-grid">
 
                                     {subcategories.map(cat => (
@@ -245,8 +245,35 @@ export default function Category() {
                                     ))}
 
                                 </div>
+                                
+                                    <div class="rs-sub-category-more-menu">
+                                        <div class="d-inline-flex align-items-center">
+                                            <div class="dropdown">
+                                                <button type="button" class="btn btn-link btn-more" aria-expanded="false"><i class="bi bi-three-dots me-1"></i><span>More</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                {/* Search Box */}
+                                 {/* Active Filters */}
+                                {(subcategory || search.trim()) && (
+
+                                    <div className="active-filter-area">
+                                        <button
+                                            type="button"
+                                            className="btn btn-link clear-filter-btn"
+                                            onClick={clearFilters}
+                                        >
+                                            <i class="bi bi-x"></i> <span>Clear</span>
+                                        </button>
+
+                                    </div>
+
+                                )}
+
+                                </div>
+                                <div className='rs-right'>
+                                         {/* Search Box */}
                                 <div className="input-wrap d-flex align-items-center category-page-search">
 
                                     <input
@@ -304,22 +331,13 @@ export default function Category() {
                                     </button>
 
                                 </div>
+                                </div>
 
-                                {/* Active Filters */}
-                                {(subcategory || search.trim()) && (
+                               
 
-                                    <div className="active-filter-area">
-                                        <button
-                                            type="button"
-                                            className="clear-filter-btn"
-                                            onClick={clearFilters}
-                                        >
-                                            Clear Filters
-                                        </button>
+                               
 
-                                    </div>
-
-                                )}
+                               
 
                             </div>
 
