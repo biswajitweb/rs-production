@@ -96,13 +96,30 @@ export default function Category() {
                 <section className="rs-listing-area">
                     <div className="container">
                         <div className="row">
-                            <div className="col-12 d-flex justify-content-end mb-3">
-                                <div
-                                    className="input-wrap d-flex align-items-center"
-                                    style={{
-                                        width: '350px',
-                                        position: 'relative'
-                                    }}
+                        <div className='category-upper-area'>
+                            <div class="rs-sub-category-grid">
+                                    <button type="button" class="rs-sub-category-link">
+                                        <svg class="search-icon" focusable="false" aria-hidden="true" viewBox="0 0 32 32" fill="currentColor">
+                                        <path d="M29.333 27.453l-7.587-7.587c1.399-1.787 2.243-4.067 2.243-6.544 0-5.891-4.776-10.667-10.667-10.667S2.655 7.431 2.655 13.322s4.776 10.667 10.667 10.667c2.477 0 4.757-.844 6.567-2.261l7.563 7.604zm-24-14.12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8-8-3.582-8-8z"></path>
+                                        </svg>
+                                        <span class="link-text">Birhor Tribe</span>
+                                    </button>
+                                    <button type="button" class="rs-sub-category-link">
+                                        <svg class="search-icon" focusable="false" aria-hidden="true" viewBox="0 0 32 32" fill="currentColor">
+                                        <path d="M29.333 27.453l-7.587-7.587c1.399-1.787 2.243-4.067 2.243-6.544 0-5.891-4.776-10.667-10.667-10.667S2.655 7.431 2.655 13.322s4.776 10.667 10.667 10.667c2.477 0 4.757-.844 6.567-2.261l7.563 7.604zm-24-14.12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8-8-3.582-8-8z"></path>
+                                        </svg>
+                                        <span class="link-text">Bonda Tribe</span>
+                                    </button>
+                                    <button type="button" class="rs-sub-category-link">
+                                        <svg class="search-icon" focusable="false" aria-hidden="true" viewBox="0 0 32 32" fill="currentColor">
+                                        <path d="M29.333 27.453l-7.587-7.587c1.399-1.787 2.243-4.067 2.243-6.544 0-5.891-4.776-10.667-10.667-10.667S2.655 7.431 2.655 13.322s4.776 10.667 10.667 10.667c2.477 0 4.757-.844 6.567-2.261l7.563 7.604zm-24-14.12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8-8-3.582-8-8z"></path>
+                                        </svg>
+                                        <span class="link-text">Chuktia Bhunjia</span>
+                                    </button>
+                                    </div>
+                                    <div
+                                    className="input-wrap d-flex align-items-center category-page-search"
+
                                 >
                                     <input
                                         type="text"
@@ -111,7 +128,6 @@ export default function Category() {
                                         value={search}
                                         name="search"
                                         onChange={(e) => setSearch(e.target.value)}
-                                        style={{ paddingRight: '65px' }}
                                     />
 
                                     {/* Clear Search */}
@@ -122,19 +138,8 @@ export default function Category() {
                                             onClick={() => setSearch('')}
                                             aria-label="Clear search"
                                             title="Clear search"
-                                            style={{
-                                                position: 'absolute',
-                                                right: '70px',
-                                                border: 'none',
-                                                background: 'transparent',
-                                                cursor: 'pointer',
-                                                padding: '5px',
-                                                color: '#6c757d',
-                                                zIndex : "999",
-                                               
-                                            }}
                                         >
-                                            <i className="bi bi-x-circle-fill"></i>
+                                            <i class="bi bi-x"></i>
                                         </button>
                                     )}
 
@@ -144,10 +149,10 @@ export default function Category() {
                                         className="btn-search"
                                         aria-label="Search photos"
                                     >
-                                        <i className="bi bi-search"></i>
+                                        <svg class="search-icon" focusable="false" aria-hidden="true" viewBox="0 0 32 32" fill="currentColor"><path d="M29.333 27.453l-7.587-7.587c1.399-1.787 2.243-4.067 2.243-6.544 0-5.891-4.776-10.667-10.667-10.667S2.655 7.431 2.655 13.322s4.776 10.667 10.667 10.667c2.477 0 4.757-.844 6.567-2.261l7.563 7.604zm-24-14.12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8-8-3.582-8-8z"></path></svg>
                                     </button>
                                 </div>
-                            </div>
+                        </div>
 
                             
 
