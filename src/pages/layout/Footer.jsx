@@ -1,6 +1,9 @@
 import React, { lazy } from 'react'
 import {STATIC_IMAGE} from '../../utils/staticImage'
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
+import categories from '../../../public/data/categories.json';
 
 const CustomersView = lazy(()=>
     import('../home/CustomersView')
@@ -11,6 +14,22 @@ const SecurePayment = lazy(()=>
 );
 
 export default function Footer() {
+    const {categories : stateCategories} =  useSelector(state => state.categories);
+    const selectedSlugs = ["tribes", "temples"];
+    const filteredCategories = categories
+    .filter(item => selectedSlugs.includes(item.slug));
+
+    const footerMenu = filteredCategories?.map((item)=>{
+        const subCat = (stateCategories || []).filter(
+            (subItem) => subItem.parent_slug === item.slug
+        );
+        return {
+            ...item,
+            hasChildren : subCat.length > 0,
+            subCat
+        }
+    });
+    
     return (
         <>
         <SecurePayment/>
@@ -48,42 +67,49 @@ export default function Footer() {
                                             <div className="rs-heading">Email</div>
                                             <div className="rs-description">rsrath13@gmail.com</div>
                                         </li>
+
+                                        <li>
+                                            <div className="rs-heading">Social Media</div>
+                                            <div className="rs-description">
+                                                <a href="https://www.youtube.com/@RabiSankarFilms" target="_blank" rel="noopener noreferrer" > YouTube</a>
+                                            </div>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
-                            <div className="rs-footer-widget tribal-wrap">
-                                <ul>
-                                    <li><a href="/birhor-tribe">Birhor Tribe</a></li>
-                                    <li><a href="/bonda-tribe">Bonda Tribe</a></li>
-                                    <li><a href="/dangaria-kandha-tribe">Chuktia Bhunjia Tribe</a></li>
-                                    <li><a href="/didayi-tribe">Didayi Tribe</a></li>
-                                    <li><a href="/dangaria-kandha-tribe">Dongaria Kandha Tribe</a></li>
-                                    <li><a href="/hill-kharia-tribe">Hill Kharia Tribe</a></li>
-                                    <li><a href="/juang-tribe">Juang Tribe</a></li>
-                                    <li><a href="/koya-tribe">Koya Tribe</a></li>
-                                    <li><a href="/kutia-kondha-tribe">Kutia Kondha Tribe</a></li>
-                                    <li><a href="/lanjia-saora-tribe">Lanjia Saora Tribe</a></li>
-                                    <li><a href="/lodha-tribe">Lodha Tribe</a></li>
-                                    <li><a href="/mankridia-tribe">Mankridia Tribe</a></li>
-                                    <li><a href="/paudi-bhuiyan-tribe">Paudi Bhuyan Tribe</a></li>
-                                    <li><a href="/saura-tribe">Saura Tribe</a></li>
-                                </ul>
-                            </div>
-                            <div className="rs-footer-widget temple-wrap">
-                                <ul>
-                                    <li><a href="#">Lingaraj Temple</a></li>
-                                    <li><a href="#">Mukteswara Temple</a></li>
-                                    <li><a href="#">Rajarani Temple</a></li>
-                                    <li><a href="#">Ananta Vasudeva Temple</a></li>
-                                    <li><a href="#">Brahmeswara Temple</a></li>
-                                    <li><a href="#">Parsurameswara Temple</a></li>
-                                    <li><a href="#">Kedargauri Temple</a></li>
-                                    <li><a href="#">Baitala Deula</a></li>
-                                    <li><a href="#">Bhaskareswara Temple</a></li>
-                                    <li><a href="#">Meghesvara Temple</a></li>
-                                    <li><a href="#">Chausathi Yogini</a></li>
-                                </ul>
-                            </div>
+                            {
+                                Array.isArray(footerMenu) && footerMenu.length > 0 &&
+                                footerMenu.map((item, index)=>{
+                                    console.log(item);
+                                    
+                                    return(
+                                        <>
+                                            <div 
+                                                className="rs-footer-widget tribal-wrap"
+                                                key={index}
+                                                >
+                                                    <ul>
+                                                        {
+                                                            item.subCat?.map((sunCatItem, subIndex)=>{
+                                                                return (
+                                                                    <>
+                                                                        <li>
+                                                                            <Link 
+                                                                                to={`/${sunCatItem.slug}`}>
+                                                                                { sunCatItem.name }
+                                                                            </Link>
+                                                                        </li>
+                                                                    </>
+                                                                )
+                                                            })
+                                                        }
+                                                    </ul>
+                                            </div>
+                                        </>
+                                    )
+                                })
+                            }
+                            
                             <div className="rs-footer-widget term-wrap">
                                 <ul>
                                     <li><Link to="/about">About</Link></li>
