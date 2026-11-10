@@ -36,7 +36,7 @@ export default function HomeSlider({
                     }
                 ])
         ).values()
-    ];
+    ].slice(0,5);
 
 
     
