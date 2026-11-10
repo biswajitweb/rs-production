@@ -48,6 +48,13 @@ export default function Footer() {
                                             <div className="rs-heading">Email</div>
                                             <div className="rs-description">rsrath13@gmail.com</div>
                                         </li>
+
+                                        <li>
+                                            <div className="rs-heading">Social Media</div>
+                                            <div className="rs-description">
+                                                <a href="https://www.youtube.com/@RabiSankarFilms" target="_blank" rel="noopener noreferrer" > YouTube</a>
+                                            </div>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
