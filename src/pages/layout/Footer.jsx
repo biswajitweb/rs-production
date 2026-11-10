@@ -80,8 +80,6 @@ export default function Footer() {
                             {
                                 Array.isArray(footerMenu) && footerMenu.length > 0 &&
                                 footerMenu.map((item, index)=>{
-                                    console.log(item);
-                                    
                                     return(
                                         <>
                                             <div 
@@ -93,9 +91,11 @@ export default function Footer() {
                                                             item.subCat?.map((sunCatItem, subIndex)=>{
                                                                 return (
                                                                     <>
-                                                                        <li>
+                                                                        <li
+                                                                            key={subIndex}
+                                                                        >
                                                                             <Link 
-                                                                                to={`/${sunCatItem.slug}`}>
+                                                                                to={`/${item.slug}?subCat=${sunCatItem.slug}`}>
                                                                                 { sunCatItem.name }
                                                                             </Link>
                                                                         </li>
