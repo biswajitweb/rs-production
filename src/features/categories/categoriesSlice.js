@@ -30,6 +30,7 @@ export const getAllCategories =  createAsyncThunk( "/categories", async(_, {reje
                     return {
                         ...category,
                         parent_slug: parent?.slug || null,
+                        parent_cat_name : parent?.name || null
                     }
                 }).sort((a, b) => a.id - b.id);
 

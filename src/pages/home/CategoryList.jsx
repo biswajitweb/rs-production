@@ -75,13 +75,15 @@ export default function CategoryList({
                                     <div className="dropdown">
                                         <button
                                             type="button"
-                                            className="btn btn-link btn-more dropdown-toggle"
+                                            className="btn btn-link btn-more"
                                             onClick={() =>
                                                 setShowDropdown(!showDropdown)
                                             }
                                             aria-expanded={showDropdown}
                                         >
-                                            {showDropdown ? "Show Less" : "View More"}
+                                            <i class="bi bi-three-dots me-1"></i>
+                                            <span>More</span>
+                                            
                                         </button>
 
                                         {showDropdown && (
@@ -116,24 +118,12 @@ export default function CategoryList({
                                 {activeCategory && (
                                     <button
                                         type="button"
-                                        className="btn btn-link btn-close"
+                                        className="btn btn-link btn-clear"
                                         onClick={handleClearFilter}
                                         title="Clear Filter"
                                         aria-label="Clear Filter"
                                     >
-                                        {/* <svg
-                                            width="18"
-                                            height="18"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        >
-                                            <path d="M18 6L6 18" />
-                                            <path d="M6 6l12 12" />
-                                        </svg> */}
+                                    <i class="bi bi-x"></i> <span>Clear</span>
                                     </button>
                                 )}
 
