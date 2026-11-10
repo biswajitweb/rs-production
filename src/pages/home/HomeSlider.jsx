@@ -2,6 +2,7 @@
 import React, { lazy } from 'react'
 import { STATIC_IMAGE } from '../../utils/staticImage'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux';
 
 
 const CustomersView = lazy(()=>
@@ -20,6 +21,25 @@ export default function HomeSlider({
    const randomImage =
     images[Math.floor(Math.random() * images.length)];
 
+    const {categories} = useSelector(state => state.categories);
+    
+
+    const uniqueParentCategories = [
+        ...new Map(
+            (categories || [])
+                .filter(item => item.parent_cat_name && item.parent_slug)
+                .map(item => [
+                    item.parent_cat_name,
+                    {
+                        parent_cat_name: item.parent_cat_name,
+                        parent_slug: item.parent_slug
+                    }
+                ])
+        ).values()
+    ];
+
+
+    
     return (
         <>
             <section
@@ -71,26 +91,28 @@ export default function HomeSlider({
                                     </button>
                                 </div>
 
+                                
+
                                 <div className="popular-tag">
-                                    <Link to="/" className="popular-list">
-                                        Birhor
-                                    </Link>
+                                    {
+                                        Array.isArray(uniqueParentCategories) && uniqueParentCategories.length > 0 &&
+                                        uniqueParentCategories.map((item)=>{
+                                            return(
+                                                <>
+                                                    <Link 
+                                                        to={`/${item.parent_slug}`} 
+                                                        className="popular-list"
+                                                        key={item.parent_slug}
+                                                        >
+                                                        {item.parent_cat_name}
+                                                    </Link>
+                                                </>
+                                            )
+                                        })
+                                    }
+                                    
 
-                                    <Link to="/" className="popular-list">
-                                        Bonda
-                                    </Link>
-
-                                    <Link to="/" className="popular-list">
-                                        Chuktia Bhunjia
-                                    </Link>
-
-                                    <Link to="/" className="popular-list">
-                                        Didayi
-                                    </Link>
-
-                                    <Link to="/" className="popular-list">
-                                        Dongaria
-                                    </Link>
+                                    
                                 </div>
 
                             </div>
