@@ -7,7 +7,12 @@ import React, {
     useMemo
 } from 'react';
 
-import { Link, useParams } from 'react-router-dom';
+import {
+    Link,
+    useParams,
+    useSearchParams
+} from 'react-router-dom';
+
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
@@ -22,9 +27,14 @@ export default function Category() {
 
     const { parentSlug } = useParams();
 
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    // Get subcategory from URL
+    const urlSubCategory = searchParams.get('subCat') || '';
+
     // States
     const [search, setSearch] = useState('');
-    const [subcategory, setSubcategory] = useState('');
+    const [subcategory, setSubcategory] = useState(urlSubCategory);
     const [showDropdown, setShowDropdown] = useState(false);
 
     // Debounce search
@@ -35,9 +45,13 @@ export default function Category() {
         state => state.categories
     );
 
+    // Sync subcategory with URL
+    useEffect(() => {
+        setSubcategory(urlSubCategory);
+    }, [urlSubCategory]);
+
     // Reset filters when parent category changes
     useEffect(() => {
-        setSubcategory('');
         setSearch('');
         setShowDropdown(false);
     }, [parentSlug]);
@@ -128,9 +142,23 @@ export default function Category() {
     // Subcategory click
     const onHandleCategoryClick = (catSlug) => {
 
-        setSubcategory(prev =>
-            prev === catSlug ? '' : catSlug
-        );
+        const newSlug = subcategory === catSlug
+            ? ''
+            : catSlug;
+
+        setSubcategory(newSlug);
+
+        setSearchParams(prev => {
+            const params = new URLSearchParams(prev);
+
+            if (newSlug) {
+                params.set('subCat', newSlug);
+            } else {
+                params.delete('subCat');
+            }
+
+            return params;
+        });
 
         setShowDropdown(false);
     };
@@ -140,8 +168,13 @@ export default function Category() {
 
         setSubcategory('');
         setSearch('');
-        setShowDropdown(false);
+        setSearchParams(prev => {
+            const params = new URLSearchParams(prev);
+            params.delete('subCat');
+            return params;
+        });
 
+        setShowDropdown(false);
     };
 
     // Filter subcategories
