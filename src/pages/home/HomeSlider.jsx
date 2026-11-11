@@ -1,8 +1,9 @@
 
-import React, { lazy } from 'react'
+import React, { lazy, useMemo } from 'react'
 import { STATIC_IMAGE } from '../../utils/staticImage'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux';
+import { useSliders } from '../../hook/useSliders';
 
 
 const CustomersView = lazy(()=>
@@ -14,12 +15,25 @@ export default function HomeSlider({
     setSearch
 }) {
 
+    
+    const {data: sliders = [], isLoading, isError} =  useSliders();
     // Combine the default background with search images
-    const images = STATIC_IMAGE.searchBanner;
-
+  
     // Select a random background image on page refresh
-   const randomImage =
-    images[Math.floor(Math.random() * images.length)];
+   
+
+     // Select random image
+    const randomImage = useMemo(() => {
+        if (!sliders.length) return '';
+
+        const randomIndex = Math.floor(
+            Math.random() * sliders.length
+        );
+
+        return sliders[randomIndex].banner_image;
+    }, [sliders]);
+   
+    
 
     const {categories} = useSelector(state => state.categories);
     
@@ -47,6 +61,7 @@ export default function HomeSlider({
                 style={{
                     backgroundImage: `url("${randomImage}")`,
                 }}
+                
             >
                 <div className="container">
                     <div className="row">

@@ -159,6 +159,10 @@ export const service = {
             return await axiosInstance.get(`${API_PREFIX}posts`, {
                 params : params
             });
+        },
+        getSlider : ()=>{
+            return axiosInstance.get(`${API_PREFIX}slider`);
         }
+        
    }
 };
