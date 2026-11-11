@@ -19,7 +19,7 @@ export default function Help() {
 
                             <h3>3. Can I use photos commercially?</h3>
 
-                            <p className='mb-4'>Yes, you can use photos for commercial purposes after payment, subject to the license terms.</p>
+                            <p className='mb-4'>Yes, you can use photos for commercial purposes after payment, subject to the license terms. However, reselling or redistributing the photos is strictly prohibited.</p>
 
                             <h3>4. Can I get a refund?</h3>
 
