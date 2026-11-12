@@ -360,7 +360,7 @@ export default function ProductDetails() {
                                     <div className="table-responsive">
                                         <table className="table table-borderless p-table">
                                             <tbody>
-                                                {productDetails?.image_meta &&
+                                                {productDetails?.image_meta && productDetails?.is_high_resolution   &&
                                                     Object.entries(productDetails.image_meta).filter(
                                                         ([key, value]) =>
                                                             value !== "" &&
@@ -386,7 +386,7 @@ export default function ProductDetails() {
                                                             ))
                                                     ) : (
                                                         <tr>
-                                                            <td colSpan="2" className="text-center text-muted">
+                                                            <td colSpan="2" className="text-left text-danger">
                                                                 No additional image information to display.
                                                             </td>
                                                         </tr>
@@ -396,34 +396,41 @@ export default function ProductDetails() {
                                     </div>
 
                                     {/* Quantity */}
-                                    <div className="d-flex align-items-center gap-2 mb-3">
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-secondary"
-                                            onClick={handleQuantityDecrement}
-                                            disabled={quantity <= 1}
-                                        >
-                                            -
-                                        </button>
+                                    {
+                                        productDetails?.is_high_resolution &&
+                                        <div 
+                                            className="d-flex align-items-center gap-2 mb-3"
+                                            >
+                                            <button
+                                                type="button"
+                                                className="btn btn-outline-secondary"
+                                                onClick={handleQuantityDecrement}
+                                                disabled={quantity <= 1}
+                                            >
+                                                -
+                                            </button>
 
-                                        <span className="px-3">
-                                            {quantity}
-                                        </span>
+                                            <span className="px-3">
+                                                {quantity}
+                                            </span>
 
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-secondary"
-                                            onClick={handleQuantityIncrement}
-                                        >
-                                            +
-                                        </button>
-                                    </div>
+                                            <button
+                                                type="button"
+                                                className="btn btn-outline-secondary"
+                                                onClick={handleQuantityIncrement}
+                                            >
+                                                +
+                                            </button>
+                                        </div>
+                                    }
+                                    
 
                                     {/* Buy Now */}
                                     <button
                                         type="button"
                                         className="btn custom-btn btn-primary btn-buy-now"
                                         onClick={onHandleAddToCart}
+                                        disabled={productDetails?.is_high_resolution === false}
                                     >
                                         <span>Buy Now</span>
 
