@@ -277,7 +277,7 @@ export default function HomeSlider({
                         <picture className='rs-category-img'><img src={STATIC_IMAGE.TRIBE_CATEGORY} alt="Tribe Category" /></picture>
                         <div className='rs-category-text'>Tribal Heritage <i class="bi bi-arrow-right"></i></div>
                     </Link>
-                    <Link to='/temples' className='rs-category-link'>
+                    <Link to='/places' className='rs-category-link'>
                         <picture className='rs-category-img'><img src={STATIC_IMAGE.TEMPLE_CATEGORY} alt="Temple Category" /></picture>
                         <div className='rs-category-text'>Sacred Places <i class="bi bi-arrow-right"></i></div>
                     </Link>
