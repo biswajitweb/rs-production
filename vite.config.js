@@ -11,7 +11,7 @@ export default defineConfig({
         proxy: {
             "/api": {
                 target:
-                    "https://rabisankar.com/live-wp/wp-json",
+                    "https://rabisankar.com/staging/rswordpress/wp-json",
                 changeOrigin: true,
                 secure: true,
 
