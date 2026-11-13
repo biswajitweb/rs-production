@@ -4,7 +4,8 @@ import React, {
     Suspense,
     useState,
     useEffect,
-    useMemo
+    useMemo,
+    useRef
 } from 'react';
 
 import {
@@ -13,7 +14,7 @@ import {
     useSearchParams
 } from 'react-router-dom';
 
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
 
@@ -45,6 +46,9 @@ export default function Category() {
         state => state.categories
     );
 
+    // Ref for automatic infinite scroll
+    const loadMoreRef = useRef(null);
+
     // Sync subcategory with URL
     useEffect(() => {
         setSubcategory(urlSubCategory);
@@ -68,13 +72,17 @@ export default function Category() {
         subcategory
     ]);
 
-    // React Query
+    // Infinite Query
     const {
+        data: catProductData,
         isPending,
         isError,
         error,
-        data: catProductData
-    } = useQuery({
+        hasNextPage,
+        isFetchingNextPage,
+        isFetchNextPageError,
+        fetchNextPage
+    } = useInfiniteQuery({
 
         queryKey: [
             'product-cat',
@@ -83,11 +91,14 @@ export default function Category() {
             subcategory
         ],
 
-        queryFn: async () => {
+        initialPageParam: 1,
 
-            const response = await service.product.getAll(
-                categoryParam
-            );
+        queryFn: async ({ pageParam }) => {
+
+            const response = await service.product.getAll({
+                ...categoryParam,
+                page: pageParam
+            });
 
             const productData = response?.data;
 
@@ -101,27 +112,77 @@ export default function Category() {
                 ),
 
                 currentPage: Number(
-                    productData?.meta?.current_page ?? 0
+                    productData?.meta?.current_page ?? pageParam
                 ),
 
                 category: productData?.category ?? null
             };
         },
 
+        getNextPageParam: (lastPage) => {
+
+            return lastPage.currentPage < lastPage.totalPages
+                ? lastPage.currentPage + 1
+                : undefined;
+        },
+
         enabled: !!parentSlug,
 
         gcTime: 10 * 60 * 1000,
 
-        staleTime: 30 * 1000,
+       
 
-        refetchOnWindowFocus: false,
-
-        refetchOnMount: false
+        
 
     });
 
-    // Product data
-    const products = catProductData?.products ?? [];
+    // Combine all product pages
+    const products = catProductData?.pages?.flatMap(
+        page => page.products
+    ) ?? [];
+
+    // Get category information
+    const categoryData = catProductData?.pages?.[0]?.category;
+
+    // Auto load next page using IntersectionObserver
+    useEffect(() => {
+
+        const element = loadMoreRef.current;
+
+        if (!element) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+
+                const firstEntry = entries[0];
+
+                if (
+                    firstEntry.isIntersecting &&
+                    hasNextPage &&
+                    !isFetchingNextPage
+                ) {
+                    fetchNextPage();
+                }
+
+            },
+            {
+                root: null,
+                rootMargin: '300px',
+                threshold: 0
+            }
+        );
+
+        observer.observe(element);
+
+        return () => {
+            observer.disconnect();
+        };
+
+    }, [
+        hasNextPage,
+        isFetchingNextPage,
+        fetchNextPage
+    ]);
 
     // Format slug
     const formatSlug = (slug = '') =>
@@ -133,7 +194,7 @@ export default function Category() {
 
     // SEO description
     const seoDescription =
-        catProductData?.category?.description ||
+        categoryData?.description ||
         `Explore ${parentName} photography, cultural heritage, traditions and original photographs from Odisha and India.`;
 
     const canonicalUrl =
@@ -168,6 +229,7 @@ export default function Category() {
 
         setSubcategory('');
         setSearch('');
+
         setSearchParams(prev => {
             const params = new URLSearchParams(prev);
             params.delete('subCat');
@@ -442,7 +504,7 @@ export default function Category() {
                                 style={{ minHeight: '300px' }}
                             >
 
-                                {/* Loading */}
+                                {/* Initial Loading */}
                                 {isPending && (
 
                                     <Suspense fallback={null}>
@@ -457,8 +519,8 @@ export default function Category() {
 
                                 )}
 
-                                {/* Error */}
-                                {isError && (
+                                {/* Initial Error */}
+                                {isError && !catProductData && (
 
                                     <div className="text-center py-5">
 
@@ -476,56 +538,115 @@ export default function Category() {
                                 )}
 
                                 {/* Product Listing */}
-                                {!isPending && !isError && (
+                                {!isPending && catProductData && (
 
                                     products.length > 0 ? (
 
-                                        <div className="rs-grid">
+                                        <>
 
-                                            {products.map((item, index) => (
+                                            <div className="rs-grid">
 
-                                                <Link
-                                                    to={`/product-details/${item.id}/variants/${item.variant_id}`}
-                                                    className="rs-card"
-                                                    key={
-                                                        item.variant_id
-                                                            ? `${item.id}-${item.variant_id}`
-                                                            : item.id ?? index
-                                                    }
-                                                >
+                                                {products.map((item, index) => (
 
-                                                    <div className="rs-image">
+                                                    <Link
+                                                        to={`/product-details/${item.id}/variants/${item.variant_id}`}
+                                                        className="rs-card"
+                                                        key={
+                                                            item.variant_id
+                                                                ? `${item.id}-${item.variant_id}`
+                                                                : item.id ?? index
+                                                        }
+                                                    >
 
-                                                        <img
-                                                            src={item?.image?.src}
-                                                            alt={
-                                                                item?.name ||
-                                                                'Product'
-                                                            }
-                                                            loading="lazy"
-                                                        />
+                                                        <div className="rs-image">
 
-                                                    </div>
-
-                                                    <div className="action-area">
-
-                                                        <figcaption>
-                                                            {item?.name}
-                                                        </figcaption>
-
-                                                        <div className="btn-buy-icon">
-
-                                                            <i className="bi bi-download"></i>
+                                                            <img
+                                                                src={item?.image?.src}
+                                                                alt={
+                                                                    item?.name ||
+                                                                    'Product'
+                                                                }
+                                                                loading="lazy"
+                                                            />
 
                                                         </div>
 
-                                                    </div>
+                                                        <div className="action-area">
 
-                                                </Link>
+                                                            <figcaption>
+                                                                {item?.name}
+                                                            </figcaption>
 
-                                            ))}
+                                                            <div className="btn-buy-icon">
 
-                                        </div>
+                                                                <i className="bi bi-download"></i>
+
+                                                            </div>
+
+                                                        </div>
+
+                                                    </Link>
+
+                                                ))}
+
+                                            </div>
+
+                                            {/* Next Page Error */}
+                                            {isFetchNextPageError && (
+
+                                                <div className="text-center mt-3">
+
+                                                    <p className="text-danger">
+                                                        Unable to load more products.
+                                                    </p>
+
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-outline-primary"
+                                                        onClick={() => fetchNextPage()}
+                                                        disabled={isFetchingNextPage}
+                                                    >
+                                                        Retry
+                                                    </button>
+
+                                                </div>
+
+                                            )}
+
+                                            {/* Automatic Infinite Scroll */}
+                                            {hasNextPage && (
+
+                                                <div
+                                                    ref={loadMoreRef}
+                                                    className="text-center py-4"
+                                                >
+
+                                                    {isFetchingNextPage && (
+
+                                                        <div className="d-flex justify-content-center align-items-center gap-2">
+
+                                                            <span
+                                                                className="spinner-border spinner-border-sm text-primary"
+                                                                role="status"
+                                                                aria-hidden="true"
+                                                            />
+
+                                                            <span className="text-muted">
+                                                                Loading more products...
+                                                            </span>
+
+                                                        </div>
+
+                                                    )}
+
+                                                </div>
+
+                                            )}
+
+                                           
+                                            
+
+                                        </>
 
                                     ) : (
 
