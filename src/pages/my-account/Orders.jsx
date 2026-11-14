@@ -48,6 +48,8 @@ export default function Orders() {
 
     const [offcanvasId, setoffcanvasId] = useState('offcanvasRight');
 
+    const [invoiceLoader, setInvoiceLoader] = useState(false);
+
 
     const [toast, setToast] = useState({
         show: false,
@@ -260,6 +262,27 @@ export default function Orders() {
         }
     }
 
+    const onHandlePrintPayment = async(orderId, transactionId )=>{
+        try {
+            if(!orderId && !transactionId) return;
+            setInvoiceLoader(true);
+            let payload  = {
+                order_id : orderId,
+                transaction_id : transactionId
+            }
+            const response = await service.order.downloadPaymentInvoice(payload);
+            const paymentResponse = response.data;
+            console.log(paymentResponse);
+        } catch (error) {
+            showToast(
+                error.message,
+                "error"
+            );
+        } finally {
+            setInvoiceLoader(false);
+        }
+    }
+
 
     return (
         <>
@@ -374,19 +397,29 @@ export default function Orders() {
                                                     data-bs-target={`#${offcanvasId}`}
                                                     aria-controls={offcanvasId}
                                                     onClick={() => onHandleOrderView(item.id)}
-                                                    disabled={downloadLoader}
+                                                    disabled={downloadLoader || invoiceLoader}
                                                 >
                                                     <i className="bi bi-eye me-1"></i>
                                                 </button>
                                                 <button
                                                     type="button"
                                                     className="btn btn-sm btn-outline-danger"
-                                                    disabled={!item.transaction_id || downloadLoader}
+                                                    disabled={!item.transaction_id || downloadLoader || invoiceLoader}
                                                     onClick={()=>downloadOrderFile(item.id, item?.transaction_id)}
                                                     
                                                 >
-                                                     <i className="bi bi-download me-1"></i>
+                                                    <i className="bi bi-download me-1"></i>
                                                 </button>
+                                                {
+                                                    item.transaction_id &&
+                                                    <button 
+                                                        className="btn btn-outline-success btn-sm d-none"
+                                                        onClick={()=>onHandlePrintPayment(item.id, item?.transaction_id)}
+                                                        disabled={downloadLoader || invoiceLoader}
+                                                        >
+                                                        <i className="bi bi-receipt me-1"></i>
+                                                    </button>
+                                                }
                                             </div>
                                         </td>
 

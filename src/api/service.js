@@ -115,6 +115,9 @@ export const service = {
             return axiosInstance.get(`${API_PREFIX}orders/razorpay/verify-order`, {
                 params : params
             } );
+        },
+        downloadPaymentInvoice : (params)=>{
+            return axiosInstance.post(`${API_PREFIX}users/payment-invoice`, params);
         } 
     },
     /**
